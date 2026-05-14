@@ -2,7 +2,9 @@
 import RawHtml from '../components/RawHtml.astro';
 import NavBar from '../components/chrome/NavBar.astro';
 import Footer from '../components/chrome/Footer.astro';
+import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
+import { sanitizeLegalHead } from '../utils/sanitizeLegalHead';
 import { site } from '../data/site';
 import inlineGlobals from '../styles/inline-globals.css?raw';
 import bodyScripts from '../partials/body-scripts-home.html?raw';
@@ -17,7 +19,7 @@ interface Props {
 
 const { canonicalPath, bodyClass, webflowPageId, bodyHtml, headHtml } = Astro.props;
 const canonical = new URL(canonicalPath, site.url).href;
-const head = rewriteAssetPaths(headHtml)
+const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
   .replace(/<meta content="[^"]*" name="google-site-verification"\/>/, '')
   .replace(
     /(families:\s*\[[^\]]+\])(\s*\}\s*\}\);)/,
@@ -37,7 +39,10 @@ const head = rewriteAssetPaths(headHtml)
   data-wf-site={site.webflowSiteId}
   lang="en"
 >
-  <head set:html={head} />
+  <head>
+    <Fragment set:html={head} />
+    <HeadAnalytics />
+  </head>
   <body class={bodyClass}>
     <div class="page-wrapper">
       <div class="global-styles w-embed">

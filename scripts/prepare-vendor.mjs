@@ -1,4 +1,4 @@
-import { cp, link, mkdir, readdir, stat } from 'node:fs/promises';
+import { cp, link, mkdir, readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -11,10 +11,6 @@ const vendorRoot = path.join(root, 'public/vendor');
 await mkdir(path.join(vendorRoot, 'webflow/css'), { recursive: true });
 await mkdir(path.join(vendorRoot, 'webflow/js'), { recursive: true });
 await mkdir(path.join(vendorRoot, 'webflow/assets'), { recursive: true });
-await mkdir(path.join(vendorRoot, 'webfont'), { recursive: true });
-await mkdir(path.join(vendorRoot, 'jquery'), { recursive: true });
-await mkdir(path.join(vendorRoot, 'cookieyes'), { recursive: true });
-await mkdir(path.join(vendorRoot, 'finsweet'), { recursive: true });
 await mkdir(path.join(vendorRoot, 'tags/first-party'), { recursive: true });
 
 await cp(path.join(webflowRoot, 'css'), path.join(vendorRoot, 'webflow/css'), {
@@ -58,42 +54,18 @@ for (const entry of await readdir(assetDir)) {
   await ensureAssetAlias(entry, webflowEncodedName(entry));
 }
 
-await cp(
-  path.join(root, 'ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js'),
-  path.join(vendorRoot, 'webfont/webfont.js'),
-);
-await cp(
-  path.join(
-    root,
-    'd3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=64f363b4ba0fc1362362824f',
-  ),
-  path.join(vendorRoot, 'jquery/jquery-3.5.1.min.js'),
-);
-await cp(
-  path.join(
-    root,
-    'cdn-cookieyes.com/client_data/a9444bde0e91feb16b7f6557/script.js',
-  ),
-  path.join(vendorRoot, 'cookieyes/script.js'),
-);
-await cp(
-  path.join(root, 'cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js'),
-  path.join(vendorRoot, 'finsweet/modal.js'),
-);
-await cp(
-  path.join(
-    root,
-    'cdn.prod.website-files.com/64f363b4ba0fc1362362824f%2F652d31f3dc22d7b4ee708e44%2F67cf7e497e5209310062b97c%2Fclarity_script-1.4.7.js',
-  ),
-  path.join(vendorRoot, 'tags/clarity_script-1.4.7.js'),
-);
-await cp(
-  path.join(
-    root,
-    'cdn.prod.website-files.com/64f363b4ba0fc1362362824f%2F66ba5a08efe71070f98dd10a%2F67cf65c4e96f6939f5bc9bfd%2Fn3phmjqq-1.1.1.js',
-  ),
-  path.join(vendorRoot, 'tags/n3phmjqq-1.1.1.js'),
-);
+const ogImageSource = path.join(assetDir, '6814fec732b8cad8fad64a0d_Home_Page_1.png');
+try {
+  await stat(ogImageSource);
+} catch {
+  const ogResponse = await fetch(
+    'https://cdn.prod.website-files.com/64f363b4ba0fc1362362824f/6814fec732b8cad8fad64a0d_Home%20Page%20(1).png',
+  );
+  if (ogResponse.ok) {
+    await writeFile(ogImageSource, Buffer.from(await ogResponse.arrayBuffer()));
+  }
+}
+
 await cp(
   path.join(
     root,
@@ -106,6 +78,20 @@ await cp(
   path.join(root, 'miri-static-overrides.js'),
   path.join(root, 'public/miri-static-overrides.js'),
 );
+
+const splineDir = path.join(root, 'public/assets/spline');
+const splineTarget = path.join(splineDir, 'hero.scene.splinecode');
+await mkdir(splineDir, { recursive: true });
+try {
+  await stat(splineTarget);
+} catch {
+  const splineResponse = await fetch(
+    'https://prod.spline.design/g1zcjk-5vLl2eWGi/scene.splinecode',
+  );
+  if (splineResponse.ok) {
+    await writeFile(splineTarget, Buffer.from(await splineResponse.arrayBuffer()));
+  }
+}
 
 const teamAssets = path.join(root, 'src/assets/team');
 try {

@@ -1,6 +1,15 @@
 ---
+import { site } from '../../data/site';
 import RawHtml from '../RawHtml.astro';
+import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
 import html from '../../partials/home/hero-header.html?raw';
+
+const rendered = rewriteAssetPaths(html)
+  .replaceAll(site.splineScene, site.splineSceneLocal)
+  .replaceAll(
+    encodeURIComponent(site.splineScene),
+    site.splineSceneLocal,
+  );
 ---
 
-<RawHtml html={html} />
+<RawHtml html={rendered} />
