@@ -1,6 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
 import RawHtml from '../RawHtml.astro';
+import { applyIndustryBodies } from '../../utils/home/applyIndustryBodies';
+import { sortByOrder } from '../../utils/home/sortEntries';
 import html from '../../partials/home/industry-tabs.html?raw';
+
+const industries = sortByOrder(await getCollection('industries'));
+const rendered = applyIndustryBodies(
+  html,
+  industries.map((entry) => entry.data.body),
+);
 ---
 
-<RawHtml html={html} />
+<RawHtml html={rendered} />

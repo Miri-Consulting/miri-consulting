@@ -1,6 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import RawHtml from '../RawHtml.astro';
 import html from '../../partials/home/services-tabs.html?raw';
+
+await getCollection('services');
 ---
 
 <RawHtml html={html} />

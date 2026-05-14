@@ -16,13 +16,6 @@ import JsonLdPerson from '../components/seo/JsonLdPerson.astro';
 import RawHtml from '../components/RawHtml.astro';
 import { site } from '../data/site';
 import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
-import { getCollection } from 'astro:content';
-
-await getCollection('team');
-await getCollection('services');
-await getCollection('industries');
-await getCollection('testimonials');
-await getCollection('clientLogos');
 ---
 
 <BaseLayout

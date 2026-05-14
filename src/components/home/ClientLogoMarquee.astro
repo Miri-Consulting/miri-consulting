@@ -1,6 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import RawHtml from '../RawHtml.astro';
 import html from '../../partials/home/client-logo-marquee.html?raw';
+
+await getCollection('clientLogos');
 ---
 
 <RawHtml html={html} />
