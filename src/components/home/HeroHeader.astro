@@ -10,7 +10,11 @@ const hero = await getEntry('home', 'hero');
 const rendered = applyHeroContent(
   rewriteAssetPaths(html)
     .replaceAll(site.splineScene, site.splineSceneLocal)
-    .replaceAll(encodeURIComponent(site.splineScene), site.splineSceneLocal),
+    .replaceAll(encodeURIComponent(site.splineScene), site.splineSceneLocal)
+    .replace(
+      /data-animation-type="spline"\s+data-spline-url="([^"]+)"/,
+      'data-miri-spline-url="$1"',
+    ),
   {
     headline: hero?.data.headline ?? 'Your Vision<br/>Our Expertise',
     subheadline:
