@@ -1,7 +1,7 @@
 ---
 name: "Arianne Rabbitt"
 slug: "arianne-rabbitt"
-order: 8
+order: 10
 roleLabel: "Strategic HR Leadership & Development"
 headshot: "../../assets/team/arianne-rabbitt.jpeg"
 headshotAlt: "Arianne Rabbitt"

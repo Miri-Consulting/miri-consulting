@@ -1,7 +1,7 @@
 ---
 name: "Nauman Nadeem"
 slug: "nauman-nadeem"
-order: 2
+order: 6
 roleLabel: "Accounting & FP&A Services"
 headshot: "../../assets/team/nauman-nadeem.jpg"
 headshotAlt: "Nauman Nadeem"

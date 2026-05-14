@@ -1,7 +1,7 @@
 ---
 name: "Amber Shoap"
 slug: "amber-shoap"
-order: 6
+order: 3
 roleLabel: "Management & Operational Development"
 headshot: "../../assets/team/amber-shoap.jpg"
 headshotAlt: "Amber Shoap"

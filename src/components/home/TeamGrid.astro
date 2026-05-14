@@ -2,16 +2,18 @@
 import { getCollection } from 'astro:content';
 import RawHtml from '../RawHtml.astro';
 import { applyTeamCards } from '../../utils/home/applyTeamCards';
+import { applyTeamGridOrder } from '../../utils/home/applyTeamGridOrder';
 import { sortByOrder } from '../../utils/home/sortEntries';
 import html from '../../partials/home/team-grid.html?raw';
 
 const team = sortByOrder(await getCollection('team'));
+const members = team.map((entry) => ({
+  name: entry.data.name,
+  roleLabel: entry.data.roleLabel,
+}));
 const rendered = applyTeamCards(
-  html,
-  team.map((entry) => ({
-    name: entry.data.name,
-    roleLabel: entry.data.roleLabel,
-  })),
+  applyTeamGridOrder(html, members),
+  members,
 );
 ---
 

@@ -50,7 +50,7 @@ import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
     <Footer />
   </main>
   <Fragment slot="scripts">
-    <script src="/miri-performance.js" type="text/javascript"></script>
     <RawHtml html={bodyScriptsHome} />
+    <script is:inline src="/miri-spline-defer.js" type="text/javascript"></script>
   </Fragment>
 </BaseLayout>

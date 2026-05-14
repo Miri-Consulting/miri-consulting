@@ -1,7 +1,7 @@
 ---
 name: "Rachel Garner"
 slug: "rachel-garner"
-order: 7
+order: 9
 roleLabel: "Digital Design"
 headshot: "../../assets/team/rachel-garner.png"
 headshotAlt: "Rachel Garner"

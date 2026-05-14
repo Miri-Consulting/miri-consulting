@@ -1,7 +1,7 @@
 ---
 name: "Mika Sanchez"
 slug: "mika-sanchez"
-order: 4
+order: 8
 roleLabel: "Development & CTO Services"
 headshot: "../../assets/team/mika-sanchez.jpeg"
 headshotAlt: "Mika Sanchez"

@@ -10,7 +10,6 @@ export default defineConfig({
       maxDiffPixelRatio: 0.001,
       animations: 'disabled',
       caret: 'hide',
-      timeout: 60_000,
     },
   },
   use: {

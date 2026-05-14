@@ -48,6 +48,14 @@ npm run preview
 BASE_URL=http://localhost:4322 npm run test:visual
 ```
 
+## Run visual regression against production
+
+After GitHub Pages is live at `https://www.miri-consulting.com`:
+
+```bash
+npm run test:visual:production
+```
+
 ## Update visual baselines after intentional changes
 
 ```bash

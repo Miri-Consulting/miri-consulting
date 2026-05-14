@@ -1,7 +1,7 @@
 ---
 name: "Keenan Baird"
 slug: "keenan-baird"
-order: 5
+order: 2
 roleLabel: "Management & Operational Development"
 headshot: "../../assets/team/keenan-baird.jpeg"
 headshotAlt: "Keenan Baird"

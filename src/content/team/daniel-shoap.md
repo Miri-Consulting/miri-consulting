@@ -1,7 +1,7 @@
 ---
 name: "Daniel Shoap"
 slug: "daniel-shoap"
-order: 9
+order: 4
 roleLabel: "Estimating & Sales Systems"
 headshot: "../../assets/team/daniel-shoap.png"
 headshotAlt: "Daniel Shoap"

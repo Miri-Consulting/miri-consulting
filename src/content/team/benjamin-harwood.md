@@ -1,7 +1,7 @@
 ---
 name: "Benjamin Harwood"
 slug: "benjamin-harwood"
-order: 10
+order: 5
 roleLabel: "Operations & Field Execution"
 headshot: "../../assets/team/benjamin-harwood.png"
 headshotAlt: "Benjamin Harwood"

@@ -13,6 +13,7 @@
     "preview": "astro preview --host",
     "check": "astro check",
     "test:visual": "playwright test",
+    "test:visual:production": "BASE_URL=https://www.miri-consulting.com playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "baseline:capture": "node scripts/capture-baseline.mjs",
     "prepare:vendor": "node scripts/prepare-vendor.mjs"

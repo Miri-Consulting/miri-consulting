@@ -1,7 +1,7 @@
 ---
 name: "Kelvin Man"
 slug: "kelvin-man"
-order: 3
+order: 7
 roleLabel: "Digital Design"
 headshot: "../../assets/team/kelvin-man.jpg"
 headshotAlt: "Kelvin Man"

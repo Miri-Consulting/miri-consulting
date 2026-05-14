@@ -8,6 +8,20 @@ export type TestimonialSlide = {
   portraitAlt: string;
 };
 
+function extendSlidesToTen(slides: TestimonialSlide[]): TestimonialSlide[] {
+  if (slides.length === 0) {
+    return [];
+  }
+
+  const extended: TestimonialSlide[] = [...slides];
+
+  while (extended.length < 10) {
+    extended.push(slides[extended.length % slides.length]);
+  }
+
+  return extended.slice(0, 10);
+}
+
 export function applyTestimonialSlides(
   html: string,
   slides: TestimonialSlide[],
@@ -20,7 +34,7 @@ export function applyTestimonialSlides(
   }
 
   const slideQuotes = testimonialQuotesForSlider(slides.map((slide) => slide.quote));
-  const slideDetails = testimonialQuotesForSlider(slides);
+  const slideDetails = extendSlidesToTen(slides);
   let quoteIndex = 0;
   let portraitIndex = 0;
   let clientIndex = 0;
