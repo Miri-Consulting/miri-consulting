@@ -1,6 +1,7 @@
 ---
 import RawHtml from '../RawHtml.astro';
+import { syncPrimaryCalendlyUrl } from '../../utils/calendly';
 import html from '../../partials/home/contact-cta.html?raw';
 ---
 
-<RawHtml html={html} />
+<RawHtml html={syncPrimaryCalendlyUrl(html)} />

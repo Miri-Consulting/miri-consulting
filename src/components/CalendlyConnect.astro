@@ -1,5 +1,6 @@
 ---
 import { cta } from '../data/site';
+import { calendlyPopupOnclick } from '../utils/calendly';
 
 interface Props {
   variant?: 'nav' | 'hero' | 'hero-big' | 'contact';
@@ -15,6 +16,8 @@ const {
 
 const className =
   variant === 'hero-big' ? 'calendly-widget-big' : 'calendly-widget';
+
+const onclick = calendlyPopupOnclick(calendlyUrl);
 ---
 
 <div class="w-embed w-script">
@@ -53,7 +56,7 @@ const className =
   <a
     href={calendlyUrl}
     class={className}
-    onclick={`Calendly.initPopupWidget({url: '${calendlyUrl}'});return false;`}
+    onclick={onclick}
   >
     Connect
   </a>

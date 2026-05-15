@@ -1,6 +1,8 @@
 export type HeroContent = {
   headline: string;
   subheadline: string;
+  /** When set, replaces the default "Learn more" link target in the hero partial. */
+  learnMoreHref?: string;
 };
 
 export function applyHeroContent(html: string, hero: HeroContent): string {
@@ -27,6 +29,10 @@ export function applyHeroContent(html: string, hero: HeroContent): string {
       return `<p class="text-size-medium hero">${hero.subheadline}</p>`;
     },
   );
+
+  if (hero.learnMoreHref) {
+    result = result.replace(/href="index\.html#services"/g, `href="${hero.learnMoreHref}"`);
+  }
 
   return result;
 }

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavBar from '../components/chrome/NavBar.astro';
+import Footer from '../components/chrome/Footer.astro';
+import HeroHeader from '../components/home/HeroHeader.astro';
+import JsonLdAspireLandscape from '../components/seo/JsonLdAspireLandscape.astro';
+import RawHtml from '../components/RawHtml.astro';
+import { cta, site } from '../data/site';
+import { calendlyPopupOnclick, syncPrimaryCalendlyUrl } from '../utils/calendly';
+import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
+import { rootPath } from '../utils/rootPath';
+import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
+import aspireBody from '../partials/aspire-landscape-landing-body.html?raw';
+import aspireLandingCss from '../styles/aspire-landing.css?raw';
+
+const canonicalPath = '/aspire-consulting-for-landscape-companies.html';
+const title = 'Aspire Consulting for Landscape Companies | Miri Consulting';
+const description =
+  'Miri helps US landscape companies improve Aspire setup, QuickBooks month-end close, job costing, estimating, workflows, reporting, and operations.';
+
+const bodyHtml = syncPrimaryCalendlyUrl(
+  rewriteAssetPaths(aspireBody)
+    .replaceAll('__CALENDLY_URL__', cta.calendlyUrl)
+    .replaceAll('__CALENDLY_ONCLICK__', calendlyPopupOnclick(cta.calendlyUrl)),
+);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  bodyClass="body"
+  webflowPageId={site.webflowHomePageId}
+>
+  <Fragment slot="head">
+    <JsonLdAspireLandscape canonicalPath={canonicalPath} />
+    <style is:global set:html={aspireLandingCss}></style>
+  </Fragment>
+  <main class="main-wrapper">
+    <NavBar />
+    <HeroHeader
+      headline="Aspire Consulting for<br/>Landscape Companies"
+      subheadline="Miri helps US landscape companies get more value from Aspire by improving setup, accounting workflows, job costing, estimating, reporting, and day-to-day operations."
+      learnMoreHref="#services"
+    />
+    <div class="aspire-landing-original">
+      <RawHtml html={bodyHtml} />
+    </div>
+    <div class="aspire-landing-page-gap" aria-hidden="true"></div>
+    <Footer />
+  </main>
+  <Fragment slot="scripts">
+    <RawHtml html={bodyScriptsHome} />
+    <script is:inline src={rootPath('/miri-spline-defer.js')} type="text/javascript"></script>
+  </Fragment>
+</BaseLayout>

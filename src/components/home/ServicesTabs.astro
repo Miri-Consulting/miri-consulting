@@ -8,6 +8,7 @@ import { applyTeamModalBios } from '../../utils/home/applyTeamModalBios';
 import { applyTeamModalExpertise } from '../../utils/home/applyTeamModalExpertise';
 import { applyTeamModalHeadshots } from '../../utils/home/applyTeamModalHeadshots';
 import { applyTeamModalOrder } from '../../utils/home/applyTeamModalOrder';
+import { addCalendlyPopupToPlainPrimaryAnchors, syncPrimaryCalendlyUrl } from '../../utils/calendly';
 import { sortByOrder } from '../../utils/home/sortEntries';
 import html from '../../partials/home/services-tabs.html?raw';
 
@@ -17,7 +18,7 @@ const teamMembers = team.map((entry) => ({
   name: entry.data.name,
 }));
 const orderedHtml = applyTeamModalOrder(html, teamMembers);
-const rendered = applyTeamModalHeadshots(
+const pipeline = applyTeamModalHeadshots(
   applyTeamModalExpertise(
     applyTeamModalBios(
       applyServiceSubServices(
@@ -56,6 +57,7 @@ const rendered = applyTeamModalHeadshots(
     alt: entry.data.headshotAlt,
   })),
 );
+const rendered = addCalendlyPopupToPlainPrimaryAnchors(syncPrimaryCalendlyUrl(pipeline));
 ---
 
 <RawHtml html={rendered} />

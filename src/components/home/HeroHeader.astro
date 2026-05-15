@@ -2,12 +2,22 @@
 import { getEntry } from 'astro:content';
 import { site } from '../../data/site';
 import RawHtml from '../RawHtml.astro';
+import { syncPrimaryCalendlyUrl } from '../../utils/calendly';
 import { applyHeroContent } from '../../utils/home/applyHeroContent';
 import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
 import html from '../../partials/home/hero-header.html?raw';
 
+interface Props {
+  headline?: string;
+  subheadline?: string;
+  learnMoreHref?: string;
+}
+
+const { headline: headlineProp, subheadline: subheadlineProp, learnMoreHref } = Astro.props;
+
 const hero = await getEntry('home', 'hero');
-const rendered = applyHeroContent(
+const rendered = syncPrimaryCalendlyUrl(
+  applyHeroContent(
   rewriteAssetPaths(html)
     .replaceAll(site.splineScene, site.splineSceneLocal)
     .replaceAll(encodeURIComponent(site.splineScene), site.splineSceneLocal)
@@ -16,11 +26,17 @@ const rendered = applyHeroContent(
       'data-miri-spline-url="$1"',
     ),
   {
-    headline: hero?.data.headline ?? 'Your Vision<br/>Our Expertise',
+    headline:
+      headlineProp ??
+      hero?.data.headline ??
+      'Your Vision<br/>Our Expertise',
     subheadline:
+      subheadlineProp ??
       hero?.data.subheadline ??
       'We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.',
+    learnMoreHref,
   },
+  ),
 );
 ---
 

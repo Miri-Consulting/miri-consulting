@@ -1,6 +1,7 @@
 ---
 import navbar from '../../partials/navbar-home.html?raw';
 import RawHtml from '../RawHtml.astro';
+import { syncPrimaryCalendlyUrl } from '../../utils/calendly';
 ---
 
-<RawHtml html={navbar} />
+<RawHtml html={syncPrimaryCalendlyUrl(navbar)} />

@@ -1,0 +1,129 @@
+---
+import { site } from '../../data/site';
+
+interface Props {
+  canonicalPath: string;
+}
+
+const { canonicalPath } = Astro.props;
+const pageUrl = new URL(canonicalPath, site.url).href;
+
+const graph = [
+  {
+    '@type': 'Organization',
+    '@id': `${site.url}/#organization`,
+    name: 'Miri Consulting',
+    url: `${site.url}/`,
+    description:
+      'Miri Consulting helps landscape, snow, and construction companies improve systems, software, accounting workflows, operations, and management processes.',
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: 'Aspire Consulting for Landscape Companies',
+    description:
+      'Miri helps US landscape companies improve Aspire setup, QuickBooks month-end close, job costing, estimating, workflows, reporting, and operations.',
+    isPartOf: { '@id': `${site.url}/#website` },
+    about: { '@id': `${pageUrl}#service` },
+    breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    url: `${site.url}/`,
+    name: 'Miri Consulting',
+    publisher: { '@id': `${site.url}/#organization` },
+  },
+  {
+    '@type': 'ProfessionalService',
+    '@id': `${pageUrl}#service`,
+    name: 'Aspire consulting for landscape companies',
+    provider: { '@id': `${site.url}/#organization` },
+    areaServed: { '@type': 'Country', name: 'United States' },
+    serviceType: [
+      'Aspire software consulting',
+      'Landscape operations consulting',
+      'Landscape accounting consulting',
+      'QuickBooks and Aspire workflow consulting',
+      'Landscape job costing consulting',
+    ],
+    description:
+      'Consulting for US landscape companies that need help improving Aspire setup, QuickBooks month-end close, job costing, estimating, reporting, and operational workflows.',
+    url: pageUrl,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${site.url}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Aspire Consulting for Landscape Companies',
+        item: pageUrl,
+      },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What does an Aspire consultant do?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'An Aspire consultant helps a landscape company configure, clean up, and use Aspire so the software supports real business decisions. That can include workflows for estimating, scheduling, purchasing, invoicing, job costing, reporting, permissions, item catalogs, and accounting handoffs to systems such as QuickBooks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can Miri help if we already implemented Aspire?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Miri can review configuration, workflows, item catalogs, reporting, permissions, billing, job costing, and accounting handoffs to identify what needs cleanup after Aspire go-live.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can Miri help with Aspire and QuickBooks?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Miri helps teams improve the operational and accounting workflow between Aspire and QuickBooks, including month-end close, revenue and cost review, billing workflows, and reporting consistency.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can Miri help improve Aspire job costing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Job costing depends on clean estimating, production factors, purchasing, time capture, billing, and financial review. Miri helps identify where the data breaks down and designs practical workflows to improve confidence in the numbers.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Who should be involved in an Aspire consulting project?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The best projects include an executive sponsor, an operations leader, a finance or accounting lead, and at least one manager who understands how work moves from sales to the field to billing.',
+        },
+      },
+    ],
+  },
+];
+
+const payload = {
+  '@context': 'https://schema.org',
+  '@graph': graph,
+};
+
+const json = JSON.stringify(payload);
+---
+
+<script type="application/ld+json" set:html={json} />
