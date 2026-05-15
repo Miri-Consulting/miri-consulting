@@ -28,11 +28,21 @@ const pipeline = applyTeamModalHeadshots(
             services.map((entry) => ({
               heading: entry.data.cardHeading,
               body: entry.data.cardBody,
+              cardImage: entry.data.cardImage.src,
+              cardImageAlt: entry.data.cardImageAlt,
             })),
           ),
           services.map((entry) => ({
             heading: entry.data.modalHeading,
             subheading: entry.data.modalSubheading,
+            // Modal renders the same image as the card; the Webflow partial
+            // referenced the same Webflow CDN URL for both slots per service.
+            // `modalImage` in content is currently mislabeled (the four card
+            // files and four modal files form byte-identical cross-service
+            // pairs) and is left unused at render time. Schema cleanup to
+            // follow.
+            modalImage: entry.data.cardImage.src,
+            modalImageAlt: entry.data.modalImageAlt,
           })),
         ),
         services.map((entry) => ({

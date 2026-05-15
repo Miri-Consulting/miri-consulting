@@ -91,15 +91,53 @@ test.describe('home page DOM', () => {
     }
   });
 
-  // Phase 11 will wire content `cardImage` / `modalImage` into the rendered HTML.
-  // Until then, service images come from hardcoded Webflow CDN URLs in the partial
-  // and alt text does not match content frontmatter.
-  test.fixme(
-    'service card and modal images use content frontmatter alt text (Phase 11)',
-    async () => {
-      // Activate after applyServiceSummaries/applyServiceModals are extended in Phase 11.
-    },
-  );
+  test('service cards and modals use content-driven images and alt text', async ({ page }) => {
+    // Each service uses one image for both its card and its modal (matching prod).
+    // Phase 11 wires cardImage from content into both slots; modalImageAlt is
+    // still applied to the modal alt so modal heading context is preserved.
+    const expectedCardAlts = [
+      'Optimize Your Workflow',
+      'Trust Your Numbers',
+      'Elevate Your Presence',
+      'Build Stronger Teams',
+    ];
+    const expectedModalAlts = [
+      'Operations Management Consulting',
+      'Comprehensive Financial Management',
+      'Digital Design & Solutions Architecture',
+      'Human Resource Consulting',
+    ];
+
+    const tabPaneImages = page.locator(
+      '.layout507_tabs.w-tabs .layout507_tab-pane .layout507_image-wrapper img',
+    );
+    await expect(tabPaneImages).toHaveCount(expectedCardAlts.length);
+    const cardAlts = await tabPaneImages.evaluateAll((els) =>
+      els.map((el) => (el as HTMLImageElement).alt),
+    );
+    expect(cardAlts).toEqual(expectedCardAlts);
+    const cardSrcs = await tabPaneImages.evaluateAll((els) =>
+      els.map((el) => (el as HTMLImageElement).getAttribute('src') ?? ''),
+    );
+    for (const src of cardSrcs) {
+      expect(src).toMatch(/^\/_assets\//);
+    }
+
+    // Service modals (4 of them) live before the team modals. Identify each
+    // service modal by its <h2 class="heading-style-h3"> (team modals use h3).
+    const serviceModalH2s = page.locator('div.fs_modal-1_popup-2 h2.heading-style-h3');
+    await expect(serviceModalH2s).toHaveCount(4);
+    for (let i = 0; i < expectedModalAlts.length; i++) {
+      const modal = serviceModalH2s.nth(i).locator('xpath=ancestor::div[contains(@class, "fs_modal-1_popup-2")]');
+      const modalImage = modal.locator('.layout507_image-wrapper img').first();
+      const alt = await modalImage.getAttribute('alt');
+      expect(alt).toBe(expectedModalAlts[i]);
+      const src = await modalImage.getAttribute('src');
+      expect(src).toMatch(/^\/_assets\//);
+      // Modal src equals the matching card src (one image per service).
+      expect(src).toBe(cardSrcs[i]);
+    }
+  });
 
   test('built HTML does not reference orphan or capture-folder paths', async () => {
     const distHtml = path.resolve('dist/index.html');

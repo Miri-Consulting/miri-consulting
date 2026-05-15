@@ -7,7 +7,7 @@ Self-contained tracker for the multi-phase cleanup of this site. Anyone picking 
 | Phase | Title | Status | Commit |
 | --- | --- | --- | --- |
 | 10 | Guardrails and Baseline | complete | see git log |
-| 11 | Service Images + Safe Dead Code Removal | not started | — |
+| 11 | Service Images + Safe Dead Code Removal | complete | see git log |
 | 12.1 | Native client logos | not started | — |
 | 12.2 | Native testimonials | not started | — |
 | 12.3 | Native industry tabs | not started | — |
@@ -72,13 +72,19 @@ The Astro migration is partway done. Git history shows Phases 5/7/9 already land
 
 Verification on `master` before commit: `npm run check` (0/0/0), `npm run build` (6 pages), `playwright test --project=dom` (6 pass, 1 fixme), `playwright test tests/visual.spec.ts` (24 pass).
 
-### Phase 11: Service Images + Safe Dead Code Removal
+### Phase 11: Service Images + Safe Dead Code Removal — complete
 
-- [ ] In [ServicesTabs.astro](src/components/home/ServicesTabs.astro), pass `cardImage` + `cardImageAlt` to [applyServiceSummaries](src/utils/home/applyServiceSummaries.ts) and `modalImage` + `modalImageAlt` to [applyServiceModals](src/utils/home/applyServiceModals.ts). Extend those utilities to replace the hardcoded `<img>` tags in [services-tabs.html](src/partials/home/services-tabs.html).
-- [ ] Add `src/content/client-logos/greenfield-capital-partners.md` and move `local-brand-logos/greenfield-capital-partners.png` to `src/assets/logos/`. Remove the hardcoded Greenfield `<a>` from [client-logo-marquee.html](src/partials/home/client-logo-marquee.html).
-- [ ] Delete confirmed-dead files: [EchoPage.astro](src/components/EchoPage.astro), [pageHtml.ts](src/utils/pageHtml.ts), [applyIndustryBodies.ts](src/utils/home/applyIndustryBodies.ts). Delete the unused `applyTestimonialQuotes` export; keep `testimonialQuotesForSlider`.
-- [ ] Delete the orphan directory `local-team-images/`.
-- [ ] Flip the Phase 10 `test.fixme()` assertions to active for service images.
+- [x] Extend [applyServiceSummaries](src/utils/home/applyServiceSummaries.ts) and [applyServiceModals](src/utils/home/applyServiceModals.ts) to also rewrite the `<img>` inside each `layout507_image-wrapper` block. Pass `cardImage`+`cardImageAlt` and `modalImageAlt` from [ServicesTabs.astro](src/components/home/ServicesTabs.astro). Each service's card and modal now render the **same** image (matches prod), so [ServicesTabs.astro](src/components/home/ServicesTabs.astro:33) passes `cardImage.src` into the modal slot as well.
+- [x] Fix HR "Learn more" Calendly bug in [services-tabs.html](src/partials/home/services-tabs.html). The Webflow export wrote `<a fs-modal-element="open-4" href="https://calendly.com/ramelsanchez/chat">` for HR alone (the other three say `href="index.html#"`); [addCalendlyPopupToPlainPrimaryAnchors](src/utils/calendly.ts) then wired a Calendly `onclick` so clicking HR Learn more opened both the modal and the Calendly popup. Fixed by normalizing the href to `index.html#`.
+- [x] Fix pre-existing [applyTeamModalHeadshots](src/utils/home/applyTeamModalHeadshots.ts) bug. Its `[\s\S]*?` lazy match spanned across image-wrappers, so every team-member iteration overwrote the *first* image-wrapper in the document (the Operations card slot). Now bounded with `(?:(?!<div class="layout507_image-wrapper">)[\s\S])*?` so each match stays within one wrapper boundary.
+- [x] Delete confirmed-dead files: `EchoPage.astro`, `pageHtml.ts`, `applyIndustryBodies.ts`. Drop the unused `applyTestimonialQuotes` export from [applyTestimonialQuotes.ts](src/utils/home/applyTestimonialQuotes.ts) (kept `testimonialQuotesForSlider`, still imported by `applyTestimonialSlides`).
+- [x] Delete orphan directory `local-team-images/`.
+- [x] Replace the `test.fixme()` placeholder in [tests/dom.spec.ts](tests/dom.spec.ts) with a real assertion that service card/modal images come from `/_assets/` and that each service's modal `src` equals its card `src`.
+- [x] Update the home `mobile-landscape` visual baseline (height shifted because the new content-driven image bytes have different aspect ratios than the Webflow CDN srcs they replaced).
+
+Verification: `npm run check` (0/0/0), `npm run build` (6 pages), `playwright test --project=dom` (7/7 pass), `playwright test tests/visual.spec.ts` (24/24 pass).
+
+**Greenfield logo moved to Phase 12.1** (deferred from Phase 11 plan). The marquee partial has 30 `<img>` slots (15 per list × 2 lists) and [applyClientLogoImages](src/utils/home/applyClientLogoImages.ts) only matches `count === logos.length` or `count === logos.length * 2`. Adding a 16th collection entry would mismatch (30 ≠ 16, 30 ≠ 32) and the utility would silently no-op the marquee. Cleanest fix is to add Greenfield + drop the four hardcoded `<a>` brand anchors when [ClientLogoMarquee.astro](src/components/home/ClientLogoMarquee.astro) goes native — that component can render `<a>` only for entries with an `externalUrl` field. Phase 12.1 will add `externalUrl` to the schema and wire it.
 
 ### Phase 12: Native Components, Section by Section
 
@@ -86,7 +92,7 @@ Each section converts to a native Astro component using `<Image>` for first-part
 
 After each section converts: try animation-freezing first (the global `animations: 'disabled'` plus per-component CSS overrides where needed). Drop the mask if screenshots stabilize, or shrink to the smallest residual motion box. Tighten the home `maxDiffPixelRatio` toward 0.01 as masks come off.
 
-- [ ] 12.1 Client logos (mobile + desktop marquees). After this lands, drop `.section_logo3` from the visual mask list.
+- [ ] 12.1 Client logos (mobile + desktop marquees). Add `externalUrl` (optional) to the `clientLogos` schema; add `src/content/client-logos/greenfield-capital-partners.md` with the four external-link URLs (BD, Willis, Greenfield, Los Alamos) attached to their entries. Drop the hardcoded `<a>` brand wrappers from the partial as it converts to a native component. After this lands, drop `.section_logo3` from the visual mask list. Also fixes the silent mobile-marquee mismatch (mobile partial has 16 `<img>` slots; with 15 collection entries today the apply utility no-ops it).
 - [ ] 12.2 Testimonials. After this lands, drop `.testimonial_slider` from the visual mask list.
 - [ ] 12.3 Industry tabs.
 - [ ] 12.4 Team grid. Expose a typed `team` shape that ServicesTabs's modal section can consume without re-fetching.
@@ -140,3 +146,5 @@ Runs after Phase 12 so the used-selector inventory reflects final markup.
 - The logo marquee uses CSS keyframes (`animation: logo-marquee 44s linear infinite;` in [src/styles/inline-globals.css](src/styles/inline-globals.css:214)). Playwright's global `animations: 'disabled'` cancels infinite CSS animations to their initial state (`transform: translate3d(0,0,0)`), so in theory the marquee should be screenshottable without masking. The mask is likely historical. Empirical verification deferred to Phase 12.1 — when [ClientLogoMarquee.astro](src/components/home/ClientLogoMarquee.astro) goes native, try removing `.section_logo3` from the mask list and see if the snapshot stabilizes. If not, fall back to a per-component CSS override before screenshot.
 - **Visual screenshot tests in CI are deferred.** Snapshot baselines in [tests/visual.spec.ts-snapshots/](tests/visual.spec.ts-snapshots/) were captured on macOS. Linux CI rendering (font hinting, sub-pixel positioning) will differ. Three paths forward, listed in order of effort: (1) use `mcr.microsoft.com/playwright:vX-jammy` as the Playwright Docker image both locally and in CI for parity, (2) maintain separate `*-linux.png` baselines committed alongside `*-darwin.png`, (3) leave visual screenshot tests local-only. Decision deferred to Phase 12.1 or later. The DOM test job in CI catches the regressions screenshots would catch for content/structure.
 - The home page is composed in [src/pages/index.astro](src/pages/index.astro) with `<ClientLogoMarqueeMobile />` rendered *before* `<ClientLogoMarquee />`. Both elements use the `.section_logo3` class, so `page.locator('.section_logo3').first()` returns the **mobile** marquee — which lacks the four hardcoded brand anchors. DOM tests target anchors by `href` instead. Worth keeping in mind when writing new selectors.
+- The 8 files in `src/assets/services/` form 4 byte-identical cross-service pairs: `operations-card.jpg ≡ finance-modal.jpg`, `operations-modal.jpeg ≡ hr-card.jpeg`, `digital-card.jpg ≡ hr-modal.jpg`, `digital-modal.jpg ≡ finance-card.jpg`. Webflow's partial used one image per service (card src == modal src); whoever populated the local assets duplicated four files under wrong names. Phase 11 sidesteps this by using `cardImage` in both slots; `modalImage`/`modalImageAlt` in the content schema is now unused at render time. Content cleanup (replace mislabeled files with truly distinct images and either drop `modalImage` from schema or have it default to `cardImage`) is a follow-up — could be done as part of Phase 12.5 (services + team modals split) or Phase 15 (repo hygiene).
+- The `services-tabs.html` partial contains both the service tabs *and* the team-member modals. Phase 11's `applyTeamModalHeadshots` fix demonstrates how fragile the cross-section regex coupling is. Phase 12.5 will split this monolith.
