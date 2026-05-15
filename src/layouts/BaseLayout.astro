@@ -3,6 +3,7 @@ import { analytics, site, vendor } from '../data/site';
 import { rootPath } from '../utils/rootPath';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import inlineGlobals from '../styles/inline-globals.css?raw';
+import staticOverrides from '../styles/miri-static-overrides.css?raw';
 
 interface Props {
   title: string;
@@ -54,7 +55,6 @@ const canonical = new URL(canonicalPath, site.url).href;
       <meta content={analytics.googleSiteVerification} name="google-site-verification" />
     ) : null}
     <link href={rootPath(vendor.webflowSharedCss)} rel="stylesheet" type="text/css" />
-    <link href={rootPath(vendor.overridesCss)} rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" />
     <script src={vendor.webfont} type="text/javascript" is:inline></script>
@@ -79,6 +79,7 @@ const canonical = new URL(canonicalPath, site.url).href;
     <div class="page-wrapper">
       <div class="global-styles w-embed">
         <style is:inline is:global set:html={inlineGlobals}></style>
+        <style is:inline is:global set:html={staticOverrides}></style>
       </div>
       <slot />
     </div>

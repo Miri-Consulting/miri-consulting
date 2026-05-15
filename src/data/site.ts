@@ -42,7 +42,6 @@ export const analytics = {
 
 export const vendor = {
   webflowSharedCss: '/vendor/webflow/css/miri-staging.webflow.shared.47e7c4151.css',
-  overridesCss: '/miri-static-overrides.css',
   jquery: `https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=${site.webflowSiteId}`,
   webfont: 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
   cookieYes: `https://cdn-cookieyes.com/client_data/${analytics.cookieYesClientId}/script.js`,

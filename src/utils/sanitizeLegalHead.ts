@@ -1,5 +1,6 @@
 export function sanitizeLegalHead(html: string): string {
   return html
+    .replace(/<link[^>]*href="[^"]*miri-static-overrides\.css"[^>]*>/gi, '')
     .replace(/<link href="https:\/\/cdn\.prod\.website-files\.com" rel="preconnect"\/>/, '')
     .replace(
       /<script>\s*\(function\(w,d,s,l,i\)[\s\S]*?GTM-N3PHMJQQ'\);\s*<\/script>/,

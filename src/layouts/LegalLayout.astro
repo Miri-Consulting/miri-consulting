@@ -7,6 +7,7 @@ import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
 import { sanitizeLegalHead } from '../utils/sanitizeLegalHead';
 import { site } from '../data/site';
 import inlineGlobals from '../styles/inline-globals.css?raw';
+import staticOverrides from '../styles/miri-static-overrides.css?raw';
 import bodyScripts from '../partials/body-scripts-home.html?raw';
 
 interface Props {
@@ -47,6 +48,7 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
     <div class="page-wrapper">
       <div class="global-styles w-embed">
         <style is:inline is:global set:html={inlineGlobals}></style>
+        <style is:inline is:global set:html={staticOverrides}></style>
       </div>
       <main class="main-wrapper">
         <NavBar />
