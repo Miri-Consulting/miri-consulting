@@ -1,20 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyClientLogoImages } from '../../utils/home/applyClientLogoImages';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import { stripWebflowInteractionIds } from '../../utils/stripWebflowInteractionIds';
-import html from '../../partials/home/client-logo-marquee-mobile.html?raw';
 
 const logos = sortByOrder(await getCollection('clientLogos'));
-const rendered = applyClientLogoImages(
-  stripWebflowInteractionIds(html),
-  logos.map((entry) => ({
-    src: entry.data.logo.src,
-    alt: entry.data.logoAlt,
-    sizeClass: entry.data.sizeClass,
-  })),
-);
 ---
 
-<RawHtml html={rendered} />
+<section class="section_logo3 show-mobile-landscape">
+  <div class="padding-section-small logo">
+    <div class="logo3_component">
+      {[false, true].map((ariaHidden) => (
+        <div class="logo3_list-3" aria-hidden={ariaHidden ? 'true' : undefined} inert={ariaHidden ? '' : undefined}>
+          {logos.map((entry) => {
+            const { logo, logoAlt, sizeClass } = entry.data;
+            const imgClass = sizeClass ? `logo3_logo ${sizeClass}` : 'logo3_logo';
+            return (
+              <div class="logo3_wrapper">
+                <Image src={logo} alt={logoAlt} loading="lazy" class={imgClass} />
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

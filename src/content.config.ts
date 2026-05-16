@@ -89,6 +89,9 @@ const clientLogos = defineCollection({
         .enum(['max-1-75', 'max-2', 'max-2-25', 'max-3', 'osprey'])
         .optional(),
       externalUrl: z.string().url().optional(),
+      brandClass: z
+        .enum(['black-diamond', 'willis', 'greenfield', 'los-alamos'])
+        .optional(),
     }),
 });
 

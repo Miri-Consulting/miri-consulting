@@ -28,11 +28,30 @@ const expectedTestimonialQuoteFragments = [
   'Working with Miri has been one of the best decisions',
 ];
 
-const expectedHardcodedLogos = [
+const expectedExternalLogos = [
   { alt: 'Black Diamond Landscape logo', hrefFragment: 'bdlandscaping' },
   { alt: 'Willis Commercial Landscaping logo', hrefFragment: 'williscommerciallandscaping' },
   { alt: 'Greenfield Capital Partners logo', hrefFragment: 'greenfieldcp' },
   { alt: 'Los Alamos Landscaping logo', hrefFragment: 'losalamoslandscaping' },
+];
+
+const expectedDesktopLogoAlts = [
+  'wj-landscape-logo-full-color-rgb',
+  'Midlands Landscape',
+  'MD Property Services',
+  'GetLogoFileById',
+  'REDWOOD VERT',
+  'Brach Horizontal',
+  'Cutting-Edge-Logo-for-website-PNG',
+  'CleanShot 2025-03-24 at 14.01.09%402x 1',
+  'CleanShot 2025-03-24 at 14.02.06%402x 1',
+  'Midlands Landscape %283%29',
+  'Gillam Lawncare',
+  'GoodEarch Logo %281%29',
+  'Black Diamond Landscape logo',
+  'Willis Commercial Landscaping logo',
+  'Greenfield Capital Partners logo',
+  'Los Alamos Landscaping logo',
 ];
 
 const expectedServices = ['Operations', 'Finance', 'Digital', 'HR'];
@@ -73,12 +92,24 @@ test.describe('home page DOM', () => {
     }
   });
 
-  test('client logo marquee retains the four hardcoded brand anchors', async ({ page }) => {
-    // Phase 11 moves Greenfield into the client-logos collection and drops the
-    // hardcoded <a> wrappers entirely. Update this test in lockstep with that.
-    for (const { alt, hrefFragment } of expectedHardcodedLogos) {
+  test('client logo marquee renders all 16 collection logos in order', async ({ page }) => {
+    // Phase 12.1 made the marquees native components. The desktop marquee is
+    // the second .section_logo3 (the first is the mobile variant rendered for
+    // .show-mobile-landscape only). Each marquee renders two duplicate lists
+    // for the infinite-scroll effect; we inspect the first (visible) list.
+    const desktopList = page.locator('.section_logo3:not(.show-mobile-landscape) .logo3_list').first();
+    const altsInOrder = await desktopList.locator('img').evaluateAll((els) =>
+      els.map((el) => (el as HTMLImageElement).alt),
+    );
+    expect(altsInOrder).toEqual(expectedDesktopLogoAlts);
+  });
+
+  test('client logo marquee external anchors are wired to expected URLs', async ({ page }) => {
+    for (const { alt, hrefFragment } of expectedExternalLogos) {
       const anchor = page.locator(`a[href*="${hrefFragment}"]`).first();
       await expect(anchor).toBeAttached();
+      await expect(anchor).toHaveAttribute('rel', 'noopener');
+      await expect(anchor).toHaveAttribute('target', '_blank');
       await expect(anchor.locator('img')).toHaveAttribute('alt', alt);
     }
   });

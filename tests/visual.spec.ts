@@ -12,9 +12,14 @@ for (const pageInfo of pages) {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) => route.abort());
     await page.goto(pageInfo.path, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
+    // .section_logo3 was masked because the marquee animates infinitely; with
+    // Playwright's `animations: 'disabled'` and the marquee now content-driven
+    // (Phase 12.1), the CSS-keyframe animation pins to the initial frame and
+    // the screenshot is deterministic, so the mask is gone. Spline scene and
+    // CookieYes still mask because they're non-deterministic external state;
+    // testimonials still mask until Phase 12.2 (slider goes native).
     const masks = [
       page.locator('.spline-scene'),
-      page.locator('.section_logo3'),
       page.locator('.testimonial_slider'),
       page.locator('#cookieyes'),
     ];

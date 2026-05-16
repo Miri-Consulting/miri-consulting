@@ -1,20 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyClientLogoImages } from '../../utils/home/applyClientLogoImages';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import { stripWebflowInteractionIds } from '../../utils/stripWebflowInteractionIds';
-import html from '../../partials/home/client-logo-marquee.html?raw';
 
 const logos = sortByOrder(await getCollection('clientLogos'));
-const rendered = applyClientLogoImages(
-  stripWebflowInteractionIds(html),
-  logos.map((entry) => ({
-    src: entry.data.logo.src,
-    alt: entry.data.logoAlt,
-    sizeClass: entry.data.sizeClass,
-  })),
-);
 ---
 
-<RawHtml html={rendered} />
+<section class="section_logo3">
+  <div class="padding-section-small logo">
+    <div class="w-layout-hflex logo-marquee" aria-label="Miri client and partner logos">
+      {[false, true].map((ariaHidden) => (
+        <div
+          class="logo3_list div-block-3-copy logo-marquee-list"
+          aria-hidden={ariaHidden ? 'true' : undefined}
+          inert={ariaHidden ? '' : undefined}
+        >
+          {logos.map((entry) => {
+            const { logo, logoAlt, sizeClass, externalUrl, brandClass } = entry.data;
+            const baseImgClass = ['logo3_logo'];
+            if (sizeClass) baseImgClass.push(sizeClass);
+            if (externalUrl) {
+              const anchorImgClass = [...baseImgClass, 'logo-marquee-logo'];
+              if (brandClass) anchorImgClass.push(`brand-logo-${brandClass}`);
+              return (
+                <a
+                  href={externalUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="logo3_wrapper logo3_external-logo-link"
+                >
+                  <Image src={logo} alt={logoAlt} loading="lazy" class={anchorImgClass.join(' ')} />
+                </a>
+              );
+            }
+            return (
+              <div class="logo3_wrapper">
+                <Image src={logo} alt={logoAlt} loading="lazy" class={baseImgClass.join(' ')} />
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
