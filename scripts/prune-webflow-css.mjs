@@ -1,10 +1,10 @@
 import { PurgeCSS } from 'purgecss';
 import { writeFile, stat } from 'node:fs/promises';
 
-// The pruning is destructive — it overwrites the Webflow shared CSS in place
+// The pruning is destructive — it overwrites public/styles/site.css in place
 // with the curated subset. Re-run after content changes or after a Webflow
 // re-export. To rebuild from scratch, restore the source file from git first.
-const SOURCE_CSS = 'public/vendor/webflow/css/miri-staging.webflow.shared.47e7c4151.css';
+const SOURCE_CSS = 'public/styles/site.css';
 const OUTPUT_CSS = SOURCE_CSS;
 
 // Webflow's runtime JS toggles classes that are not present in static HTML
@@ -43,7 +43,7 @@ const SAFELIST = {
 const result = await new PurgeCSS().purge({
   content: [
     'dist/**/*.html',
-    'public/vendor/webflow/js/*.js',
+    'public/scripts/*.js',
     'public/*.js',
     'src/**/*.astro',
     'src/**/*.html',

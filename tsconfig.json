@@ -7,5 +7,5 @@
     }
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules", "public/vendor", "scripts", "baseline"]
+  "exclude": ["dist", "node_modules", "public/scripts", "scripts", "baseline"]
 }

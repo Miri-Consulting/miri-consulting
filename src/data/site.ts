@@ -4,8 +4,7 @@ export const site = {
   description:
     "Miri is a consulting company that helps landscape, construction, and snow removal companies customize and integrate Aspire, Buildertrend, Quickbooks, and other industry standard softwares. Our Teams specialize in project management, financial forecasting and month-end close, HR onboarding and counseling, and digital design assistance. We work with you directly to strategize solutions for your company's specific needs, and we continue to support you as you implement new systems and grow your business.",
   url: 'https://www.miri-consulting.com',
-  ogImage:
-    'https://www.miri-consulting.com/vendor/webflow/assets/6814fec732b8cad8fad64a0d_Home_Page_1.png',
+  ogImage: 'https://www.miri-consulting.com/media/og-image.png',
   splineScene: 'https://prod.spline.design/g1zcjk-5vLl2eWGi/scene.splinecode',
   splineSceneLocal: '/assets/spline/hero.scene.splinecode',
   joinTeamFormUrl:
@@ -40,12 +39,12 @@ export const analytics = {
 } as const;
 
 export const vendor = {
-  webflowSharedCss: '/vendor/webflow/css/miri-staging.webflow.shared.47e7c4151.css',
-  jquery: `https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=${site.webflowSiteId}`,
+  siteCss: '/styles/site.css',
+  jquery: '/scripts/jquery.min.js',
   webfont: 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
   cookieYes: `https://cdn-cookieyes.com/client_data/${analytics.cookieYesClientId}/script.js`,
   finsweetModal: 'https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js',
-  firstPartyTag: '/vendor/tags/first-party/tvAAsIKEswP0uufI_5zRB4CSZhM',
-  favicon: '/vendor/webflow/assets/655e49bdaf2f0d125f6123cb_favicon.png',
-  webclip: '/vendor/webflow/assets/655e49c25e6e56fce2fee4ae_webclip.png',
+  firstPartyTag: '/tracking/first-party',
+  favicon: '/media/favicon.png',
+  webclip: '/media/webclip.png',
 } as const;

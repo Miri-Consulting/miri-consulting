@@ -3,10 +3,10 @@ import { cta, navLinks } from '../../data/site';
 import { calendlyPopupOnclick } from '../../utils/calendly';
 import { rootPath } from '../../utils/rootPath';
 
-const logoBase = '/vendor/webflow/assets/6525b8dcb0a19bb9e7ccde75_Miri_Horizontal_wht_BG%20%282%29';
+const logoBase = '/media/logo-horizontal-white';
 const logoSrc = rootPath(`${logoBase}.png`);
 const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
-  .map((w) => `${rootPath(`${logoBase}-p-${w}.png`)} ${w}w`)
+  .map((w) => `${rootPath(`${logoBase}-${w}.png`)} ${w}w`)
   .concat(`${logoSrc} 6174w`)
   .join(', ');
 const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
