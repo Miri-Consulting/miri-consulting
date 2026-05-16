@@ -1,6 +1,49 @@
 ---
-import footer from '../../partials/footer.html?raw';
-import RawHtml from '../RawHtml.astro';
+import { site, navLinks } from '../../data/site';
+import { rootPath } from '../../utils/rootPath';
+
+const logoBase = '/vendor/webflow/assets/6525b8dcb0a19bb9e7ccde75_Miri_Horizontal_wht_BG%20%282%29';
+const logoSrc = rootPath(`${logoBase}.png`);
+const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
+  .map((w) => `${rootPath(`${logoBase}-p-${w}.png`)} ${w}w`)
+  .concat(`${logoSrc} 6174w`)
+  .join(', ');
 ---
 
-<RawHtml html={footer} />
+<footer class="footer7_component">
+  <div class="padding-global">
+    <div class="container-large">
+      <div class="padding-bottom padding-medium">
+        <div class="padding-bottom padding-medium">
+          <div class="footer7_top-wrapper">
+            <a href="index.html#header" class="footer7_logo-link w-nav-brand">
+              <img
+                src={logoSrc}
+                loading="lazy"
+                sizes="119px"
+                height="27"
+                alt="Miri Consulting"
+                srcset={logoSrcset}
+              />
+            </a>
+            <div class="w-layout-grid footer7_link-list">
+              {navLinks.map((link) => (
+                <a href={link.href} class="footer7_link">{link.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="line-divider"></div>
+        <div class="padding-top padding-medium">
+          <div class="footer7_bottom-wrapper">
+            <div class="footer7_credit-text">{site.copyright}</div>
+            <div class="w-layout-grid footer7_link-list">
+              <a href="privacy-policy.html" class="footer7_link is-secondary">Privacy Policy</a>
+              <a href="terms-of-service.html" class="footer7_link is-secondary">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
