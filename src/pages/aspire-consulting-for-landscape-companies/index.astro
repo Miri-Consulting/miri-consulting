@@ -1,19 +1,19 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import NavBar from '../components/chrome/NavBar.astro';
-import Footer from '../components/chrome/Footer.astro';
-import HeroHeader from '../components/home/HeroHeader.astro';
-import JsonLdAspireLandscape from '../components/seo/JsonLdAspireLandscape.astro';
-import RawHtml from '../components/RawHtml.astro';
-import { cta, site } from '../data/site';
-import { calendlyPopupOnclick, syncPrimaryCalendlyUrl } from '../utils/calendly';
-import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
-import { rootPath } from '../utils/rootPath';
-import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
-import aspireBody from '../partials/aspire-landscape-landing-body.html?raw';
-import aspireLandingCss from '../styles/aspire-landing.css?raw';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBar from '../../components/chrome/NavBar.astro';
+import Footer from '../../components/chrome/Footer.astro';
+import HeroHeader from '../../components/home/HeroHeader.astro';
+import JsonLdAspireLandscape from '../../components/seo/JsonLdAspireLandscape.astro';
+import RawHtml from '../../components/RawHtml.astro';
+import { cta, site } from '../../data/site';
+import { calendlyPopupOnclick, syncPrimaryCalendlyUrl } from '../../utils/calendly';
+import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
+import { rootPath } from '../../utils/rootPath';
+import bodyScriptsHome from '../../partials/body-scripts-home.html?raw';
+import aspireBody from '../../partials/aspire-landscape-landing-body.html?raw';
+import aspireLandingCss from '../../styles/aspire-landing.css?raw';
 
-const canonicalPath = '/aspire-consulting-for-landscape-companies.html';
+const canonicalPath = '/aspire-consulting-for-landscape-companies';
 const title = 'Aspire Consulting for Landscape Companies | Miri Consulting';
 const description =
   'Miri helps US landscape companies improve Aspire setup, QuickBooks month-end close, job costing, estimating, workflows, reporting, and operations.';

@@ -19,7 +19,11 @@ export default defineConfig({
   base,
   trailingSlash: 'ignore',
   build: {
-    format: 'file',
+    // Emit each page as <slug>/index.html so URLs are extension-less:
+    // /privacy-policy, /terms-of-service, /thank-you, etc. Home stays at /.
+    // 404.astro is a special case Astro keeps at dist/404.html for static
+    // hosts like GitHub Pages that look for that specific filename.
+    format: 'directory',
     assets: '_assets',
   },
   integrations: [sitemap()],
