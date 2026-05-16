@@ -57,41 +57,6 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                   </div>
                   <p class="text-size-medium hero">{subheadline}</p>
                   <div class="margin-top margin-small">
-                    <div class="w-form">
-                      {/* The form is intentional. Its submit handler is
-                         hooked by Webflow's forms.js runtime — when the
-                         Calendly success listener below clicks #submit-form,
-                         Webflow POSTs `name=Captcha&pageId=...&domain=...`
-                         to https://webflow.com/api/v1/form/<webflowSiteId>,
-                         logging the booking as a tracked form submission
-                         in the Webflow dashboard. Then `data-redirect`
-                         takes the visitor to /thank-you. No PII captured
-                         (no fields) — just the conversion event. */}
-                      <form
-                        id="wf-form-Captcha"
-                        name="wf-form-Captcha"
-                        data-name="Captcha"
-                        data-redirect="/thank-you"
-                        method="get"
-                        class="form-2"
-                        data-wf-page-id={site.webflowHomePageId}
-                        {...({ redirect: '/thank-you' } as Record<string, string>)}
-                      >
-                        <input
-                          type="submit"
-                          data-wait="Please wait..."
-                          id="submit-form"
-                          class="w-button"
-                          value="Submit"
-                        />
-                      </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
-                    </div>
                     <div class="button-group is-center">
                       <div class="w-embed w-script">
                         <style is:inline>
@@ -107,12 +72,29 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                           }
                         </style>
                         <script is:inline>
-                          function isCalendlyEvent(e) {
-                            return e.data.event && e.data.event.indexOf('calendly') === 0;
-                          }
+                          // When the visitor completes a Calendly booking, fire a GA4
+                          // conversion event and send them to /thank-you. Previously this
+                          // path went through a hidden Webflow <form> whose only real
+                          // job was POSTing metadata to webflow.com/api/v1/form/<siteId>
+                          // for Webflow-dashboard tracking — but Webflow is being
+                          // retired, so the endpoint goes away. GA4 (already loaded by
+                          // HeadAnalytics) captures the same conversion signal without
+                          // any Webflow dependency. The form was named "Captcha" but
+                          // had no captcha widget; Calendly's own iframe handles its
+                          // bot protection.
                           window.addEventListener('message', function (e) {
-                            if (isCalendlyEvent(e) && e.data.event === 'calendly.event_scheduled') {
-                              window.document.getElementById('submit-form').click();
+                            if (
+                              e.data &&
+                              typeof e.data.event === 'string' &&
+                              e.data.event === 'calendly.event_scheduled'
+                            ) {
+                              if (typeof window.gtag === 'function') {
+                                window.gtag('event', 'calendly_booking', {
+                                  event_category: 'conversion',
+                                  event_label: 'hero',
+                                });
+                              }
+                              window.location.href = '/thank-you';
                             }
                           });
                         </script>
