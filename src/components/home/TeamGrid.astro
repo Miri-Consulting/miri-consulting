@@ -1,20 +1,66 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyTeamCards } from '../../utils/home/applyTeamCards';
-import { applyTeamGridOrder } from '../../utils/home/applyTeamGridOrder';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import html from '../../partials/home/team-grid.html?raw';
+import { site } from '../../data/site';
 
 const team = sortByOrder(await getCollection('team'));
-const members = team.map((entry) => ({
-  name: entry.data.name,
-  roleLabel: entry.data.roleLabel,
-}));
-const rendered = applyTeamCards(
-  applyTeamGridOrder(html, members),
-  members,
-);
+const arrowIconSrc =
+  '/vendor/webflow/assets/67e1e3bb1b01a5f1de8c64f3_arrow-up-right.svg';
+const joinTeamUrl = site.joinTeamFormUrl;
 ---
 
-<RawHtml html={rendered} />
+<section class="section_team8">
+  <div id="people" class="anchor industries"></div>
+  <div class="padding-global">
+    <div class="container-medium">
+      <div class="padding-section-small">
+        <div class="team8_component">
+          <div class="margin-bottom margin-xlarge">
+            <div class="text-align-center">
+              <div class="margin-bottom margin-xxsmall">
+                <h2 class="heading-style-h2">The People Behind Miri</h2>
+              </div>
+              <div class="w-layout-vflex margin-bottom margin-xsmall">
+                <p class="text-size-medium text-color-grey">We're always looking for great talent.</p>
+              </div>
+              <a href={joinTeamUrl} class="button-2 is-secondary w-inline-block">
+                <div>Join our team</div>
+              </a>
+            </div>
+          </div>
+          <div class="team8_list-wrapper">
+            <div class="w-layout-grid team8_list">
+              {team.map((entry) => {
+                const openId = entry.data.legacyModalId.replace(/^modal/, 'open');
+                return (
+                  <a
+                    fs-modal-element={openId}
+                    href="index.html#"
+                    class="team8_item w-inline-block"
+                  >
+                    <div class="team8_image-wrapper">
+                      <Image
+                        src={entry.data.headshot}
+                        alt={entry.data.headshotAlt}
+                        loading="lazy"
+                        class="team8_image"
+                      />
+                    </div>
+                    <div class="team8_title-wrapper">
+                      <div class="w-layout-vflex margin-bottom margin-tiny">
+                        <div class="text-size-small text-weight-semibold">{entry.data.name}</div>
+                      </div>
+                      <div class="text-size-tiny">{entry.data.roleLabel}</div>
+                    </div>
+                    <img loading="lazy" height="Auto" alt="" src={arrowIconSrc} class="icon-1x1-medium" />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
