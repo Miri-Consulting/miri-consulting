@@ -3,6 +3,23 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const BASE_URL = process.env.BASE_URL ?? 'https://www.miri-consulting.com';
+
+/**
+ * Join an absolute path onto BASE_URL without losing BASE_URL's own pathname.
+ *
+ * `new URL('/foo', 'https://host.com/sub')` returns `https://host.com/foo` —
+ * the leading slash makes the path *root-relative*, clobbering the `/sub`
+ * subpath. That ate one capture run when BASE_URL was set to the GitHub
+ * Pages project URL `https://keyneom.github.io/miri-consulting-site` and
+ * every page wound up scraping the bare `https://keyneom.github.io/`
+ * (someone else's blog). Normalise the base to end with `/` and strip the
+ * leading `/` from the path so the join is purely additive.
+ */
+function joinUrl(base, path) {
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+  const normalizedPath = path === '/' ? '' : path.replace(/^\//, '');
+  return new URL(normalizedPath, normalizedBase).toString();
+}
 const VIEWPORTS = [
   { name: '375', width: 375, height: 800 },
   { name: '640', width: 640, height: 480 },
@@ -30,9 +47,14 @@ const context = await browser.newContext();
 
 for (const pageInfo of PAGES) {
   const page = await context.newPage();
-  await page.goto(new URL(pageInfo.path, BASE_URL).toString(), {
-    waitUntil: 'networkidle',
-  });
+  const url = joinUrl(BASE_URL, pageInfo.path);
+  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  const status = response?.status() ?? 0;
+  if (status >= 400) {
+    console.warn(`Skipping ${pageInfo.name}: ${url} returned HTTP ${status}`);
+    await page.close();
+    continue;
+  }
   await page.evaluate(() => document.fonts.ready);
 
   const html = await page.evaluate(() => document.documentElement.outerHTML);
