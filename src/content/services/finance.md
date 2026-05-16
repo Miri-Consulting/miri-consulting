@@ -4,11 +4,11 @@ slug: "finance"
 order: 2
 cardHeading: "Trust Your Numbers"
 cardBody: "We turn your financial data into a reliable decision-making tool. From day-to-day bookkeeping to long-term planning, we help you stay organized, eliminate discrepancies, and build confidence in your numbers."
-cardImage: "../../assets/services/finance-card.jpg"
+cardImage: "../../assets/services/finance.jpg"
 cardImageAlt: "Trust Your Numbers"
 modalHeading: "Comprehensive Financial Management"
 modalSubheading: "We turn your financial data into a reliable decision-making tool. From day-to-day bookkeeping to long-term planning, we help you stay organized, eliminate discrepancies, and build confidence in your numbers."
-modalImage: "../../assets/services/finance-modal.jpg"
+modalImage: "../../assets/services/finance.jpg"
 modalImageAlt: "Comprehensive Financial Management"
 subServices:
   - title: "Receipt Entry & Bookkeeping"

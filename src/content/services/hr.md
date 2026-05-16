@@ -4,11 +4,11 @@ slug: "hr"
 order: 4
 cardHeading: "Build Stronger Teams"
 cardBody: "We help businesses design and implement HR systems that support every stage of the employee lifecycle. From recruiting to performance reviews and succession planning, we create practical processes that align with your culture, tools, and team structure."
-cardImage: "../../assets/services/hr-card.jpeg"
+cardImage: "../../assets/services/hr.jpg"
 cardImageAlt: "Build Stronger Teams"
 modalHeading: "Human Resource Consulting"
 modalSubheading: "We help businesses design and implement HR systems that support every stage of the employee lifecycle. From recruiting to performance reviews and succession planning, we create practical processes that align with your culture, tools, and team structure."
-modalImage: "../../assets/services/hr-modal.jpg"
+modalImage: "../../assets/services/hr.jpg"
 modalImageAlt: "Human Resource Consulting"
 subServices:
   - title: "HR Leadership Consulting"

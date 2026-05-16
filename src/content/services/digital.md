@@ -4,11 +4,11 @@ slug: "digital"
 order: 3
 cardHeading: "Elevate Your Presence"
 cardBody: "We design practical, integrated digital solutions that support real business operations. From software systems to branded tools, everything we build is focused on improving efficiency, clarity, and client communication."
-cardImage: "../../assets/services/digital-card.jpg"
+cardImage: "../../assets/services/digital.jpg"
 cardImageAlt: "Elevate Your Presence"
 modalHeading: "Digital Design & Solutions Architecture"
 modalSubheading: "We design practical, integrated digital solutions that support real business operations. From software systems to branded tools, everything we build is focused on improving efficiency, clarity, and client communication."
-modalImage: "../../assets/services/digital-modal.jpg"
+modalImage: "../../assets/services/digital.jpg"
 modalImageAlt: "Digital Design & Solutions Architecture"
 subServices:
   - title: "Custom Software Integrations"

@@ -4,11 +4,11 @@ slug: "operations"
 order: 1
 cardHeading: "Optimize Your Workflow"
 cardBody: "We help landscape, snow, and construction companies simplify their operations by implementing software, refining processes, and making tools like Aspire and Buildertrend work for their team."
-cardImage: "../../assets/services/operations-card.jpg"
+cardImage: "../../assets/services/operations.jpeg"
 cardImageAlt: "Optimize Your Workflow"
 modalHeading: "Operations Management Consulting"
 modalSubheading: "We help landscape, snow, and construction companies simplify their operations by implementing software, refining processes, and making tools like Aspire and Buildertrend work for their team."
-modalImage: "../../assets/services/operations-modal.jpeg"
+modalImage: "../../assets/services/operations.jpeg"
 modalImageAlt: "Operations Management Consulting"
 subServices:
   - title: "Aspire, Buildertrend & Software Configuration"
