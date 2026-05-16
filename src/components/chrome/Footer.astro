@@ -16,7 +16,11 @@ const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
       <div class="padding-bottom padding-medium">
         <div class="padding-bottom padding-medium">
           <div class="footer7_top-wrapper">
-            <a href="index.html#header" class="footer7_logo-link w-nav-brand">
+            <a
+              href="index.html#header"
+              id="w-node-_01b1c673-753b-abc2-cf46-8525606d7233-606d722d"
+              class="footer7_logo-link w-nav-brand"
+            >
               <img
                 src={logoSrc}
                 loading="lazy"
@@ -27,9 +31,17 @@ const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
               />
             </a>
             <div class="w-layout-grid footer7_link-list">
-              {navLinks.map((link) => (
-                <a href={link.href} class="footer7_link">{link.label}</a>
-              ))}
+              {navLinks.map((link) => {
+                const id =
+                  link.label === 'Industries'
+                    ? 'w-node-_1d28ec18-008b-4954-b402-e9a7d99edeb7-606d722d'
+                    : link.label === 'Testimonials'
+                      ? 'w-node-bd8d8176-1f60-eb7c-c62d-081e0b0578ce-606d722d'
+                      : undefined;
+                return (
+                  <a href={link.href} id={id} class="footer7_link">{link.label}</a>
+                );
+              })}
             </div>
           </div>
         </div>

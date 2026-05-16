@@ -15,6 +15,48 @@ function bioParagraphs(bio: string): string[] {
     .map((p) => p.trim())
     .filter(Boolean);
 }
+
+// Webflow auto-generated grid-positioning IDs from the original
+// services-tabs.html partial. The shared Webflow CSS positions the
+// layout494 tabs menu and the first (active) tab link via these IDs.
+// Without them the modal layout collapses. Daniel Shoap and Benjamin
+// Harwood were added after the Webflow export was last generated, so
+// they don't have IDs — their modals render without these positioning
+// hooks, which is faithful to the prod partial.
+const TEAM_LAYOUT_IDS: Record<string, { tabsMenu: string; firstTabLink: string }> = {
+  'ramel-sanchez': {
+    tabsMenu: 'w-node-_99cd9c2c-b80f-6a8d-4908-7b317a73db7f-f960df05',
+    firstTabLink: 'w-node-_99cd9c2c-b80f-6a8d-4908-7b317a73db80-f960df05',
+  },
+  'keenan-baird': {
+    tabsMenu: 'w-node-_73b275c0-bbff-23f2-c4f8-17fe1f84e046-f960df05',
+    firstTabLink: 'w-node-_73b275c0-bbff-23f2-c4f8-17fe1f84e047-f960df05',
+  },
+  'amber-shoap': {
+    tabsMenu: 'w-node-_14ee13ce-c92e-a586-0773-42391e38c8f8-f960df05',
+    firstTabLink: 'w-node-_14ee13ce-c92e-a586-0773-42391e38c8f9-f960df05',
+  },
+  'nauman-nadeem': {
+    tabsMenu: 'w-node-d70b1cf6-d9a1-0218-a092-ce0e2e261ca3-f960df05',
+    firstTabLink: 'w-node-d70b1cf6-d9a1-0218-a092-ce0e2e261ca4-f960df05',
+  },
+  'kelvin-man': {
+    tabsMenu: 'w-node-_5b981740-4713-0b04-6a22-8f59449966aa-f960df05',
+    firstTabLink: 'w-node-_5b981740-4713-0b04-6a22-8f59449966ab-f960df05',
+  },
+  'mika-sanchez': {
+    tabsMenu: 'w-node-_693166f9-f291-4c71-873e-d9929202f862-f960df05',
+    firstTabLink: 'w-node-_693166f9-f291-4c71-873e-d9929202f863-f960df05',
+  },
+  'rachel-garner': {
+    tabsMenu: 'w-node-_5ed95566-4690-12db-7786-d0c852eb5fcb-f960df05',
+    firstTabLink: 'w-node-_5ed95566-4690-12db-7786-d0c852eb5fcc-f960df05',
+  },
+  'arianne-rabbitt': {
+    tabsMenu: 'w-node-f5d25488-3e32-0266-cccc-7fc4ceb34a73-f960df05',
+    firstTabLink: 'w-node-f5d25488-3e32-0266-cccc-7fc4ceb34a74-f960df05',
+  },
+};
 ---
 
 {team.map((entry) => {
@@ -24,6 +66,7 @@ function bioParagraphs(bio: string): string[] {
   const functionalIsDefault = entry.data.defaultTab === 'functional';
   const functionalActive = functionalIsDefault;
   const industryActive = !functionalIsDefault;
+  const layoutIds = TEAM_LAYOUT_IDS[entry.data.slug];
   return (
     <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
       <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
@@ -64,10 +107,11 @@ function bioParagraphs(bio: string): string[] {
               data-easing="ease"
               class="layout494_tabs w-tabs"
             >
-              <div class="layout494_tabs-menu w-tab-menu">
+              <div id={layoutIds?.tabsMenu} class="layout494_tabs-menu w-tab-menu">
                 <a
                   data-w-tab="Tab 1"
                   ms-code-onhover="click"
+                  id={functionalActive ? layoutIds?.firstTabLink : undefined}
                   class={`layout494_tab-link w-inline-block w-tab-link${functionalActive ? ' w--current' : ''}`}
                 >
                   <h3 class="heading-style-h6">Functional Expertise</h3>
@@ -80,6 +124,7 @@ function bioParagraphs(bio: string): string[] {
                 <a
                   data-w-tab="Tab 2"
                   ms-code-onhover="click"
+                  id={industryActive ? layoutIds?.firstTabLink : undefined}
                   class={`layout494_tab-link w-inline-block w-tab-link${industryActive ? ' w--current' : ''}`}
                 >
                   <h3 class="heading-style-h6">Industry Experience</h3>

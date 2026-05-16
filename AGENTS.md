@@ -80,6 +80,12 @@ npm run test:visual:production
 npm run test:visual:update
 ```
 
+**Before updating baselines, verify the new render matches prod.** A baseline update silently locks in whatever's currently rendered — if a refactor accidentally drops a Webflow grid ID or shifts layout, "refresh baselines" hides the regression. Discipline:
+
+1. Run `npm run test:visual:production` first. This runs the suite against `https://www.miri-consulting.com` using the *currently committed* baselines as expectations. If the suite passes, the committed baselines reflect prod and any local diff must be intentional.
+2. If a baseline diff arises during normal local work, capture local + prod screenshots side-by-side (e.g. open both URLs at the same viewport in a headless browser and screenshot both with `fullPage: true`) and confirm they're the same shape before running `test:visual:update`.
+3. The Webflow shared CSS positions many grid children by ID (~166 `#w-node-...` rules). Native Astro rewrites that drop those IDs collapse layout to a 1-column fallback. When porting a partial to a native component, preserve any `id="w-node-..."` attribute that the partial had — those are load-bearing for layout, not decorative.
+
 ## Deploy
 
 Pushes to `master` run `.github/workflows/deploy.yml`. After the first successful deploy, set GitHub Pages source to **GitHub Actions** in repository settings.

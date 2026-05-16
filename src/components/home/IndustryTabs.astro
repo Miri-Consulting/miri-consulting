@@ -39,7 +39,10 @@ const industries = sortByOrder(await getCollection('industries'));
                 data-easing="ease"
                 class="layout493_tabs w-tabs"
               >
-                <div class="layout493_tabs-menu w-tab-menu">
+                <div
+                  id="w-node-_5348f082-0c11-b7a5-8b63-7a387345b99c-f960df05"
+                  class="layout493_tabs-menu w-tab-menu"
+                >
                   {industries.map((entry, i) => {
                     const tabIndex = i + 1;
                     const isFirst = i === 0;
@@ -47,6 +50,7 @@ const industries = sortByOrder(await getCollection('industries'));
                       <a
                         data-w-tab={`Tab ${tabIndex}`}
                         ms-code-onhover="click"
+                        id={isFirst ? 'w-node-_5348f082-0c11-b7a5-8b63-7a387345b99d-f960df05' : undefined}
                         class={`layout493_tab-link w-inline-block w-tab-link${isFirst ? ' w--current' : ''}`}
                       >
                         <h3 class="heading-style-h6">{entry.data.tabLabel}</h3>

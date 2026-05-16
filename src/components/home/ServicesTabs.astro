@@ -4,6 +4,36 @@ import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
 
 const services = sortByOrder(await getCollection('services'));
+
+// Webflow auto-generated grid-positioning IDs from the original
+// services-tabs.html partial. The shared Webflow CSS rules are keyed on
+// these specific IDs (e.g. `#w-node-..._4e7d9648-... { grid-area: ... }`),
+// so the modal layout breaks if they're not on the rendered elements.
+const SERVICES_TAB_MENU_ID = 'w-node-_9f029da8-0e02-f3b5-5061-c7de6fea06f0-f960df05';
+const SERVICE_LAYOUT_IDS: Record<
+  string,
+  { contentTop: string; tabsMenu: string; firstTabLink?: string }
+> = {
+  operations: {
+    contentTop: 'w-node-b213a889-87f7-799e-0213-ce76cc48abb3-f960df05',
+    tabsMenu: 'w-node-b213a889-87f7-799e-0213-ce76cc48abba-f960df05',
+  },
+  finance: {
+    contentTop: 'w-node-_4e7d9648-627f-8a6e-8553-79054c6acf29-f960df05',
+    tabsMenu: 'w-node-_4e7d9648-627f-8a6e-8553-79054c6acf30-f960df05',
+    firstTabLink: 'w-node-_4e7d9648-627f-8a6e-8553-79054c6acf31-f960df05',
+  },
+  digital: {
+    contentTop: 'w-node-_1bb9774c-6bdf-da35-81c4-8420db444470-f960df05',
+    tabsMenu: 'w-node-_1bb9774c-6bdf-da35-81c4-8420db444477-f960df05',
+    firstTabLink: 'w-node-_1bb9774c-6bdf-da35-81c4-8420db444478-f960df05',
+  },
+  hr: {
+    contentTop: 'w-node-_9d6a1ab8-7f22-e685-a085-f4b0559bb487-f960df05',
+    tabsMenu: 'w-node-_9d6a1ab8-7f22-e685-a085-f4b0559bb48e-f960df05',
+    firstTabLink: 'w-node-_9d6a1ab8-7f22-e685-a085-f4b0559bb48f-f960df05',
+  },
+};
 ---
 
 <section class="section_layout507">
@@ -29,7 +59,7 @@ const services = sortByOrder(await getCollection('services'));
             data-easing="ease"
             class="layout507_tabs w-tabs"
           >
-            <div class="layout507_tabs-menu w-tab-menu">
+            <div id={SERVICES_TAB_MENU_ID} class="layout507_tabs-menu w-tab-menu">
               {services.map((entry, i) => (
                 <a
                   data-w-tab={`Tab ${i + 1}`}
@@ -91,6 +121,7 @@ const services = sortByOrder(await getCollection('services'));
 {services.map((entry) => {
   const modalAttr = entry.data.legacyModalId;
   const closeAttr = modalAttr.replace(/^modal/, 'close');
+  const layoutIds = SERVICE_LAYOUT_IDS[entry.data.slug];
   return (
     <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
       <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
@@ -106,7 +137,7 @@ const services = sortByOrder(await getCollection('services'));
         </div>
       </div>
       <div class="fs_modal-1_wrapper-2 people">
-        <div class="layout507_card-content-top">
+        <div id={layoutIds?.contentTop} class="layout507_card-content-top">
           <div class="margin-bottom margin-small">
             <h2 class="heading-style-h3">{entry.data.modalHeading}</h2>
           </div>
@@ -120,11 +151,12 @@ const services = sortByOrder(await getCollection('services'));
             data-easing="ease"
             class="layout493_tabs w-tabs"
           >
-            <div class="layout493_tabs-menu w-tab-menu">
+            <div id={layoutIds?.tabsMenu} class="layout493_tabs-menu w-tab-menu">
               {entry.data.subServices.map((sub, i) => (
                 <a
                   data-w-tab={`Tab ${i + 1}`}
                   ms-code-onhover="click"
+                  id={i === 0 ? layoutIds?.firstTabLink : undefined}
                   class={`layout493_tab-link w-inline-block w-tab-link${i === 0 ? ' w--current' : ''}`}
                 >
                   <h3 class="heading-style-h6">{sub.title}</h3>
