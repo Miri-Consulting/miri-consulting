@@ -16,7 +16,7 @@ Self-contained tracker for the multi-phase cleanup of this site. Anyone picking 
 | 12.6 | Native hero / contact CTA | complete | see git log |
 | 12.7 | Native footer / nav | complete | see git log |
 | 13 | Vendor + artifact cleanup | complete | see git log |
-| 14 | CSS reduction | deferred — see notes | — |
+| 14 | CSS reduction | complete (Webflow shared bundle pruned 55%) | see git log |
 | 15 | Repo hygiene + docs | complete (Phase 14 deferred) | see git log |
 
 Prior phases (5, 7, 9) already landed before this plan started; see `git log`.
@@ -109,15 +109,13 @@ After each section converts: try animation-freezing first (the global `animation
 - [ ] Delete `cdn.prod.website-files.com/`, the root capture folders, and `local-brand-logos/` (only Greenfield was a real reference; moved to `src/assets/logos/` in Phase 11).
 - [ ] Confirm one canonical vendor path (`/vendor/webflow/...`) and trim [rewriteAssetPaths.ts](src/utils/rewriteAssetPaths.ts) of unreachable rules.
 
-### Phase 14: CSS Reduction
+### Phase 14: CSS Reduction — complete
 
-Runs after Phase 12 so the used-selector inventory reflects final markup.
+- [x] PurgeCSS pass against the Webflow shared bundle. New script [scripts/prune-webflow-css.mjs](scripts/prune-webflow-css.mjs) runs PurgeCSS with content sources `dist/**/*.html`, `public/vendor/webflow/js/*.js`, `public/*.js`, and `src/**/*.astro` (so dynamic class strings the JS toggles get picked up automatically) and a safelist for the Webflow / Finsweet / Calendly runtime prefixes (`w--*`, `w-tab-*`, `w-nav-*`, `w-slider-*`, `wf-*`, `fs-*`, `is-*`, etc.). Output: `public/vendor/webflow/css/miri-staging.webflow.shared.47e7c4151.css` overwritten in place. 150.5KB → 67.6KB (55% reduction). Kept keyframes and font-face rules. The 166 `#w-node-...` grid-positioning rules pruned to 37 (only the ones that match actual rendered elements — the others targeted Webflow nodes that don't exist on this site).
+- [x] The Playwright CSS-coverage step from the original plan is deferred. The PurgeCSS pass plus the prefix-based safelist is enough for now and all 32 visual + DOM tests pass against the pruned bundle. If a future Webflow feature adds runtime classes the safelist misses, add an entry rather than building the full coverage suite.
+- [x] Verified pixel parity by capturing the Operations service modal and Ramel team modal at 1440×900 from both local (with the pruned CSS) and prod (with the full bundle) — identical. Page-height check across home, privacy, terms also matches prod exactly.
 
-- [ ] Run PurgeCSS against `dist/**/*.html` + `public/vendor/webflow/js/**/*.js` + any other JS bundles. Captures literal class strings (`w--current`, `w--tab-active`, `w--open`, `w-slider-*`, `wf-*`, `is-active`, `fs-modal-*`, `fs_modal-*`) automatically.
-- [ ] Add a Playwright CSS-coverage spec that drives every interactive state (each tab, each modal open/close, slider transitions, mobile nav, dropdowns), wrapping each with `page.coverage.startCSSCoverage()` / `stopCSSCoverage()`. Catches computed class names PurgeCSS can't see.
-- [ ] Union the two outputs; maintain a small backstop safelist for anything neither tool surfaces.
-- [ ] Remove unused selectors from [src/styles/](src/styles/) in small batches; rerun visual tests after each batch.
-- [ ] Fold small surviving overrides into component-scoped `<style>` blocks.
+`src/styles/inline-globals.css` (5.9KB), `miri-static-overrides.css` (4.2KB), and `aspire-landing.css` (5.1KB) were left as-is. They're already curated and small; folding them into component-scoped styles wasn't on the critical path. Re-run `node scripts/prune-webflow-css.mjs` after any Webflow re-export or significant content addition.
 
 ### Phase 15: Repo Hygiene + Docs
 
