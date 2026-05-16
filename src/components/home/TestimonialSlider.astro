@@ -1,21 +1,96 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyTestimonialSlides } from '../../utils/home/applyTestimonialSlides';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import html from '../../partials/home/testimonial-slider.html?raw';
 
 const testimonials = sortByOrder(await getCollection('testimonials'));
-const rendered = applyTestimonialSlides(
-  html,
-  testimonials.map((entry) => ({
-    quote: entry.data.quote,
-    name: entry.data.name,
-    title: entry.data.title,
-    portraitSrc: entry.data.portrait.src,
-    portraitAlt: entry.data.portraitAlt,
-  })),
-);
 ---
 
-<RawHtml html={rendered} />
+<section class="section_testimonial23">
+  <div id="testimonials" class="anchor testimonials"></div>
+  <div class="padding-global">
+    <div class="container-large">
+      <div class="padding-section-small">
+        <div class="testimonial23_component">
+          <div class="margin-bottom margin-medium">
+            <div class="text-align-center">
+              <div class="margin-bottom margin-xxsmall">
+                <h2 class="heading-style-h2 text-color-black">Customer Testimonials</h2>
+              </div>
+              <p class="text-size-medium text-color-grey">See what clients are saying about Miri</p>
+            </div>
+          </div>
+        </div>
+        <div
+          data-delay="4000"
+          data-animation="slide"
+          class="testimonial23_slider w-slider"
+          data-autoplay="false"
+          data-easing="ease"
+          data-hide-arrows="false"
+          data-disable-swipe="false"
+          data-autoplay-limit="0"
+          data-nav-spacing="3"
+          data-duration="500"
+          data-infinite="true"
+        >
+          <div class="testimonial23_mask w-slider-mask">
+            {testimonials.map((entry) => {
+              const { quote, name, title, color, portrait, portraitAlt } = entry.data;
+              return (
+                <div class="testimonial23_slide w-slide">
+                  <div class={`testimonial23_card ${color}`}>
+                    <div class="testimonial23_content-top">
+                      <div class="w-layout-vflex">
+                        <div class="margin-bottom margin-large">
+                          <div class="testimonial4_rating-wrapper">
+                            {Array.from({ length: 5 }).map(() => (
+                              <div class="testimonial4_rating-icon">
+                                <div class="icon-embed-xsmall text-color-white w-embed">
+                                  <svg width="100%" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.16379 0.551109C8.47316 -0.183704 9.52684 -0.183703 9.83621 0.551111L11.6621 4.88811C11.7926 5.19789 12.0875 5.40955 12.426 5.43636L17.1654 5.81173C17.9684 5.87533 18.294 6.86532 17.6822 7.38306L14.0713 10.4388C13.8134 10.6571 13.7007 10.9996 13.7795 11.3259L14.8827 15.8949C15.0696 16.669 14.2172 17.2809 13.5297 16.8661L9.47208 14.4176C9.18225 14.2427 8.81775 14.2427 8.52793 14.4176L4.47029 16.8661C3.7828 17.2809 2.93036 16.669 3.11727 15.8949L4.22048 11.3259C4.29928 10.9996 4.18664 10.6571 3.92873 10.4388L0.317756 7.38306C-0.294046 6.86532 0.0315611 5.87533 0.834562 5.81173L5.57402 5.43636C5.91255 5.40955 6.20744 5.19789 6.33786 4.88811L8.16379 0.551109Z" fill="currentColor" />
+                                  </svg>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div class="text-size-medium">{quote}</div>
+                      </div>
+                      <div class="margin-top margin-small">
+                        <div class="testimonial23_client">
+                          <div class="testimonial23_client-image-wrapper">
+                            <Image src={portrait} alt={portraitAlt} loading="lazy" class="testimonial23_customer-image" />
+                          </div>
+                          <div class="testimonial23_client-info">
+                            <div class="text-weight-semibold"><strong>{name}</strong></div>
+                            <div>{title}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div class="slider-arrow hide-mobile-landscape is-centre-previous w-slider-arrow-left">
+            <div class="slider-arrow-icon_default w-embed">
+              <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.31066 8.75001L9.03033 14.4697L7.96967 15.5303L0.439339 8.00001L7.96967 0.469676L9.03033 1.53034L3.31066 7.25001L15.5 7.25L15.5 8.75L3.31066 8.75001Z" fill="currentColor" />
+              </svg>
+            </div>
+          </div>
+          <div class="slider-arrow is-centre-next hide-mobile-landscape w-slider-arrow-right">
+            <div class="slider-arrow-icon_default w-embed">
+              <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6893 7.25L6.96967 1.53033L8.03033 0.469666L15.5607 8L8.03033 15.5303L6.96967 14.4697L12.6893 8.75H0.5V7.25H12.6893Z" fill="currentColor" />
+              </svg>
+            </div>
+          </div>
+          <div class="testimonial23_slide-nav w-slider-nav w-slider-nav-invert w-round"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

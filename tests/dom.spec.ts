@@ -82,13 +82,27 @@ test.describe('home page DOM', () => {
     expect(alts).toEqual(expectedTeam);
   });
 
-  test('each testimonial collection entry renders at least once', async ({ page }) => {
-    const slider = page.locator('.section_testimonial23');
-    for (const name of expectedTestimonialNames) {
-      await expect(slider.getByText(name).first()).toBeVisible();
-    }
+  test('testimonial slider renders one slide per collection entry in order', async ({ page }) => {
+    // Phase 12.2 made the slider native. One slide per testimonial (was 10 in
+    // the partial via apply-util duplication). data-autoplay="false" keeps
+    // slide 1 visible by default.
+    const slides = page.locator('.section_testimonial23 .testimonial23_slide');
+    await expect(slides).toHaveCount(expectedTestimonialNames.length);
+    const renderedNames = await slides
+      .locator('.testimonial23_client-info strong')
+      .allTextContents();
+    expect(renderedNames.map((s) => s.trim())).toEqual(expectedTestimonialNames);
+    // Color variants must match each entry's `color` field.
+    const cards = page.locator('.section_testimonial23 .testimonial23_card');
+    const cardClassLists = await cards.evaluateAll((els) =>
+      els.map((el) => el.className.replace('testimonial23_card', '').trim()),
+    );
+    expect(cardClassLists).toEqual(['light-blue', 'blue', 'orange', 'orange', 'light-blue', 'blue']);
+    // First testimonial's quote fragment present.
     for (const fragment of expectedTestimonialQuoteFragments) {
-      await expect(slider.getByText(fragment, { exact: false }).first()).toBeVisible();
+      await expect(
+        page.locator('.section_testimonial23').getByText(fragment, { exact: false }).first(),
+      ).toBeVisible();
     }
   });
 

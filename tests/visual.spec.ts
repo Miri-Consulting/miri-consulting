@@ -12,17 +12,13 @@ for (const pageInfo of pages) {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) => route.abort());
     await page.goto(pageInfo.path, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
-    // .section_logo3 was masked because the marquee animates infinitely; with
-    // Playwright's `animations: 'disabled'` and the marquee now content-driven
-    // (Phase 12.1), the CSS-keyframe animation pins to the initial frame and
-    // the screenshot is deterministic, so the mask is gone. Spline scene and
-    // CookieYes still mask because they're non-deterministic external state;
-    // testimonials still mask until Phase 12.2 (slider goes native).
-    const masks = [
-      page.locator('.spline-scene'),
-      page.locator('.testimonial_slider'),
-      page.locator('#cookieyes'),
-    ];
+    // .spline-scene and #cookieyes are the only remaining masks. Both involve
+    // non-deterministic external state (3D scene render, third-party cookie
+    // banner). The logo marquee unmasked at Phase 12.1; the testimonial
+    // slider unmasked at Phase 12.2 — Webflow's slider auto-advances when
+    // data-autoplay="true" but our data-autoplay="false" + Playwright's
+    // animations: 'disabled' keeps it on slide 1 deterministically.
+    const masks = [page.locator('.spline-scene'), page.locator('#cookieyes')];
     await expect(page).toHaveScreenshot(`${pageInfo.name}.png`, {
       fullPage: true,
       mask: masks,
