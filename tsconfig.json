@@ -7,18 +7,5 @@
     }
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "public/vendor",
-    "cdn.prod.website-files.com",
-    "scripts",
-    "baseline",
-    "ajax.googleapis.com",
-    "fonts.googleapis.com",
-    "cdn.jsdelivr.net",
-    "assets.calendly.com",
-    "cdn-cookieyes.com",
-    "haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm"
-  ]
+  "exclude": ["dist", "node_modules", "public/vendor", "scripts", "baseline"]
 }

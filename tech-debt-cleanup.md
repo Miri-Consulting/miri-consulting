@@ -15,7 +15,7 @@ Self-contained tracker for the multi-phase cleanup of this site. Anyone picking 
 | 12.5 | Native services + team modals split | complete | see git log |
 | 12.6 | Native hero / contact CTA | complete | see git log |
 | 12.7 | Native footer / nav | complete | see git log |
-| 13 | Vendor + artifact cleanup | not started | — |
+| 13 | Vendor + artifact cleanup | complete | see git log |
 | 14 | CSS reduction | not started | — |
 | 15 | Repo hygiene + docs | not started | — |
 

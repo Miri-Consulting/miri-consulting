@@ -23,9 +23,6 @@ function applyDeployBasePrefix(html: string): string {
 export function rewriteAssetPaths(html: string): string {
   return applyDeployBasePrefix(
     html
-      .replaceAll('local-brand-logos/', '/assets/logos/local/')
-      .replaceAll('assets/team/', '/assets/team/')
-      .replaceAll('assets/testimonials/', '/assets/testimonials/')
       .replaceAll(`${webflowSitePath}css/`, '/vendor/webflow/css/')
       .replaceAll(`${webflowSitePath}js/`, '/vendor/webflow/js/')
       .replaceAll(webflowSitePath, '/vendor/webflow/assets/')
