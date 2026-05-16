@@ -32,7 +32,6 @@ const services = defineCollection({
       cardImageAlt: z.string(),
       modalHeading: z.string(),
       modalSubheading: z.string(),
-      modalImage: image(),
       modalImageAlt: z.string(),
       subServices: z
         .array(z.object({ title: z.string(), description: z.string() }))
