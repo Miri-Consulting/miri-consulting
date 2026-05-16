@@ -1,11 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
-import { site } from '../../data/site';
-import RawHtml from '../RawHtml.astro';
-import { syncPrimaryCalendlyUrl } from '../../utils/calendly';
-import { applyHeroContent } from '../../utils/home/applyHeroContent';
-import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
-import html from '../../partials/home/hero-header.html?raw';
+import { site, cta } from '../../data/site';
+import { calendlyPopupOnclick } from '../../utils/calendly';
 
 interface Props {
   headline?: string;
@@ -13,31 +9,129 @@ interface Props {
   learnMoreHref?: string;
 }
 
-const { headline: headlineProp, subheadline: subheadlineProp, learnMoreHref } = Astro.props;
+const {
+  headline: headlineProp,
+  subheadline: subheadlineProp,
+  learnMoreHref = 'index.html#services',
+} = Astro.props;
 
 const hero = await getEntry('home', 'hero');
-const rendered = syncPrimaryCalendlyUrl(
-  applyHeroContent(
-  rewriteAssetPaths(html)
-    .replaceAll(site.splineScene, site.splineSceneLocal)
-    .replaceAll(encodeURIComponent(site.splineScene), site.splineSceneLocal)
-    .replace(
-      /data-animation-type="spline"\s+data-spline-url="([^"]+)"/,
-      'data-miri-spline-url="$1"',
-    ),
-  {
-    headline:
-      headlineProp ??
-      hero?.data.headline ??
-      'Your Vision<br/>Our Expertise',
-    subheadline:
-      subheadlineProp ??
-      hero?.data.subheadline ??
-      'We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.',
-    learnMoreHref,
-  },
-  ),
-);
+const headline = headlineProp ?? hero?.data.headline ?? 'Your Vision<br/>Our Expertise';
+const subheadline =
+  subheadlineProp ??
+  hero?.data.subheadline ??
+  'We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.';
+const splineSrc = site.splineSceneLocal;
+const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
 ---
 
-<RawHtml html={rendered} />
+<header class="section_header26">
+  <div id="header" class="anchor header"></div>
+  <div class="padding-global">
+    <div class="header142_component">
+      <div class="spline-scene" data-miri-spline-url={splineSrc}>
+        <canvas></canvas>
+      </div>
+      <div class="video-overlay-layer"></div>
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="text-align-center">
+              <div class="max-width-small">
+                <div class="header142_content">
+                  <div class="margin-bottom margin-small">
+                    <div class="testimonial4_rating-wrapper hero-header">
+                      {Array.from({ length: 5 }).map(() => (
+                        <div class="testimonial4_rating-icon">
+                          <div class="icon-embed-xsmall text-color-orange w-embed">
+                            <svg width="100%" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M8.16379 0.551109C8.47316 -0.183704 9.52684 -0.183703 9.83621 0.551111L11.6621 4.88811C11.7926 5.19789 12.0875 5.40955 12.426 5.43636L17.1654 5.81173C17.9684 5.87533 18.294 6.86532 17.6822 7.38306L14.0713 10.4388C13.8134 10.6571 13.7007 10.9996 13.7795 11.3259L14.8827 15.8949C15.0696 16.669 14.2172 17.2809 13.5297 16.8661L9.47208 14.4176C9.18225 14.2427 8.81775 14.2427 8.52793 14.4176L4.47029 16.8661C3.7828 17.2809 2.93036 16.669 3.11727 15.8949L4.22048 11.3259C4.29928 10.9996 4.18664 10.6571 3.92873 10.4388L0.317756 7.38306C-0.294046 6.86532 0.0315611 5.87533 0.834562 5.81173L5.57402 5.43636C5.91255 5.40955 6.20744 5.19789 6.33786 4.88811L8.16379 0.551109Z" fill="currentColor" />
+                            </svg>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div class="margin-bottom margin-small">
+                    <h1 class="heading-style-h1 hero" set:html={headline}></h1>
+                  </div>
+                  <p class="text-size-medium hero">{subheadline}</p>
+                  <div class="margin-top margin-small">
+                    <div class="w-form">
+                      <form
+                        id="wf-form-Captcha"
+                        name="wf-form-Captcha"
+                        data-name="Captcha"
+                        data-redirect="/thank-you"
+                        method="get"
+                        class="form-2"
+                        data-wf-page-id={site.webflowHomePageId}
+                        {...({ redirect: '/thank-you' } as Record<string, string>)}
+                      >
+                        <input
+                          type="submit"
+                          data-wait="Please wait..."
+                          id="submit-form"
+                          class="w-button"
+                          value="Submit"
+                        />
+                      </form>
+                      <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                      </div>
+                      <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                      </div>
+                    </div>
+                    <div class="button-group is-center">
+                      <div class="w-embed w-script">
+                        <style is:inline>
+                          .calendly-widget-big {
+                            background-color: #0094ff;
+                            color: white;
+                            padding: 0.75rem 2rem;
+                            text-decoration: none;
+                            border-radius: 2rem;
+                            font-weight: 300;
+                            margin: 12px 0px;
+                            display: block;
+                          }
+                        </style>
+                        <script is:inline>
+                          function isCalendlyEvent(e) {
+                            return e.data.event && e.data.event.indexOf('calendly') === 0;
+                          }
+                          window.addEventListener('message', function (e) {
+                            if (isCalendlyEvent(e) && e.data.event === 'calendly.event_scheduled') {
+                              window.document.getElementById('submit-form').click();
+                            }
+                          });
+                        </script>
+                        <link
+                          href="https://assets.calendly.com/assets/external/widget.css"
+                          rel="stylesheet"
+                        />
+                        <script
+                          is:inline
+                          src="https://assets.calendly.com/assets/external/widget.js"
+                          type="text/javascript"
+                          async
+                        ></script>
+                        <a
+                          href={cta.calendlyUrl}
+                          class="calendly-widget-big"
+                          onclick={calendlyOnclick}>Connect</a
+                        >
+                      </div>
+                      <a href={learnMoreHref} class="button-5 is-secondary w-button">Learn more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
