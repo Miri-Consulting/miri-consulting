@@ -57,32 +57,6 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                   </div>
                   <p class="text-size-medium hero">{subheadline}</p>
                   <div class="margin-top margin-small">
-                    <div class="w-form">
-                      <form
-                        id="wf-form-Captcha"
-                        name="wf-form-Captcha"
-                        data-name="Captcha"
-                        data-redirect="/thank-you"
-                        method="get"
-                        class="form-2"
-                        data-wf-page-id={site.webflowHomePageId}
-                        {...({ redirect: '/thank-you' } as Record<string, string>)}
-                      >
-                        <input
-                          type="submit"
-                          data-wait="Please wait..."
-                          id="submit-form"
-                          class="w-button"
-                          value="Submit"
-                        />
-                      </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
-                    </div>
                     <div class="button-group is-center">
                       <div class="w-embed w-script">
                         <style is:inline>
@@ -98,12 +72,16 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                           }
                         </style>
                         <script is:inline>
-                          function isCalendlyEvent(e) {
-                            return e.data.event && e.data.event.indexOf('calendly') === 0;
-                          }
+                          // When the visitor completes a Calendly booking, send them to /thank-you.
+                          // (Previously this was wired through a no-op Webflow <form> that used
+                          // data-redirect to redirect on submit — the form never posted anywhere.)
                           window.addEventListener('message', function (e) {
-                            if (isCalendlyEvent(e) && e.data.event === 'calendly.event_scheduled') {
-                              window.document.getElementById('submit-form').click();
+                            if (
+                              e.data &&
+                              typeof e.data.event === 'string' &&
+                              e.data.event === 'calendly.event_scheduled'
+                            ) {
+                              window.location.href = '/thank-you';
                             }
                           });
                         </script>

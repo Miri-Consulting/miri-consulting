@@ -29,11 +29,18 @@ const VIEWPORTS = [
   { name: '1920', width: 1920, height: 1080 },
 ];
 
+// `path` is the local route (with the `.html` extension Astro emits when
+// `format: 'file'`). `prodPath` is the URL on miri-consulting.com, which
+// strips the extension (`/privacy-policy` rather than `/privacy-policy.html`).
+// The capture tries `prodPath` first when running against prod and falls
+// back to `path` otherwise.
 const PAGES = [
-  { name: 'home', path: '/' },
-  { name: 'privacy', path: '/privacy-policy.html' },
-  { name: 'terms', path: '/terms-of-service.html' },
+  { name: 'home', path: '/', prodPath: '/' },
+  { name: 'privacy', path: '/privacy-policy.html', prodPath: '/privacy-policy' },
+  { name: 'terms', path: '/terms-of-service.html', prodPath: '/terms-of-service' },
 ];
+
+const isProdCapture = /miri-consulting\.com/.test(BASE_URL);
 
 const root = process.cwd();
 const screenshotDir = path.join(root, 'baseline', 'screenshots');
@@ -47,7 +54,8 @@ const context = await browser.newContext();
 
 for (const pageInfo of PAGES) {
   const page = await context.newPage();
-  const url = joinUrl(BASE_URL, pageInfo.path);
+  const pagePath = isProdCapture ? pageInfo.prodPath : pageInfo.path;
+  const url = joinUrl(BASE_URL, pagePath);
   const response = await page.goto(url, { waitUntil: 'networkidle' });
   const status = response?.status() ?? 0;
   if (status >= 400) {
