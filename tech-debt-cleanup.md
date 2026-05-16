@@ -10,7 +10,7 @@ Self-contained tracker for the multi-phase cleanup of this site. Anyone picking 
 | 11 | Service Images + Safe Dead Code Removal | complete | see git log |
 | 12.1 | Native client logos | complete | see git log |
 | 12.2 | Native testimonials | complete | see git log |
-| 12.3 | Native industry tabs | not started | — |
+| 12.3 | Native industry tabs | complete | see git log |
 | 12.4 | Native team grid | not started | — |
 | 12.5 | Native services + team modals split | not started | — |
 | 12.6 | Native hero / contact CTA | not started | — |
@@ -96,7 +96,7 @@ After each section converts: try animation-freezing first (the global `animation
 
 **Salvaged regression**: the old `client-logo-marquee.html` partial also contained the entire `section_layout402` "How We Work" 3-tab section (Deep Discovery / Collaborative Execution / Long-Term Partnership). Deleting the partial dropped that section from the home page. Extracted it into `src/partials/home/how-we-work.html` + `src/components/home/HowWeWork.astro` and wired into `src/pages/index.astro` between `<ClientLogoMarquee />` and `<IndustryTabs />`. The content is static (no collection backing); converting to fully native is deferred — not on the critical path for Phase 12.
 - [x] 12.2 Testimonials. Native [TestimonialSlider.astro](src/components/home/TestimonialSlider.astro): renders one slide per testimonial collection entry (was 10 in the partial via apply-util duplication; the Webflow slider with `data-infinite="true"` clones as needed). Each slide's color comes from `entry.data.color`. Used `<Image>` for portraits. Deleted `src/partials/home/testimonial-slider.html`, `src/utils/home/applyTestimonialSlides.ts`, and `src/utils/home/applyTestimonialQuotes.ts` (the latter held `testimonialQuotesForSlider`, now unused). Removed `.testimonial_slider` from the visual mask list — Webflow's slider has `data-autoplay="false"` so it stays on slide 1 by default, and Playwright's `animations: 'disabled'` halts any transitions. Refreshed home baselines. Note: testimonial `title` fields in content are all empty strings today (the rendered `<div>` is empty); pre-existing content gap, surfaces now that the masked section is no longer hidden.
-- [ ] 12.3 Industry tabs.
+- [x] 12.3 Industry tabs. Native [IndustryTabs.astro](src/components/home/IndustryTabs.astro): iterates content collection, generating one `<a data-w-tab="Tab N">` per tab in the menu and one `<div data-w-tab="Tab N">` per tab pane. First tab carries `w--current` / `w--tab-active`; subsequent ones unstyled. `imageClass` from content (e.g. `center` for snow-removal) appended to image class. Uses `<Image>`. Deleted `src/partials/home/industry-tabs.html` and `src/utils/home/applyIndustryContent.ts`. Visual baselines unchanged — pixel-equivalent to the old partial+apply combo.
 - [ ] 12.4 Team grid. Expose a typed `team` shape that ServicesTabs's modal section can consume without re-fetching.
 - [ ] 12.5 Services + team modals. Highest-risk step — split the monolithic [services-tabs.html](src/partials/home/services-tabs.html) (62KB, 7-util pipeline) into `ServicesTabs` and a sibling `TeamModals`. Capture extra pre/post DOM and screenshot baselines.
 - [ ] 12.6 Hero / contact CTA. Preserve Calendly wiring and Spline mount.

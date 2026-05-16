@@ -1,20 +1,93 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyIndustryContent } from '../../utils/home/applyIndustryContent';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import html from '../../partials/home/industry-tabs.html?raw';
 
 const industries = sortByOrder(await getCollection('industries'));
-const rendered = applyIndustryContent(
-  html,
-  industries.map((entry) => ({
-    tabLabel: entry.data.tabLabel,
-    body: entry.data.body,
-    imageSrc: entry.data.image.src,
-    imageAlt: entry.data.imageAlt,
-  })),
-);
 ---
 
-<RawHtml html={rendered} />
+<section class="section_layout494">
+  <div id="industries" class="anchor industries"></div>
+  <div class="padding-global">
+    <div class="container-medium">
+      <div class="padding-section-small">
+        <div class="margin-bottom margin-medium">
+          <div class="text-align-center">
+            <div class="margin-bottom margin-xxsmall">
+              <h2 class="heading-style-h2">Who We Work With</h2>
+            </div>
+            <p class="text-size-medium text-color-grey">
+              We partner with owners and operators in the landscape, snow, and construction industries <br />to streamline operations, tighten systems, and turn efficiency into profit.
+            </p>
+          </div>
+        </div>
+        <div class="layout493_component">
+          <div class="layout493_content">
+            <div class="layout493_inner-wrapper">
+              <div class="layout493_header">
+                <div class="margin-bottom margin-small">
+                  <h2 class="heading-style-h3">Service-Based Businesses</h2>
+                </div>
+                <p class="text-size-medium-smallspace text-color-grey">
+                  We refine estimating, project management, and financial processes so businesses can scale with confidence.
+                </p>
+              </div>
+              <div
+                data-duration-in="400"
+                data-duration-out="200"
+                data-current="Tab 1"
+                data-easing="ease"
+                class="layout493_tabs w-tabs"
+              >
+                <div class="layout493_tabs-menu w-tab-menu">
+                  {industries.map((entry, i) => {
+                    const tabIndex = i + 1;
+                    const isFirst = i === 0;
+                    return (
+                      <a
+                        data-w-tab={`Tab ${tabIndex}`}
+                        ms-code-onhover="click"
+                        class={`layout493_tab-link w-inline-block w-tab-link${isFirst ? ' w--current' : ''}`}
+                      >
+                        <h3 class="heading-style-h6">{entry.data.tabLabel}</h3>
+                        <div class="layout493_paragraph">
+                          <div class="margin-top margin-xxsmall">
+                            <p class="text-size-small text-color-grey">{entry.data.body}</p>
+                          </div>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+                <div class="layout493_tabs-content w-tab-content">
+                  {industries.map((entry, i) => {
+                    const tabIndex = i + 1;
+                    const isFirst = i === 0;
+                    const imageClass = entry.data.imageClass
+                      ? `layout493_image ${entry.data.imageClass}`
+                      : 'layout493_image';
+                    return (
+                      <div
+                        data-w-tab={`Tab ${tabIndex}`}
+                        class={`layout493_tab-pane w-tab-pane${isFirst ? ' w--tab-active' : ''}`}
+                      >
+                        <div class="layout493_image-wrapper">
+                          <Image
+                            src={entry.data.image}
+                            alt={entry.data.imageAlt}
+                            loading="lazy"
+                            class={imageClass}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
