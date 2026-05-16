@@ -13,12 +13,11 @@ import bodyScripts from '../partials/body-scripts-home.html?raw';
 interface Props {
   canonicalPath: string;
   bodyClass: string;
-  webflowPageId: string;
   bodyHtml: string;
   headHtml: string;
 }
 
-const { canonicalPath, bodyClass, webflowPageId, bodyHtml, headHtml } = Astro.props;
+const { canonicalPath, bodyClass, bodyHtml, headHtml } = Astro.props;
 const canonical = new URL(canonicalPath, site.url).href;
 const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
   .replace(/<meta content="[^"]*" name="google-site-verification"\/>/, '')
@@ -34,12 +33,7 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
 ---
 
 <!DOCTYPE html>
-<html
-  data-wf-domain="www.miri-consulting.com"
-  data-wf-page={webflowPageId}
-  data-wf-site={site.webflowSiteId}
-  lang="en"
->
+<html lang="en">
   <head>
     <Fragment set:html={head} />
     <HeadAnalytics />

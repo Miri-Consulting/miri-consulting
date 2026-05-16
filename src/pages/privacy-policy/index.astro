@@ -1,6 +1,5 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
-import { site } from '../../data/site';
 import bodyHtml from '../../partials/legal-privacy-body.html?raw';
 import headHtml from '../../partials/legal-privacy-head.html?raw';
 ---
@@ -8,7 +7,6 @@ import headHtml from '../../partials/legal-privacy-head.html?raw';
 <LegalLayout
   canonicalPath="/privacy-policy"
   bodyClass="body-2"
-  webflowPageId={site.webflowPrivacyPageId}
   bodyHtml={bodyHtml}
   headHtml={headHtml}
 />

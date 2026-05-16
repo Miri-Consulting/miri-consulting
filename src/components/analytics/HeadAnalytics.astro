@@ -20,6 +20,13 @@ const clarityId = analytics.clarityProjectId;
   })(window, [gaId], 'google_tags_first_party');
 </script>
 <script async is:inline src={rootPath(vendor.firstPartyTag)}></script>
+<!-- Load the GA4 library directly so window.gtag() actually sends events to
+     google-analytics.com/g/collect. The Webflow-era setup defined window.gtag
+     as a dataLayer push and relied on the GTM container to forward events;
+     loading gtag.js explicitly decouples our analytics from GTM-container
+     configuration so events from `gtag('event', 'calendly_booking', ...)`
+     reach GA4 regardless of whether GTM is wired correctly. -->
+<script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
 <script is:inline define:vars={{ gaId }}>
   window.dataLayer = window.dataLayer || [];
   function gtag() {

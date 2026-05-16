@@ -5,7 +5,7 @@ import Footer from '../../components/chrome/Footer.astro';
 import HeroHeader from '../../components/home/HeroHeader.astro';
 import JsonLdAspireLandscape from '../../components/seo/JsonLdAspireLandscape.astro';
 import RawHtml from '../../components/RawHtml.astro';
-import { cta, site } from '../../data/site';
+import { cta } from '../../data/site';
 import { calendlyPopupOnclick, syncPrimaryCalendlyUrl } from '../../utils/calendly';
 import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
 import { rootPath } from '../../utils/rootPath';
@@ -30,7 +30,6 @@ const bodyHtml = syncPrimaryCalendlyUrl(
   description={description}
   canonicalPath={canonicalPath}
   bodyClass="body"
-  webflowPageId={site.webflowHomePageId}
 >
   <Fragment slot="head">
     <JsonLdAspireLandscape canonicalPath={canonicalPath} />

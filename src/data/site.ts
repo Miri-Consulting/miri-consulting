@@ -9,10 +9,6 @@ export const site = {
   splineSceneLocal: '/assets/spline/hero.scene.splinecode',
   joinTeamFormUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSeBoXrL-grJIQg5PPhon73buKD1aUytT0h6uwXAohbzVDcwlw/viewform?usp=sharing',
-  webflowSiteId: '64f363b4ba0fc1362362824f',
-  webflowHomePageId: '67cf44591eba6d97f960df05',
-  webflowPrivacyPageId: '67f94c40dab2e5c3b96a8efd',
-  webflowTermsPageId: '67f96117bb872567f22b2800',
   copyright: '© 2025 Miri. All rights reserved.',
 } as const;
 
@@ -23,7 +19,6 @@ export const navLinks = [
   { href: 'index.html#services', label: 'Services' },
   { href: 'index.html#people', label: 'People' },
 ] as const;
-
 export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',
   calendlyLegalUrl: 'https://calendly.com/ramel-miri/chat',

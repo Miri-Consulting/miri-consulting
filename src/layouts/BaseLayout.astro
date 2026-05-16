@@ -10,7 +10,6 @@ interface Props {
   description: string;
   canonicalPath: string;
   bodyClass: string;
-  webflowPageId: string;
   includeFinsweet?: boolean;
   robots?: string;
   ogImage?: string | null;
@@ -21,7 +20,6 @@ const {
   description,
   canonicalPath,
   bodyClass,
-  webflowPageId,
   includeFinsweet = false,
   robots = 'index,follow',
   ogImage = site.ogImage,
@@ -31,12 +29,7 @@ const canonical = new URL(canonicalPath, site.url).href;
 ---
 
 <!DOCTYPE html>
-<html
-  data-wf-domain="www.miri-consulting.com"
-  data-wf-page={webflowPageId}
-  data-wf-site={site.webflowSiteId}
-  lang="en"
->
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
