@@ -1,73 +1,160 @@
 ---
 import { getCollection } from 'astro:content';
-import RawHtml from '../RawHtml.astro';
-import { applyServiceModals } from '../../utils/home/applyServiceModals';
-import { applyServiceSubServices } from '../../utils/home/applyServiceSubServices';
-import { applyServiceSummaries } from '../../utils/home/applyServiceSummaries';
-import { applyTeamModalBios } from '../../utils/home/applyTeamModalBios';
-import { applyTeamModalExpertise } from '../../utils/home/applyTeamModalExpertise';
-import { applyTeamModalHeadshots } from '../../utils/home/applyTeamModalHeadshots';
-import { applyTeamModalOrder } from '../../utils/home/applyTeamModalOrder';
-import { addCalendlyPopupToPlainPrimaryAnchors, syncPrimaryCalendlyUrl } from '../../utils/calendly';
+import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
-import html from '../../partials/home/services-tabs.html?raw';
 
 const services = sortByOrder(await getCollection('services'));
-const team = sortByOrder(await getCollection('team'));
-const teamMembers = team.map((entry) => ({
-  name: entry.data.name,
-}));
-const orderedHtml = applyTeamModalOrder(html, teamMembers);
-const pipeline = applyTeamModalHeadshots(
-  applyTeamModalExpertise(
-    applyTeamModalBios(
-      applyServiceSubServices(
-        applyServiceModals(
-          applyServiceSummaries(
-            orderedHtml,
-            services.map((entry) => ({
-              heading: entry.data.cardHeading,
-              body: entry.data.cardBody,
-              cardImage: entry.data.cardImage.src,
-              cardImageAlt: entry.data.cardImageAlt,
-            })),
-          ),
-          services.map((entry) => ({
-            heading: entry.data.modalHeading,
-            subheading: entry.data.modalSubheading,
-            // Modal renders the same image as the card; the Webflow partial
-            // referenced the same Webflow CDN URL for both slots per service.
-            // `modalImage` in content is currently mislabeled (the four card
-            // files and four modal files form byte-identical cross-service
-            // pairs) and is left unused at render time. Schema cleanup to
-            // follow.
-            modalImage: entry.data.cardImage.src,
-            modalImageAlt: entry.data.modalImageAlt,
-          })),
-        ),
-        services.map((entry) => ({
-          modalHeading: entry.data.modalHeading,
-          subServices: entry.data.subServices,
-        })),
-      ),
-      team.map((entry) => ({
-        name: entry.data.name,
-        bio: entry.data.bio,
-      })),
-    ),
-    team.map((entry) => ({
-      name: entry.data.name,
-      functionalExpertise: entry.data.functionalExpertise,
-      industryExperience: entry.data.industryExperience,
-    })),
-  ),
-  team.map((entry) => ({
-    name: entry.data.name,
-    src: entry.data.headshot.src,
-    alt: entry.data.headshotAlt,
-  })),
-);
-const rendered = addCalendlyPopupToPlainPrimaryAnchors(syncPrimaryCalendlyUrl(pipeline));
 ---
 
-<RawHtml html={rendered} />
+<section class="section_layout507">
+  <div id="services" class="anchor services"></div>
+  <div class="padding-global">
+    <div class="container-medium">
+      <div class="padding-section-medium">
+        <div class="layout507_component">
+          <div class="margin-bottom margin-xlarge">
+            <div class="text-align-center">
+              <div class="margin-bottom margin-xxsmall">
+                <h2 class="heading-style-h2">Our Services</h2>
+              </div>
+              <p class="text-size-medium-smallspace text-color-grey">
+                We offer specialized teams to support each of the core pillars of your business.
+              </p>
+            </div>
+          </div>
+          <div
+            data-duration-in="400"
+            data-duration-out="200"
+            data-current="Tab 1"
+            data-easing="ease"
+            class="layout507_tabs w-tabs"
+          >
+            <div class="layout507_tabs-menu w-tab-menu">
+              {services.map((entry, i) => (
+                <a
+                  data-w-tab={`Tab ${i + 1}`}
+                  ms-code-onhover="click"
+                  class={`layout507_tab-link w-inline-block w-tab-link${i === 0 ? ' w--current' : ''}`}
+                >
+                  <h3 class="heading-style-h6">{entry.data.name}</h3>
+                </a>
+              ))}
+            </div>
+            <div class="layout507_tabs-content w-tab-content">
+              {services.map((entry, i) => {
+                const openAttr = entry.data.legacyModalId.replace(/^modal/, 'open');
+                return (
+                  <div
+                    data-w-tab={`Tab ${i + 1}`}
+                    class={`layout507_tab-pane w-tab-pane${i === 0 ? ' w--tab-active' : ''}`}
+                  >
+                    <div class="layout507_card">
+                      <div class="layout507_image-wrapper">
+                        <Image
+                          src={entry.data.cardImage}
+                          alt={entry.data.cardImageAlt}
+                          loading="lazy"
+                          class="layout507_image"
+                        />
+                      </div>
+                      <div class="layout507_card-content center">
+                        <div class="layout507_card-content-top">
+                          <div class="margin-bottom margin-small">
+                            <h3 class="heading-style-h3">{entry.data.cardHeading}</h3>
+                          </div>
+                          <p class="text-size-medium text-color-grey">{entry.data.cardBody}</p>
+                        </div>
+                        <div class="margin-top margin-medium">
+                          <div class="button-group">
+                            <a
+                              fs-modal-element={openAttr}
+                              href="index.html#"
+                              class="button-2 is-black w-inline-block"
+                            >
+                              <div>Learn more</div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{services.map((entry) => {
+  const modalAttr = entry.data.legacyModalId;
+  const closeAttr = modalAttr.replace(/^modal/, 'close');
+  return (
+    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
+      <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
+        <div fs-modal-element={closeAttr} class="fs_modal-1_close-2">
+          <div class="fs_modal-1_close-icon-2 w-embed">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                fill="CurrentColor"
+                d="M14.5,12l9-9c0.7-0.7,0.7-1.8,0-2.5c-0.7-0.7-1.8-0.7-2.5,0l-9,9l-9-9c-0.7-0.7-1.8-0.7-2.5,0 c-0.7,0.7-0.7,1.8,0,2.5l9,9l-9,9c-0.7,0.7-0.7,1.8,0,2.5c0.7,0.7,1.8,0.7,2.5,0l9-9l9,9c0.7,0.7,1.8,0.7,2.5,0 c0.7-0.7,0.7-1.8,0-2.5L14.5,12z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="fs_modal-1_wrapper-2 people">
+        <div class="layout507_card-content-top">
+          <div class="margin-bottom margin-small">
+            <h2 class="heading-style-h3">{entry.data.modalHeading}</h2>
+          </div>
+          <p class="text-size-medium-smallspace text-color-grey">{entry.data.modalSubheading}</p>
+        </div>
+        <div class="layout507_card-content">
+          <div
+            data-duration-in="400"
+            data-duration-out="200"
+            data-current="Tab 1"
+            data-easing="ease"
+            class="layout493_tabs w-tabs"
+          >
+            <div class="layout493_tabs-menu w-tab-menu">
+              {entry.data.subServices.map((sub, i) => (
+                <a
+                  data-w-tab={`Tab ${i + 1}`}
+                  ms-code-onhover="click"
+                  class={`layout493_tab-link w-inline-block w-tab-link${i === 0 ? ' w--current' : ''}`}
+                >
+                  <h3 class="heading-style-h6">{sub.title}</h3>
+                  <div class="layout493_paragraph">
+                    <div class="margin-top margin-xxsmall">
+                      <p class="text-size-small text-color-grey">{sub.description}</p>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div class="layout493_tabs-content w-tab-content">
+              {entry.data.subServices.map((_, i) => (
+                <div
+                  data-w-tab={`Tab ${i + 1}`}
+                  class={`layout493_tab-pane w-tab-pane${i === 0 ? ' w--tab-active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="layout507_image-wrapper">
+          <Image
+            src={entry.data.modalImage}
+            alt={entry.data.modalImageAlt}
+            loading="lazy"
+            class="layout507_image"
+          />
+        </div>
+      </div>
+    </div>
+  );
+})}

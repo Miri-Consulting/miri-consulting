@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { sortByOrder } from '../../utils/home/sortEntries';
+
+const team = sortByOrder(await getCollection('team'));
+
+function formatBullets(items: readonly string[]): string {
+  return items.map((item) => `&bull; ${item}`).join('<br/>');
+}
+
+function bioParagraphs(bio: string): string[] {
+  return bio
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+---
+
+{team.map((entry) => {
+  const modalAttr = entry.data.legacyModalId;
+  const closeAttr = modalAttr.replace(/^modal/, 'close');
+  const paragraphs = bioParagraphs(entry.data.bio);
+  const functionalIsDefault = entry.data.defaultTab === 'functional';
+  const functionalActive = functionalIsDefault;
+  const industryActive = !functionalIsDefault;
+  return (
+    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
+      <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
+        <div fs-modal-element={closeAttr} class="fs_modal-1_close-2">
+          <div class="fs_modal-1_close-icon-2 w-embed">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                fill="CurrentColor"
+                d="M14.5,12l9-9c0.7-0.7,0.7-1.8,0-2.5c-0.7-0.7-1.8-0.7-2.5,0l-9,9l-9-9c-0.7-0.7-1.8-0.7-2.5,0 c-0.7,0.7-0.7,1.8,0,2.5l9,9l-9,9c-0.7,0.7-0.7,1.8,0,2.5c0.7,0.7,1.8,0.7,2.5,0l9-9l9,9c0.7,0.7,1.8,0.7,2.5,0 c0.7-0.7,0.7-1.8,0-2.5L14.5,12z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="fs_modal-1_wrapper-2 people">
+        <div class="layout507_image-wrapper">
+          <Image
+            src={entry.data.headshot}
+            alt={entry.data.headshotAlt}
+            loading="lazy"
+            class="layout507_image"
+          />
+        </div>
+        <div class="layout507_card-content">
+          <div class="layout507_card-content-top">
+            <div class="margin-bottom margin-small">
+              <h3 class="heading-style-h3">{entry.data.name}</h3>
+            </div>
+            {paragraphs.map((p) => (
+              <p class="text-size-medium-smallspace text-color-grey">{p}</p>
+            ))}
+          </div>
+          <div class="margin-top margin-medium">
+            <div
+              data-duration-in="400"
+              data-duration-out="200"
+              data-current={functionalActive ? 'Tab 1' : 'Tab 2'}
+              data-easing="ease"
+              class="layout494_tabs w-tabs"
+            >
+              <div class="layout494_tabs-menu w-tab-menu">
+                <a
+                  data-w-tab="Tab 1"
+                  ms-code-onhover="click"
+                  class={`layout494_tab-link w-inline-block w-tab-link${functionalActive ? ' w--current' : ''}`}
+                >
+                  <h3 class="heading-style-h6">Functional Expertise</h3>
+                  <div class="layout494_paragraph">
+                    <div class="margin-top margin-xxsmall">
+                      <p class="text-size-small text-color-grey" set:html={formatBullets(entry.data.functionalExpertise)} />
+                    </div>
+                  </div>
+                </a>
+                <a
+                  data-w-tab="Tab 2"
+                  ms-code-onhover="click"
+                  class={`layout494_tab-link w-inline-block w-tab-link${industryActive ? ' w--current' : ''}`}
+                >
+                  <h3 class="heading-style-h6">Industry Experience</h3>
+                  <div class="layout494_paragraph">
+                    <div class="margin-top margin-xxsmall">
+                      <p class="text-size-small text-color-grey" set:html={formatBullets(entry.data.industryExperience)} />
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="layout494_tabs-content w-tab-content">
+                <div
+                  data-w-tab="Tab 1"
+                  class={`layout494_tab-pane w-tab-pane${functionalActive ? ' w--tab-active' : ''}`}
+                />
+                <div
+                  data-w-tab="Tab 2"
+                  class={`layout494_tab-pane w-tab-pane${industryActive ? ' w--tab-active' : ''}`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+})}
