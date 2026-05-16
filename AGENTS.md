@@ -1,5 +1,14 @@
 # Miri Consulting site agent cookbook
 
+## Architecture (post-tech-debt-cleanup)
+
+- Every home-page section is a native Astro component under `src/components/home/`. There are no `apply*` regex utilities or raw HTML home partials anymore — content collections drive the markup directly.
+- First-party images live in `src/assets/` and flow through Astro's `<Image>` component (Sharp pipeline → content-hashed `/_assets/<name>.<hash>.<ext>`).
+- Shared site constants (nav links, Calendly URL, analytics IDs, vendor paths) live in `src/data/site.ts`.
+- Legal pages still render a few static Webflow HTML partials (`src/partials/legal-*.html`, `src/partials/home/how-we-work.html`, `src/partials/aspire-landscape-landing-body.html`, `src/partials/body-scripts-home.html`) through `RawHtml`, which applies `src/utils/rewriteAssetPaths.ts` to point Webflow CDN URLs at the committed `/vendor/webflow/...` files. Promoting those partials to native is optional follow-up work.
+- `public/vendor/webflow/` is committed (curated CSS + 5 JS files + ~16 images + encoded aliases for URL compatibility). There is no `prepare-vendor` script — what's in the repo is what gets served.
+- `tech-debt-cleanup.md` is the long-form tracker for the multi-phase cleanup; see it for phase status and decisions.
+
 ## Add a team member
 
 1. Add a headshot under `src/assets/team/`.
@@ -42,11 +51,20 @@ Edit `analytics` in `src/data/site.ts`.
 
 ## Run visual regression locally
 
+In one terminal:
+
 ```bash
 npm run build
 npm run preview
-BASE_URL=http://localhost:4322 npm run test:visual
 ```
+
+In another:
+
+```bash
+npm run test:visual
+```
+
+Playwright defaults `BASE_URL` to `http://localhost:4321` (matching `astro preview`). DOM tests live in `tests/dom.spec.ts` (one viewport via the `dom` project); visual screenshot tests live in `tests/visual.spec.ts` (six viewport projects). On PRs and pushes to `master`, `.github/workflows/test.yml` runs `check` + `build` + the DOM project; visual screenshot tests stay local until a Linux-baseline workflow is set up.
 
 ## Run visual regression against production
 
@@ -59,7 +77,7 @@ npm run test:visual:production
 ## Update visual baselines after intentional changes
 
 ```bash
-BASE_URL=http://localhost:4322 npm run test:visual:update
+npm run test:visual:update
 ```
 
 ## Deploy

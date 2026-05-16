@@ -1,5 +1,5 @@
 ---
-import { analytics, site, vendor } from '../data/site';
+import { site, vendor } from '../data/site';
 import { rootPath } from '../utils/rootPath';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import inlineGlobals from '../styles/inline-globals.css?raw';
@@ -51,9 +51,6 @@ const canonical = new URL(canonicalPath, site.url).href;
     <meta content="summary_large_image" name="twitter:card" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content={robots} name="robots" />
-    {analytics.googleSiteVerification ? (
-      <meta content={analytics.googleSiteVerification} name="google-site-verification" />
-    ) : null}
     <link href={rootPath(vendor.webflowSharedCss)} rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" />

@@ -16,8 +16,8 @@ Self-contained tracker for the multi-phase cleanup of this site. Anyone picking 
 | 12.6 | Native hero / contact CTA | complete | see git log |
 | 12.7 | Native footer / nav | complete | see git log |
 | 13 | Vendor + artifact cleanup | complete | see git log |
-| 14 | CSS reduction | not started | — |
-| 15 | Repo hygiene + docs | not started | — |
+| 14 | CSS reduction | deferred — see notes | — |
+| 15 | Repo hygiene + docs | complete (Phase 14 deferred) | see git log |
 
 Prior phases (5, 7, 9) already landed before this plan started; see `git log`.
 

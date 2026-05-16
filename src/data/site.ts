@@ -37,7 +37,6 @@ export const analytics = {
   cookieYesClientId: 'a9444bde0e91feb16b7f6557',
   clarityProjectId: 'qm79cyqx8h',
   facebookDomainVerification: 'mlk59ybu44651lzcbhhxjfl8vfae8q',
-  googleSiteVerification: null,
 } as const;
 
 export const vendor = {
