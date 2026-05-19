@@ -311,9 +311,19 @@
     display: none;
   }
 
+  /* Empty tab panes sit over the accordion menu at this breakpoint; sub-service copy lives in the links. */
+  .fs_modal-1_wrapper-2.service-modal .layout493_tabs-content {
+    display: none;
+  }
+
   .fs_modal-1_wrapper-2.service-modal .layout493_paragraph {
     height: 0 !important;
     overflow: hidden;
+  }
+
+  .fs_modal-1_wrapper-2.service-modal .layout493_tab-link.w--current .layout493_paragraph {
+    height: auto !important;
+    overflow: visible;
   }
 }
 
