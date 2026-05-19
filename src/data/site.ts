@@ -31,6 +31,21 @@ export const analytics = {
   facebookDomainVerification: 'mlk59ybu44651lzcbhhxjfl8vfae8q',
 } as const;
 
+/** Webflow export IDs — required for IX2 (navbar menu) and page-scoped interactions. */
+export const webflow = {
+  siteId: '64f363b4ba0fc1362362824f',
+  domain: 'www.miri-consulting.com',
+  pages: {
+    home: '67cf44591eba6d97f960df05',
+    privacy: '67f94c40dab2e5c3b96a8efd',
+    terms: '67f96117bb872567f22b2800',
+  },
+  navInteractionId: {
+    home: '48410a7f-9d6d-9f18-2a4c-2f70603fdcfe',
+    legal: '019cc202-3501-62e0-9424-94423a0fbe04',
+  },
+} as const;
+
 export const vendor = {
   siteCss: '/styles/site.css',
   jquery: '/scripts/jquery.min.js',

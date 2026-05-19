@@ -1,7 +1,16 @@
 ---
-import { cta, navLinks } from '../../data/site';
+import { cta, navLinks, webflow } from '../../data/site';
 import { calendlyPopupOnclick } from '../../utils/calendly';
 import { rootPath } from '../../utils/rootPath';
+
+interface Props {
+  /** Home uses a different IX2 target id than legal pages. */
+  variant?: 'home' | 'legal';
+}
+
+const { variant = 'home' } = Astro.props;
+const navInteractionId =
+  variant === 'legal' ? webflow.navInteractionId.legal : webflow.navInteractionId.home;
 
 const logoBase = '/media/logo-horizontal-white';
 const logoSrc = rootPath(`${logoBase}.png`);
@@ -15,6 +24,7 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
 <div
   data-animation="default"
   class="navbar2_component w-nav"
+  data-w-id={navInteractionId}
   data-easing2="ease"
   fs-scrolldisable-element="smart-nav"
   data-easing="ease"

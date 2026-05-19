@@ -5,7 +5,7 @@ import Footer from '../components/chrome/Footer.astro';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
 import { sanitizeLegalHead } from '../utils/sanitizeLegalHead';
-import { site } from '../data/site';
+import { site, webflow } from '../data/site';
 import inlineGlobals from '../styles/inline-globals.css?raw';
 import staticOverrides from '../styles/miri-static-overrides.css?raw';
 import bodyScripts from '../partials/body-scripts-home.html?raw';
@@ -15,9 +15,10 @@ interface Props {
   bodyClass: string;
   bodyHtml: string;
   headHtml: string;
+  webflowPageId: string;
 }
 
-const { canonicalPath, bodyClass, bodyHtml, headHtml } = Astro.props;
+const { canonicalPath, bodyClass, bodyHtml, headHtml, webflowPageId } = Astro.props;
 const canonical = new URL(canonicalPath, site.url).href;
 const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
   .replace(/<meta content="[^"]*" name="google-site-verification"\/>/, '')
@@ -33,7 +34,12 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  data-wf-domain={webflow.domain}
+  data-wf-page={webflowPageId}
+  data-wf-site={webflow.siteId}
+>
   <head>
     <Fragment set:html={head} />
     <HeadAnalytics />
@@ -45,7 +51,7 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
         <style is:inline is:global set:html={staticOverrides}></style>
       </div>
       <main class="main-wrapper">
-        <NavBar />
+        <NavBar variant="legal" />
         <RawHtml html={bodyHtml} />
         <Footer />
       </main>

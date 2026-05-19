@@ -1,5 +1,5 @@
 ---
-import { site, vendor } from '../data/site';
+import { site, vendor, webflow } from '../data/site';
 import { rootPath } from '../utils/rootPath';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import inlineGlobals from '../styles/inline-globals.css?raw';
@@ -13,6 +13,8 @@ interface Props {
   includeFinsweet?: boolean;
   robots?: string;
   ogImage?: string | null;
+  /** Webflow page id for IX2; defaults to home. */
+  webflowPageId?: string;
 }
 
 const {
@@ -23,13 +25,19 @@ const {
   includeFinsweet = false,
   robots = 'index,follow',
   ogImage = site.ogImage,
+  webflowPageId = webflow.pages.home,
 } = Astro.props;
 
 const canonical = new URL(canonicalPath, site.url).href;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  data-wf-domain={webflow.domain}
+  data-wf-page={webflowPageId}
+  data-wf-site={webflow.siteId}
+>
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>

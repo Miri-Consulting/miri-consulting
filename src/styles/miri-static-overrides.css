@@ -3,6 +3,46 @@
   box-sizing: border-box;
 }
 
+/* Fixed navbar: explicit height so inner grid can use height:100%; disable
+   Webflow .w-nav clearfix pseudo-elements that can shift layout while scrolling. */
+.navbar2_component.w-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  height: 4.5rem;
+  min-height: 4.5rem;
+}
+
+.navbar2_component.w-nav::before,
+.navbar2_component.w-nav::after {
+  display: none;
+}
+
+.navbar2_component .navbar2_container {
+  height: 100%;
+  min-height: 100%;
+  align-items: center;
+}
+
+.navbar2_component .navbar2_logo-link.w-nav-brand {
+  float: none;
+}
+
+.navbar2_component .navbar2_logo {
+  display: block;
+  height: 27px;
+  width: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .navbar2_component.w-nav {
+    height: 4rem;
+    min-height: 4rem;
+  }
+}
+
 .spline-scene canvas {
   pointer-events: none;
 }

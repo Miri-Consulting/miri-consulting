@@ -70,10 +70,6 @@ const testimonials = defineCollection({
       quote: z.string(),
       title: z.string(),
       company: z.string(),
-      // Card background colors rotate automatically by slide position via
-      // CSS (orange → light-blue → dark-blue). The legacy `color` field
-      // is no longer required; if present it's ignored at render time.
-      color: z.enum(['light-blue', 'blue', 'orange']).optional(),
       portrait: image().optional(),
       portraitAlt: z.string().optional(),
       companyLogo: image().optional(),
@@ -96,7 +92,7 @@ const clientLogos = defineCollection({
         .optional(),
       externalUrl: z.string().url().optional(),
       brandClass: z
-        .enum(['black-diamond', 'willis', 'greenfield', 'los-alamos'])
+        .enum(['black-diamond', 'willis', 'los-alamos'])
         .optional(),
     }),
 });

@@ -223,9 +223,9 @@ margin: 0rem !important;
   display: flex;
   flex: none;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.25rem;
   margin-right: 0;
-  padding-right: 1.75rem;
+  padding-right: 1.25rem;
 }
 
 .logo-marquee-list .logo3_wrapper {
@@ -238,19 +238,19 @@ margin: 0rem !important;
   padding-inline: .5rem;
 }
 
-/* Inside the marquee, let the per-class rules from the Webflow shared
-   bundle drive logo size (.logo3_logo defaults to 2.5rem tall; .max-3 to
-   4rem; .max-2-25 to 2.25rem; .max-2 to 2rem; .max-1-75 to 1.75rem;
-   .osprey to 3.75rem). The wrapper above pins each slot to
-   8rem × 4.5rem so the marquee animation has consistent slot widths;
-   `object-fit: contain` keeps tall/wide logos from distorting when their
-   auto-derived width exceeds the slot. Previously this rule capped every
-   logo at 3rem tall, which flattened max-3/osprey logos to 48px instead
-   of the 64/60px prod renders. */
+/* Let Webflow size-class heights apply, but cap at the slot height so wide
+   logos grow vertically instead of leaving empty space above/below. */
 .logo-marquee-list .logo3_logo {
+  display: block;
   width: auto;
+  height: auto;
   max-width: 100%;
+  max-height: 4.5rem;
   object-fit: contain;
+}
+
+.logo-marquee-list .logo3_logo.osprey {
+  padding-bottom: 0;
 }
 
 .logo3_external-logo-link {
@@ -272,11 +272,6 @@ margin: 0rem !important;
   max-height: 2.2rem;
 }
 
-.logo-marquee-logo.brand-logo-greenfield {
-  max-width: 5.75rem;
-  max-height: 3.25rem;
-}
-
 .logo-marquee-logo.brand-logo-los-alamos {
   max-width: 8.75rem;
   max-height: 2.8rem;
@@ -289,67 +284,57 @@ margin: 0rem !important;
   }
 }
 
-/* Desktop-only marquee scale-up. The mobile / tablet sizes above keep
-   `.section_logo3` compact in small viewports, but at desktop the section
-   sits between the hero and "How We Work" with ~4rem of section padding top
-   and bottom, leaving the strip looking small and the section visually thin.
-   Growing the wrapper + the size-class max-heights ~1.4x at >=992px keeps
-   the marquee proportionally balanced against its surrounding whitespace
-   without disturbing mobile (where ClientLogoMarqueeMobile takes over). */
+/* Logo strip sits under the hero; Webflow's .padding-section-small adds 4rem
+   top/bottom on tablet/desktop (only ≤767 zeroes top). Trim for every viewport
+   where the marquee renders — including 768–991 where the desktop section shows. */
+.section_logo3 .padding-section-small.logo {
+  padding-top: 0;
+  padding-bottom: 1rem;
+}
+
+/* Desktop/tablet-wide slots (≥992): prod-like width, logos fill slot height. */
 @media screen and (min-width: 992px) {
   .logo-marquee {
-    min-height: 7rem;
+    min-height: 5rem;
   }
 
   .logo-marquee-list .logo3_wrapper {
-    width: 11rem;
-    min-width: 11rem;
-    height: 6.25rem;
-    flex: 0 0 11rem;
+    width: 11.5rem;
+    min-width: 11.5rem;
+    height: 5rem;
+    flex: 0 0 11.5rem;
+    padding-inline: .35rem;
   }
 
   .logo-marquee-list .logo3_logo {
-    max-height: 3.5rem;
+    height: 100%;
+    max-height: 100%;
   }
 
-  .logo-marquee-list .logo3_logo.max-3 {
-    max-height: 5.5rem;
-  }
-
+  .logo-marquee-list .logo3_logo.max-3,
+  .logo-marquee-list .logo3_logo.osprey,
+  .logo-marquee-list .logo3_logo.max-1-75,
+  .logo-marquee-list .logo3_logo.max-2,
   .logo-marquee-list .logo3_logo.max-2-25 {
-    max-height: 3.15rem;
-  }
-
-  .logo-marquee-list .logo3_logo.max-2 {
-    max-height: 2.8rem;
-  }
-
-  .logo-marquee-list .logo3_logo.max-1-75 {
-    max-height: 2.45rem;
-  }
-
-  .logo-marquee-list .logo3_logo.osprey {
-    max-height: 5.25rem;
+    height: 100%;
+    max-height: 100%;
+    padding-bottom: 0;
   }
 
   .logo-marquee-logo {
-    max-height: 4.2rem;
+    max-height: 3.25rem;
   }
 
   .logo-marquee-logo.brand-logo-black-diamond {
-    max-height: 3.55rem;
+    max-height: 2.75rem;
   }
 
   .logo-marquee-logo.brand-logo-willis {
-    max-height: 3.1rem;
-  }
-
-  .logo-marquee-logo.brand-logo-greenfield {
-    max-height: 4.55rem;
+    max-height: 2.4rem;
   }
 
   .logo-marquee-logo.brand-logo-los-alamos {
-    max-height: 3.9rem;
+    max-height: 3rem;
   }
 }
 

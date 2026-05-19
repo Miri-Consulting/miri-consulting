@@ -1,5 +1,6 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
+import { webflow } from '../../data/site';
 import bodyHtml from '../../partials/legal-terms-body.html?raw';
 import headHtml from '../../partials/legal-terms-head.html?raw';
 ---
@@ -9,4 +10,5 @@ import headHtml from '../../partials/legal-terms-head.html?raw';
   bodyClass="body-3"
   bodyHtml={bodyHtml}
   headHtml={headHtml}
+  webflowPageId={webflow.pages.terms}
 />
