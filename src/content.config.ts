@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const team = defineCollection({
@@ -90,7 +91,7 @@ const clientLogos = defineCollection({
       sizeClass: z
         .enum(['max-1-75', 'max-2', 'max-2-25', 'max-3', 'osprey'])
         .optional(),
-      externalUrl: z.string().url().optional(),
+      externalUrl: z.url().optional(),
       brandClass: z
         .enum(['black-diamond', 'willis', 'los-alamos'])
         .optional(),
