@@ -4,6 +4,8 @@ import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
 
 const testimonials = sortByOrder(await getCollection('testimonials'));
+const clientLogos = await getCollection('clientLogos');
+const clientLogoBySlug = new Map(clientLogos.map((entry) => [entry.data.slug, entry]));
 ---
 
 <section class="section_testimonial23">
@@ -36,13 +38,35 @@ const testimonials = sortByOrder(await getCollection('testimonials'));
         >
           <div class="testimonial23_mask w-slider-mask">
             {testimonials.map((entry) => {
-              const { quote, name, title, color, portrait, portraitAlt } = entry.data;
+              const {
+                quote,
+                name,
+                title,
+                company,
+                portrait,
+                portraitAlt,
+                companyLogo,
+                companyLogoAlt,
+                clientLogoSlug,
+              } = entry.data;
+              const fallbackLogo = clientLogoSlug
+                ? clientLogoBySlug.get(clientLogoSlug)?.data
+                : undefined;
+              const clientImage = portrait ?? companyLogo ?? fallbackLogo?.logo;
+              const clientImageAlt = portrait
+                ? (portraitAlt ?? name)
+                : (companyLogoAlt ?? fallbackLogo?.logoAlt ?? `${company} logo`);
+              const clientImageClass = [
+                'testimonial23_customer-image',
+                portrait ? '' : 'testimonial23_logo-avatar',
+              ].filter(Boolean).join(' ');
               return (
                 <div class="testimonial23_slide w-slide">
-                  <div class={`testimonial23_card ${color}`}>
+                  <div class="testimonial23_card">
+
                     <div class="testimonial23_content-top">
                       <div class="w-layout-vflex">
-                        <div class="margin-bottom margin-large">
+                        <div class="margin-bottom margin-small">
                           <div class="testimonial4_rating-wrapper">
                             {Array.from({ length: 5 }).map(() => (
                               <div class="testimonial4_rating-icon">
@@ -60,11 +84,19 @@ const testimonials = sortByOrder(await getCollection('testimonials'));
                       <div class="margin-top margin-small">
                         <div class="testimonial23_client">
                           <div class="testimonial23_client-image-wrapper">
-                            <Image src={portrait} alt={portraitAlt} loading="lazy" class="testimonial23_customer-image" />
+                            {clientImage ? (
+                              <Image
+                                src={clientImage}
+                                alt={clientImageAlt}
+                                loading="lazy"
+                                class={clientImageClass}
+                              />
+                            ) : null}
                           </div>
                           <div class="testimonial23_client-info">
                             <div class="text-weight-semibold"><strong>{name}</strong></div>
                             <div>{title}</div>
+                            <div>{company}</div>
                           </div>
                         </div>
                       </div>

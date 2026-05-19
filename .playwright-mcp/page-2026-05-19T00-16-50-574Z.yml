@@ -1,0 +1,555 @@
+- main [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link [ref=e6] [cursor=pointer]:
+        - /url: "#header"
+      - navigation [ref=e7]:
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: "#about"
+        - link "Industries" [ref=e9] [cursor=pointer]:
+          - /url: "#industries"
+        - link "Testimonials" [ref=e10] [cursor=pointer]:
+          - /url: "#testimonials"
+        - link "Services" [ref=e11] [cursor=pointer]:
+          - /url: "#services"
+        - link "People" [ref=e12] [cursor=pointer]:
+          - /url: "#people"
+      - link "Connect" [ref=e15] [cursor=pointer]:
+        - /url: ""
+  - generic [ref=e27]:
+    - generic [ref=e29]:
+      - img [ref=e32]
+      - img [ref=e36]
+      - img [ref=e40]
+      - img [ref=e44]
+      - img [ref=e48]
+    - heading "Your Vision Our Expertise" [level=1] [ref=e51]:
+      - text: Your Vision
+      - text: Our Expertise
+    - paragraph [ref=e52]: We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.
+    - generic [ref=e54]:
+      - link "Connect" [ref=e56] [cursor=pointer]:
+        - /url: ""
+      - link "Learn more" [ref=e57] [cursor=pointer]:
+        - /url: "#services"
+  - generic [ref=e101]:
+    - generic [ref=e102]:
+      - heading "How We Work" [level=2] [ref=e104]
+      - paragraph [ref=e105]:
+        - text: We roll up our sleeves and get to know your business, pain points, and goals.
+        - text: Then we tailor and execute projects that simplify operations and increase revenue.
+    - generic [ref=e106]:
+      - tablist [ref=e107]:
+        - tab "Deep Discovery" [selected] [ref=e108] [cursor=pointer]:
+          - generic [ref=e109]: Deep Discovery
+        - tab "Collaborative Execution" [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]: Collaborative Execution
+        - tab "Long-Term Partnership" [ref=e112] [cursor=pointer]:
+          - generic [ref=e113]: Long-Term Partnership
+      - tabpanel "Deep Discovery" [ref=e115]:
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - heading "Deep Discovery" [level=2] [ref=e119]
+            - paragraph [ref=e120]: We take time to understand your unique workflows, challenges, and goals. That way, our solutions align with what you truly need — not a generic blueprint.
+          - img "Business management consulting services" [ref=e122]
+  - generic [ref=e126]:
+    - generic [ref=e128]:
+      - heading "Who We Work With" [level=2] [ref=e130]
+      - paragraph [ref=e131]:
+        - text: We partner with owners and operators in the landscape, snow, and construction industries
+        - text: to streamline operations, tighten systems, and turn efficiency into profit.
+    - generic [ref=e134]:
+      - generic [ref=e135]:
+        - heading "Service-Based Businesses" [level=2] [ref=e137]
+        - paragraph [ref=e138]: We refine estimating, project management, and financial processes so businesses can scale with confidence.
+      - generic [ref=e139]:
+        - tablist [ref=e140]:
+          - tab "Landscape Maintenance Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team." [selected] [ref=e141] [cursor=pointer]:
+            - heading "Landscape Maintenance" [level=3] [ref=e142]
+            - paragraph [ref=e145]: Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team.
+          - tab "Snow Removal Subcontractor mayhem, slip and fall liability, and 3am dispatches. We help snow operations implement bulletproof systems for tracking, documenting, and invoicing so you can stay protected and bill fast, even on no sleep." [ref=e146] [cursor=pointer]:
+            - heading "Snow Removal" [level=3] [ref=e147]
+            - paragraph [ref=e149]: Subcontractor mayhem, slip and fall liability, and 3am dispatches. We help snow operations implement bulletproof systems for tracking, documenting, and invoicing so you can stay protected and bill fast, even on no sleep.
+          - tab "Landscape Construction & Builders Timelines shift, change orders pile up, and quality slips between trades. It can be easy to lose control. We help construction teams get ahead of the disorder by aligning estimating, job costing, and project management so your clients stay in the loop and out of the stress." [ref=e150] [cursor=pointer]:
+            - heading "Landscape Construction & Builders" [level=3] [ref=e151]
+            - paragraph [ref=e153]: Timelines shift, change orders pile up, and quality slips between trades. It can be easy to lose control. We help construction teams get ahead of the disorder by aligning estimating, job costing, and project management so your clients stay in the loop and out of the stress.
+        - generic [ref=e154]:
+          - tabpanel "Landscape Maintenance Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team.":
+            - generic:
+              - img "Landscape Maintenance"
+  - generic [ref=e158]:
+    - generic [ref=e161]:
+      - heading "Customer Testimonials" [level=2] [ref=e163]
+      - paragraph [ref=e164]: See what clients are saying about Miri
+    - region "carousel" [ref=e165]:
+      - generic [ref=e166]:
+        - group "1 of 24" [ref=e167]:
+          - generic [ref=e169]:
+            - generic [ref=e170]:
+              - generic [ref=e172]:
+                - img [ref=e175]
+                - img [ref=e179]
+                - img [ref=e183]
+                - img [ref=e187]
+                - img [ref=e191]
+              - generic [ref=e193]:
+                - text: Working with Miri has been one of the best decisions we have ever made. Ramel and Nauman are hands in.
+                - text: They listen diligently and swiftly provide actionable deliverables and work products that have propelled our business forward from day one.
+            - generic [ref=e197]:
+              - strong [ref=e199]: Will Jameson
+              - generic [ref=e200]: President, WJ Landscape Maintenance, Inc.
+        - group [ref=e201]:
+          - generic [ref=e203]:
+            - generic [ref=e204]:
+              - generic [ref=e206]:
+                - img [ref=e209]
+                - img [ref=e213]
+                - img [ref=e217]
+                - img [ref=e221]
+                - img [ref=e225]
+              - generic [ref=e227]: Ramel and team have been amazing to work with – they have moved our roll-out of Aspire up exponentially showing us things we didn’t know and things we didn’t know we needed to know. They always hit their deadlines and are a pleasure to work with!
+            - generic [ref=e229]:
+              - img [ref=e231]
+              - generic [ref=e232]:
+                - generic [ref=e233]: Elliott MacIsaac
+                - generic [ref=e234]: CFO, Cutting Edge
+        - group [ref=e235]:
+          - generic [ref=e237]:
+            - generic [ref=e238]:
+              - generic [ref=e240]:
+                - img [ref=e243]
+                - img [ref=e247]
+                - img [ref=e251]
+                - img [ref=e255]
+                - img [ref=e259]
+              - generic [ref=e261]: Ramel’s commitment to delivering value is unwavering, making him an essential asset to any project. He conducts himself with honesty, respect, and a personal touch that fosters productive relationships. His insights and ability to anticipate outcomes consistently impress us.
+            - generic [ref=e263]:
+              - img [ref=e265]
+              - generic [ref=e266]:
+                - generic [ref=e267]:
+                  - text: ‍
+                  - strong [ref=e268]: Mark Meahl
+                - generic [ref=e269]: President, Garden View Inc.
+        - group [ref=e270]:
+          - generic [ref=e272]:
+            - generic [ref=e273]:
+              - generic [ref=e275]:
+                - img [ref=e278]
+                - img [ref=e282]
+                - img [ref=e286]
+                - img [ref=e290]
+                - img [ref=e294]
+              - generic [ref=e296]: Working with Miri Consulting has been a major success for us. They’re incredibly easy to communicate with, quick to understand what we need, and always come through with smart, effective solutions. It's been a great experience all around!
+            - generic [ref=e298]:
+              - img [ref=e300]
+              - generic [ref=e301]:
+                - generic [ref=e302]: Alex Ostblom
+                - generic [ref=e303]: Founder & CEO, Branch Landscape Group
+        - group [ref=e304]:
+          - generic [ref=e306]:
+            - generic [ref=e307]:
+              - generic [ref=e309]:
+                - img [ref=e312]
+                - img [ref=e316]
+                - img [ref=e320]
+                - img [ref=e324]
+                - img [ref=e328]
+              - generic [ref=e330]: The decision to work with Miri on our project has been a game changer. Ramel has listened to our needs, came up with a game plan and has always delivered.
+            - generic [ref=e332]:
+              - img [ref=e334]
+              - generic [ref=e335]:
+                - generic [ref=e336]: Jamie Brady
+                - generic [ref=e337]: CEO & Founder, Cutting Edge
+        - group [ref=e338]:
+          - generic [ref=e340]:
+            - generic [ref=e341]:
+              - generic [ref=e343]:
+                - img [ref=e346]
+                - img [ref=e350]
+                - img [ref=e354]
+                - img [ref=e358]
+                - img [ref=e362]
+              - generic [ref=e364]: Miri’s professionalism, timely delivery, and reliability is commendable. We would highly recommend Miri for website development or any other project work that fits within their offerings.
+            - generic [ref=e366]:
+              - img [ref=e368]
+              - generic [ref=e369]:
+                - strong [ref=e371]: Ramu Veerappan
+                - generic [ref=e372]: Chairman and CEO, Sapphire
+        - group [ref=e373]:
+          - generic [ref=e375]:
+            - generic [ref=e376]:
+              - generic [ref=e378]:
+                - img [ref=e381]
+                - img [ref=e385]
+                - img [ref=e389]
+                - img [ref=e393]
+                - img [ref=e397]
+              - generic [ref=e399]: Working with Miri has been one of the best decisions we have ever made. Ramel and Nauman are hands in. They listen diligently and swiftly provide actionable deliverables and work products that have propelled our business forward from day one.
+            - generic [ref=e401]:
+              - img [ref=e403]
+              - generic [ref=e404]:
+                - strong [ref=e406]: Will Jameson
+                - generic [ref=e407]: President, WJ Landscape Maintenance, Inc.
+        - group [ref=e408]:
+          - generic [ref=e410]:
+            - generic [ref=e411]:
+              - generic [ref=e413]:
+                - img [ref=e416]
+                - img [ref=e420]
+                - img [ref=e424]
+                - img [ref=e428]
+                - img [ref=e432]
+              - generic [ref=e434]: Ramel and team have been amazing to work with – they have moved our roll-out of Aspire up exponentially showing us things we didn’t know and things we didn’t know we needed to know. They always hit their deadlines and are a pleasure to work with!
+            - generic [ref=e436]:
+              - img [ref=e438]
+              - generic [ref=e439]:
+                - generic [ref=e440]: Elliott MacIsaac
+                - generic [ref=e441]: CFO, Cutting Edge
+        - group [ref=e442]:
+          - generic [ref=e444]:
+            - generic [ref=e445]:
+              - generic [ref=e447]:
+                - img [ref=e450]
+                - img [ref=e454]
+                - img [ref=e458]
+                - img [ref=e462]
+                - img [ref=e466]
+              - generic [ref=e468]: Ramel’s commitment to delivering value is unwavering, making him an essential asset to any project. He conducts himself with honesty, respect, and a personal touch that fosters productive relationships. His insights and ability to anticipate outcomes consistently impress us.
+            - generic [ref=e470]:
+              - img [ref=e472]
+              - generic [ref=e473]:
+                - generic [ref=e474]:
+                  - text: ‍
+                  - strong [ref=e475]: Mark Meahl
+                - generic [ref=e476]: President, Garden View Inc.
+        - group [ref=e477]:
+          - generic [ref=e479]:
+            - generic [ref=e480]:
+              - generic [ref=e482]:
+                - img [ref=e485]
+                - img [ref=e489]
+                - img [ref=e493]
+                - img [ref=e497]
+                - img [ref=e501]
+              - generic [ref=e503]: Working with Miri Consulting has been a major success for us. They’re incredibly easy to communicate with, quick to understand what we need, and always come through with smart, effective solutions. It's been a great experience all around!
+            - generic [ref=e505]:
+              - img [ref=e507]
+              - generic [ref=e508]:
+                - generic [ref=e509]: Alex Ostblom
+                - generic [ref=e510]: Founder & CEO, Branch Landscape Group
+        - group [ref=e511]:
+          - generic [ref=e513]:
+            - generic [ref=e514]:
+              - generic [ref=e516]:
+                - img [ref=e519]
+                - img [ref=e523]
+                - img [ref=e527]
+                - img [ref=e531]
+                - img [ref=e535]
+              - generic [ref=e537]: The decision to work with Miri on our project has been a game changer. Ramel has listened to our needs, came up with a game plan and has always delivered.
+            - generic [ref=e539]:
+              - img [ref=e541]
+              - generic [ref=e542]:
+                - generic [ref=e543]: Jamie Brady
+                - generic [ref=e544]: CEO & Founder, Cutting Edge
+        - group [ref=e545]:
+          - generic [ref=e547]:
+            - generic [ref=e548]:
+              - generic [ref=e550]:
+                - img [ref=e553]
+                - img [ref=e557]
+                - img [ref=e561]
+                - img [ref=e565]
+                - img [ref=e569]
+              - generic [ref=e571]: Miri’s professionalism, timely delivery, and reliability is commendable. We would highly recommend Miri for website development or any other project work that fits within their offerings.
+            - generic [ref=e573]:
+              - img [ref=e575]
+              - generic [ref=e576]:
+                - strong [ref=e578]: Ramu Veerappan
+                - generic [ref=e579]: Chairman and CEO, Sapphire
+        - group [ref=e580]:
+          - generic [ref=e582]:
+            - generic [ref=e583]:
+              - generic [ref=e585]:
+                - img [ref=e588]
+                - img [ref=e592]
+                - img [ref=e596]
+                - img [ref=e600]
+                - img [ref=e604]
+              - generic [ref=e606]: Working with Miri has been one of the best decisions we have ever made. Ramel and Nauman are hands in. They listen diligently and swiftly provide actionable deliverables and work products that have propelled our business forward from day one.
+            - generic [ref=e608]:
+              - img [ref=e610]
+              - generic [ref=e611]:
+                - strong [ref=e613]: Will Jameson
+                - generic [ref=e614]: President, WJ Landscape Maintenance, Inc.
+        - group [ref=e615]:
+          - generic [ref=e617]:
+            - generic [ref=e618]:
+              - generic [ref=e620]:
+                - img [ref=e623]
+                - img [ref=e627]
+                - img [ref=e631]
+                - img [ref=e635]
+                - img [ref=e639]
+              - generic [ref=e641]: Ramel and team have been amazing to work with – they have moved our roll-out of Aspire up exponentially showing us things we didn’t know and things we didn’t know we needed to know. They always hit their deadlines and are a pleasure to work with!
+            - generic [ref=e643]:
+              - img [ref=e645]
+              - generic [ref=e646]:
+                - generic [ref=e647]: Elliott MacIsaac
+                - generic [ref=e648]: CFO, Cutting Edge
+        - group [ref=e649]:
+          - generic [ref=e651]:
+            - generic [ref=e652]:
+              - generic [ref=e654]:
+                - img [ref=e657]
+                - img [ref=e661]
+                - img [ref=e665]
+                - img [ref=e669]
+                - img [ref=e673]
+              - generic [ref=e675]: Ramel’s commitment to delivering value is unwavering, making him an essential asset to any project. He conducts himself with honesty, respect, and a personal touch that fosters productive relationships. His insights and ability to anticipate outcomes consistently impress us.
+            - generic [ref=e677]:
+              - img [ref=e679]
+              - generic [ref=e680]:
+                - generic [ref=e681]:
+                  - text: ‍
+                  - strong [ref=e682]: Mark Meahl
+                - generic [ref=e683]: President, Garden View Inc.
+        - group [ref=e684]:
+          - generic [ref=e686]:
+            - generic [ref=e687]:
+              - generic [ref=e689]:
+                - img [ref=e692]
+                - img [ref=e696]
+                - img [ref=e700]
+                - img [ref=e704]
+                - img [ref=e708]
+              - generic [ref=e710]: Working with Miri Consulting has been a major success for us. They’re incredibly easy to communicate with, quick to understand what we need, and always come through with smart, effective solutions. It's been a great experience all around!
+            - generic [ref=e712]:
+              - img [ref=e714]
+              - generic [ref=e715]:
+                - generic [ref=e716]: Alex Ostblom
+                - generic [ref=e717]: Founder & CEO, Branch Landscape Group
+        - group [ref=e718]:
+          - generic [ref=e720]:
+            - generic [ref=e721]:
+              - generic [ref=e723]:
+                - img [ref=e726]
+                - img [ref=e730]
+                - img [ref=e734]
+                - img [ref=e738]
+                - img [ref=e742]
+              - generic [ref=e744]: The decision to work with Miri on our project has been a game changer. Ramel has listened to our needs, came up with a game plan and has always delivered.
+            - generic [ref=e746]:
+              - img [ref=e748]
+              - generic [ref=e749]:
+                - generic [ref=e750]: Jamie Brady
+                - generic [ref=e751]: CEO & Founder, Cutting Edge
+        - group [ref=e752]:
+          - generic [ref=e754]:
+            - generic [ref=e755]:
+              - generic [ref=e757]:
+                - img [ref=e760]
+                - img [ref=e764]
+                - img [ref=e768]
+                - img [ref=e772]
+                - img [ref=e776]
+              - generic [ref=e778]: Miri’s professionalism, timely delivery, and reliability is commendable. We would highly recommend Miri for website development or any other project work that fits within their offerings.
+            - generic [ref=e780]:
+              - img [ref=e782]
+              - generic [ref=e783]:
+                - strong [ref=e785]: Ramu Veerappan
+                - generic [ref=e786]: Chairman and CEO, Sapphire
+        - group [ref=e787]:
+          - generic [ref=e789]:
+            - generic [ref=e790]:
+              - generic [ref=e792]:
+                - img [ref=e795]
+                - img [ref=e799]
+                - img [ref=e803]
+                - img [ref=e807]
+                - img [ref=e811]
+              - generic [ref=e813]: Working with Miri has been one of the best decisions we have ever made. Ramel and Nauman are hands in. They listen diligently and swiftly provide actionable deliverables and work products that have propelled our business forward from day one.
+            - generic [ref=e815]:
+              - img [ref=e817]
+              - generic [ref=e818]:
+                - strong [ref=e820]: Will Jameson
+                - generic [ref=e821]: President, WJ Landscape Maintenance, Inc.
+        - group [ref=e822]:
+          - generic [ref=e824]:
+            - generic [ref=e825]:
+              - generic [ref=e827]:
+                - img [ref=e830]
+                - img [ref=e834]
+                - img [ref=e838]
+                - img [ref=e842]
+                - img [ref=e846]
+              - generic [ref=e848]: Ramel and team have been amazing to work with – they have moved our roll-out of Aspire up exponentially showing us things we didn’t know and things we didn’t know we needed to know. They always hit their deadlines and are a pleasure to work with!
+            - generic [ref=e850]:
+              - img [ref=e852]
+              - generic [ref=e853]:
+                - generic [ref=e854]: Elliott MacIsaac
+                - generic [ref=e855]: CFO, Cutting Edge
+        - group [ref=e856]:
+          - generic [ref=e858]:
+            - generic [ref=e859]:
+              - generic [ref=e861]:
+                - img [ref=e864]
+                - img [ref=e868]
+                - img [ref=e872]
+                - img [ref=e876]
+                - img [ref=e880]
+              - generic [ref=e882]: Ramel’s commitment to delivering value is unwavering, making him an essential asset to any project. He conducts himself with honesty, respect, and a personal touch that fosters productive relationships. His insights and ability to anticipate outcomes consistently impress us.
+            - generic [ref=e884]:
+              - img [ref=e886]
+              - generic [ref=e887]:
+                - generic [ref=e888]:
+                  - text: ‍
+                  - strong [ref=e889]: Mark Meahl
+                - generic [ref=e890]: President, Garden View Inc.
+        - group [ref=e891]:
+          - generic [ref=e893]:
+            - generic [ref=e894]:
+              - generic [ref=e896]:
+                - img [ref=e899]
+                - img [ref=e903]
+                - img [ref=e907]
+                - img [ref=e911]
+                - img [ref=e915]
+              - generic [ref=e917]: Working with Miri Consulting has been a major success for us. They’re incredibly easy to communicate with, quick to understand what we need, and always come through with smart, effective solutions. It's been a great experience all around!
+            - generic [ref=e919]:
+              - img [ref=e921]
+              - generic [ref=e922]:
+                - generic [ref=e923]: Alex Ostblom
+                - generic [ref=e924]: Founder & CEO, Branch Landscape Group
+        - group [ref=e925]:
+          - generic [ref=e927]:
+            - generic [ref=e928]:
+              - generic [ref=e930]:
+                - img [ref=e933]
+                - img [ref=e937]
+                - img [ref=e941]
+                - img [ref=e945]
+                - img [ref=e949]
+              - generic [ref=e951]: The decision to work with Miri on our project has been a game changer. Ramel has listened to our needs, came up with a game plan and has always delivered.
+            - generic [ref=e953]:
+              - img [ref=e955]
+              - generic [ref=e956]:
+                - generic [ref=e957]: Jamie Brady
+                - generic [ref=e958]: CEO & Founder, Cutting Edge
+        - group [ref=e959]:
+          - generic [ref=e961]:
+            - generic [ref=e962]:
+              - generic [ref=e964]:
+                - img [ref=e967]
+                - img [ref=e971]
+                - img [ref=e975]
+                - img [ref=e979]
+                - img [ref=e983]
+              - generic [ref=e985]: Miri’s professionalism, timely delivery, and reliability is commendable. We would highly recommend Miri for website development or any other project work that fits within their offerings.
+            - generic [ref=e987]:
+              - img [ref=e989]
+              - generic [ref=e990]:
+                - strong [ref=e992]: Ramu Veerappan
+                - generic [ref=e993]: Chairman and CEO, Sapphire
+      - button "previous slide" [ref=e995] [cursor=pointer]:
+        - img [ref=e997]
+      - button "next slide" [ref=e999] [cursor=pointer]:
+        - img [ref=e1001]
+  - generic [ref=e1007]:
+    - generic [ref=e1009]:
+      - heading "Our Services" [level=2] [ref=e1011]
+      - paragraph [ref=e1012]: We offer specialized teams to support each of the core pillars of your business.
+    - generic [ref=e1013]:
+      - tablist [ref=e1014]:
+        - tab "Operations" [selected] [ref=e1015] [cursor=pointer]:
+          - heading "Operations" [level=3] [ref=e1016]
+        - tab "Finance" [ref=e1017] [cursor=pointer]:
+          - heading "Finance" [level=3] [ref=e1018]
+        - tab "Digital" [ref=e1019] [cursor=pointer]:
+          - heading "Digital" [level=3] [ref=e1020]
+        - tab "HR" [ref=e1021] [cursor=pointer]:
+          - heading "HR" [level=3] [ref=e1022]
+      - tabpanel "Operations" [ref=e1024]:
+        - generic [ref=e1025]:
+          - img "Standard Operating Procedures" [ref=e1027]
+          - generic [ref=e1028]:
+            - generic [ref=e1029]:
+              - heading "Optimize Your Workflow" [level=3] [ref=e1031]
+              - paragraph [ref=e1032]: We help landscape, snow, and construction companies simplify their operations by implementing software, refining processes, and making tools like Aspire and Buildertrend work for their team.
+            - button "Learn more" [ref=e1035] [cursor=pointer]:
+              - generic [ref=e1036]: Learn more
+  - generic [ref=e1041]:
+    - generic [ref=e1043]:
+      - heading "The People Behind Miri" [level=2] [ref=e1045]
+      - paragraph [ref=e1047]: We're always looking for great talent.
+      - link "Join our team" [ref=e1048] [cursor=pointer]:
+        - /url: https://docs.google.com/forms/d/e/1FAIpQLSeBoXrL-grJIQg5PPhon73buKD1aUytT0h6uwXAohbzVDcwlw/viewform?usp=sharing
+        - generic [ref=e1049]: Join our team
+    - generic [ref=e1051]:
+      - button "Ramel Sanchez Ramel Sanchez Management & Operational Development" [ref=e1052] [cursor=pointer]:
+        - img "Ramel Sanchez" [ref=e1054]
+        - generic [ref=e1055]:
+          - generic [ref=e1057]: Ramel Sanchez
+          - generic [ref=e1058]: Management & Operational Development
+      - button "Nauman Nadeem Nauman Nadeem Accounting & FP&A Services" [ref=e1059] [cursor=pointer]:
+        - img "Nauman Nadeem" [ref=e1061]
+        - generic [ref=e1062]:
+          - generic [ref=e1064]: Nauman Nadeem
+          - generic [ref=e1065]: Accounting & FP&A Services
+      - button "Kelvin Man Kelvin Man Digital Design" [ref=e1066] [cursor=pointer]:
+        - img "Kelvin Man" [ref=e1068]
+        - generic [ref=e1069]:
+          - generic [ref=e1071]: Kelvin Man
+          - generic [ref=e1072]: Digital Design
+      - button "Mika Sanchez Mika Sanchez Development & CTO Services" [ref=e1073] [cursor=pointer]:
+        - img "Mika Sanchez" [ref=e1075]
+        - generic [ref=e1076]:
+          - generic [ref=e1078]: Mika Sanchez
+          - generic [ref=e1079]: Development & CTO Services
+      - button "Keenan Baird Keenan Baird Management & Operational Development" [ref=e1080] [cursor=pointer]:
+        - img "Keenan Baird" [ref=e1082]
+        - generic [ref=e1083]:
+          - generic [ref=e1085]: Keenan Baird
+          - generic [ref=e1086]: Management & Operational Development
+      - button "Amber Shoap Amber Shoap Management & Operational Development" [ref=e1087] [cursor=pointer]:
+        - img "Amber Shoap" [ref=e1089]
+        - generic [ref=e1090]:
+          - generic [ref=e1092]: Amber Shoap
+          - generic [ref=e1093]: Management & Operational Development
+      - button "Rachel Garner Rachel Garner Digital Design" [ref=e1094] [cursor=pointer]:
+        - img "Rachel Garner" [ref=e1096]
+        - generic [ref=e1097]:
+          - generic [ref=e1099]: Rachel Garner
+          - generic [ref=e1100]: Digital Design
+      - button "Arianne Rabbitt Arianne Rabbitt Strategic HR Leadership & Development" [ref=e1101] [cursor=pointer]:
+        - img "Arianne Rabbitt" [ref=e1103]
+        - generic [ref=e1104]:
+          - generic [ref=e1106]: Arianne Rabbitt
+          - generic [ref=e1107]: Strategic HR Leadership & Development
+  - generic [ref=e1112]:
+    - heading "Schedule a Call to explore if Miri is right for you" [level=2] [ref=e1115]
+    - paragraph [ref=e1117]: No strings attached.
+    - link "Connect" [ref=e1119] [cursor=pointer]:
+      - /url: ""
+  - generic [ref=e1123]:
+    - generic [ref=e1125]:
+      - link [ref=e1126] [cursor=pointer]:
+        - /url: "#header"
+      - generic [ref=e1127]:
+        - link "About" [ref=e1128] [cursor=pointer]:
+          - /url: "#about"
+        - link "Industries" [ref=e1129] [cursor=pointer]:
+          - /url: "#industries"
+        - link "Testimonials" [ref=e1130] [cursor=pointer]:
+          - /url: "#testimonials"
+        - link "Services" [ref=e1131] [cursor=pointer]:
+          - /url: "#services"
+        - link "People" [ref=e1132] [cursor=pointer]:
+          - /url: "#people"
+    - generic [ref=e1135]:
+      - generic [ref=e1136]: © 2025 Miri. All rights reserved.
+      - generic [ref=e1137]:
+        - link "Privacy Policy" [ref=e1138] [cursor=pointer]:
+          - /url: /privacy-policy
+        - link "Terms of Service" [ref=e1139] [cursor=pointer]:
+          - /url: /terms-of-service

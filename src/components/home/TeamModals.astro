@@ -68,7 +68,7 @@ const TEAM_LAYOUT_IDS: Record<string, { tabsMenu: string; firstTabLink: string }
   const industryActive = !functionalIsDefault;
   const layoutIds = TEAM_LAYOUT_IDS[entry.data.slug];
   return (
-    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
+    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel team-modal-popup">
       <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
         <div fs-modal-element={closeAttr} class="fs_modal-1_close-2">
           <div class="fs_modal-1_close-icon-2 w-embed">
@@ -81,7 +81,7 @@ const TEAM_LAYOUT_IDS: Record<string, { tabsMenu: string; firstTabLink: string }
           </div>
         </div>
       </div>
-      <div class="fs_modal-1_wrapper-2 people">
+      <div class="fs_modal-1_wrapper-2 people team-modal">
         <div class="layout507_image-wrapper">
           <Image
             src={entry.data.headshot}

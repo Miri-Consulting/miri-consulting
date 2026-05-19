@@ -123,7 +123,7 @@ const SERVICE_LAYOUT_IDS: Record<
   const closeAttr = modalAttr.replace(/^modal/, 'close');
   const layoutIds = SERVICE_LAYOUT_IDS[entry.data.slug];
   return (
-    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel">
+    <div fs-modal-element={modalAttr} class="fs_modal-1_popup-2 ramel service-modal-popup">
       <div fs-modal-element={closeAttr} class="fs_modal-1_cover-2">
         <div fs-modal-element={closeAttr} class="fs_modal-1_close-2">
           <div class="fs_modal-1_close-icon-2 w-embed">
@@ -136,7 +136,7 @@ const SERVICE_LAYOUT_IDS: Record<
           </div>
         </div>
       </div>
-      <div class="fs_modal-1_wrapper-2 people">
+      <div class="fs_modal-1_wrapper-2 people service-modal">
         <div id={layoutIds?.contentTop} class="layout507_card-content-top">
           <div class="margin-bottom margin-small">
             <h2 class="heading-style-h3">{entry.data.modalHeading}</h2>

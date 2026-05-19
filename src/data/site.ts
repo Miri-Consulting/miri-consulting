@@ -5,7 +5,6 @@ export const site = {
     "Miri is a consulting company that helps landscape, construction, and snow removal companies customize and integrate Aspire, Buildertrend, Quickbooks, and other industry standard softwares. Our Teams specialize in project management, financial forecasting and month-end close, HR onboarding and counseling, and digital design assistance. We work with you directly to strategize solutions for your company's specific needs, and we continue to support you as you implement new systems and grow your business.",
   url: 'https://www.miri-consulting.com',
   ogImage: 'https://www.miri-consulting.com/media/og-image.png',
-  splineScene: 'https://prod.spline.design/g1zcjk-5vLl2eWGi/scene.splinecode',
   splineSceneLocal: '/assets/spline/hero.scene.splinecode',
   joinTeamFormUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSeBoXrL-grJIQg5PPhon73buKD1aUytT0h6uwXAohbzVDcwlw/viewform?usp=sharing',
@@ -21,7 +20,6 @@ export const navLinks = [
 ] as const;
 export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',
-  calendlyLegalUrl: 'https://calendly.com/ramel-miri/chat',
 } as const;
 
 export const analytics = {

@@ -41,6 +41,25 @@
   max-width: 100%;
 }
 
+.testimonial23_customer-image {
+  width: 4rem;
+  min-width: 4rem;
+  height: 4rem;
+  min-height: 4rem;
+  /* Portraits and logo avatars share this base size. The .testimonial23_logo-avatar
+     variant below adds white background + padding + contain-fit; portraits
+     instead crop-fit to fill the circle so faces aren't stretched. */
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Logo-avatar variant overrides cover with contain so wide / non-square
+   company marks don't get cropped. Border radius stays 50% so the chrome
+   matches the portrait variant. */
+.testimonial23_customer-image.testimonial23_logo-avatar {
+  object-fit: contain;
+}
+
 .testimonial23_client .text-weight-semibold,
 .testimonial23_client .text-size-tiny,
 .testimonial23_client-info > div {
@@ -57,6 +76,34 @@
   object-position: 50% 20%;
 }
 
+/* Keep incomplete team rows centered while preserving the grid column rhythm. */
+@media screen and (min-width: 992px) {
+  .team8_list .team8_item:nth-last-child(1):nth-child(4n + 1),
+  .team8_list .team8_item:nth-last-child(2):nth-child(4n + 1) {
+    grid-column-start: 2;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .team8_list .team8_item:nth-last-child(1):nth-child(3n + 1) {
+    grid-column-start: 2;
+  }
+}
+
+.header142_component .calendly-widget-big,
+.header142_component .button-5.is-secondary,
+.section_contact9 .calendly-widget {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  min-height: 3rem;
+  padding: .75rem 1.5rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 .fs_modal-1_wrapper-2.people {
   align-items: start;
 }
@@ -65,14 +112,16 @@
   min-width: 0;
 }
 
-.fs_modal-1_wrapper-2 .layout507_image-wrapper {
+.fs_modal-1_wrapper-2.team-modal .layout507_image-wrapper {
   align-self: stretch;
   min-height: 14rem;
-  max-height: 72vh;
+  height: 100%;
+  max-height: none;
 }
 
-.fs_modal-1_wrapper-2 .layout507_image {
-  max-height: 72vh;
+.fs_modal-1_wrapper-2.team-modal .layout507_image {
+  height: 100%;
+  max-height: none;
   object-fit: cover;
 }
 
@@ -131,7 +180,7 @@
     margin-bottom: 0;
   }
 
-  .fs_modal-1_popup-2 {
+  .fs_modal-1_popup-2.team-modal-popup {
     justify-content: center;
     align-items: flex-start;
     overflow-x: hidden;
@@ -139,7 +188,7 @@
     padding: 1rem 2rem;
   }
 
-  .fs_modal-1_wrapper-2 {
+  .fs_modal-1_wrapper-2.team-modal {
     height: auto;
     max-height: none;
     margin-top: 0;
@@ -148,22 +197,17 @@
     overflow: visible;
   }
 
-  .fs_modal-1_wrapper-2.people {
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 1.25rem;
-  }
-
   .fs_modal-1_content-2 {
     grid-row-gap: 1rem;
     padding: 1.25rem;
   }
 
-  .fs_modal-1_wrapper-2 .layout507_image-wrapper {
+  .fs_modal-1_wrapper-2.team-modal .layout507_image-wrapper {
     min-height: 12rem;
     max-height: 58vh;
   }
 
-  .fs_modal-1_wrapper-2 .layout507_image {
+  .fs_modal-1_wrapper-2.team-modal .layout507_image {
     max-height: 58vh;
   }
 
@@ -210,18 +254,26 @@
 }
 
 @media screen and (max-width: 991px) {
-  .fs_modal-1_popup-2 {
+  .fs_modal-1_popup-2.team-modal-popup {
     align-items: flex-start;
     overflow-y: auto;
   }
 
-  .fs_modal-1_wrapper-2,
-  .fs_modal-1_wrapper-2.people {
+  .fs_modal-1_wrapper-2.team-modal {
     height: auto;
     max-height: none;
     margin-top: 1rem;
     margin-bottom: 1rem;
     overflow: visible;
+  }
+
+  .fs_modal-1_wrapper-2.service-modal > .layout507_image-wrapper {
+    display: none;
+  }
+
+  .fs_modal-1_wrapper-2.service-modal .layout493_paragraph {
+    height: 0 !important;
+    overflow: hidden;
   }
 }
 

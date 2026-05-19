@@ -2,7 +2,6 @@
 name: "MD Property Services"
 slug: "md-property-services"
 order: 3
-logo: "../../assets/logos/md-property-services.png"
-logoAlt: "MD Property Services"
-sizeClass: "max-2"
+logo: "../../assets/logos/md-logo-banner.png"
+logoAlt: "MD Property Services logo"
 ---

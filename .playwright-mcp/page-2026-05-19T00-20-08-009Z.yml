@@ -1,0 +1,230 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Miri Consulting" [ref=e6] [cursor=pointer]:
+          - /url: index.html#header
+          - img "Miri Consulting" [ref=e7]
+        - generic [ref=e8]:
+          - button "menu" [ref=e9] [cursor=pointer]
+          - link "Connect" [ref=e15] [cursor=pointer]:
+            - /url: https://calendly.com/ramelsanchez/chat
+    - generic [ref=e26]:
+      - generic [ref=e28]:
+        - img [ref=e31]
+        - img [ref=e35]
+        - img [ref=e39]
+        - img [ref=e43]
+        - img [ref=e47]
+      - heading "Your Vision Our Expertise" [level=1] [ref=e50]:
+        - text: Your Vision
+        - text: Our Expertise
+      - paragraph [ref=e51]: We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.
+      - generic [ref=e53]:
+        - link "Connect" [ref=e55] [cursor=pointer]:
+          - /url: https://calendly.com/ramelsanchez/chat
+        - link "Learn more" [ref=e56] [cursor=pointer]:
+          - /url: index.html#services
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - img "WJ Landscape logo" [ref=e62]
+        - img "Midlands Landscape logo" [ref=e64]
+        - img "MD Property Services logo" [ref=e66]
+        - img "Garden View logo" [ref=e68]
+        - img "Redwood logo" [ref=e70]
+        - img "Branch logo" [ref=e72]
+        - img "Cutting Edge logo" [ref=e74]
+        - img "Osprey Landscape logo" [ref=e76]
+        - generic [ref=e77]:
+          - img "Gillam Lawncare logo"
+        - generic [ref=e78]:
+          - img "Good Earth Aspen logo"
+        - img "Black Diamond Landscape logo" [ref=e80]
+        - img "Willis Commercial Landscaping logo" [ref=e82]
+        - img "Greenfield Capital Partners logo" [ref=e84]
+        - img "Los Alamos Landscaping logo" [ref=e86]
+      - generic [ref=e87]:
+        - img [ref=e89]
+        - img [ref=e91]
+        - img [ref=e93]
+        - img [ref=e95]
+        - img [ref=e97]
+        - img [ref=e99]
+        - img [ref=e101]
+        - img [ref=e103]
+        - img [ref=e107]
+        - img [ref=e109]
+        - img [ref=e111]
+        - img [ref=e113]
+    - generic [ref=e118]:
+      - generic [ref=e119]:
+        - heading "How We Work" [level=2] [ref=e121]
+        - paragraph [ref=e122]:
+          - text: We roll up our sleeves and get to know your business, pain points, and goals.
+          - text: Then we tailor and execute projects that simplify operations and increase revenue.
+      - generic [ref=e123]:
+        - tablist [ref=e124]:
+          - tab "Deep Discovery" [selected] [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]: Deep Discovery
+          - tab "Collaborative Execution" [ref=e127] [cursor=pointer]:
+            - generic [ref=e128]: Collaborative Execution
+          - tab "Long-Term Partnership" [ref=e129] [cursor=pointer]:
+            - generic [ref=e130]: Long-Term Partnership
+        - tabpanel "Deep Discovery" [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - heading "Deep Discovery" [level=2] [ref=e136]
+              - paragraph [ref=e137]: We take time to understand your unique workflows, challenges, and goals. That way, our solutions align with what you truly need — not a generic blueprint.
+            - img "Business management consulting services" [ref=e139]
+    - generic [ref=e143]:
+      - generic [ref=e145]:
+        - heading "Who We Work With" [level=2] [ref=e147]
+        - paragraph [ref=e148]:
+          - text: We partner with owners and operators in the landscape, snow, and construction industries
+          - text: to streamline operations, tighten systems, and turn efficiency into profit.
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - heading "Service-Based Businesses" [level=2] [ref=e154]
+          - paragraph [ref=e155]: We refine estimating, project management, and financial processes so businesses can scale with confidence.
+        - generic [ref=e156]:
+          - tablist [ref=e157]:
+            - tab "Landscape Maintenance Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team." [selected] [ref=e158] [cursor=pointer]:
+              - heading "Landscape Maintenance" [level=3] [ref=e159]
+              - paragraph [ref=e162]: Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team.
+            - tab "Snow Removal Subcontractor mayhem, slip and fall liability, and 3am dispatches. We help snow operations implement bulletproof systems for tracking, documenting, and invoicing so you can stay protected and bill fast, even on no sleep." [ref=e163] [cursor=pointer]:
+              - heading "Snow Removal" [level=3] [ref=e164]
+              - paragraph [ref=e166]: Subcontractor mayhem, slip and fall liability, and 3am dispatches. We help snow operations implement bulletproof systems for tracking, documenting, and invoicing so you can stay protected and bill fast, even on no sleep.
+            - tab "Landscape Construction & Builders Timelines shift, change orders pile up, and quality slips between trades. It can be easy to lose control. We help construction teams get ahead of the disorder by aligning estimating, job costing, and project management so your clients stay in the loop and out of the stress." [ref=e167] [cursor=pointer]:
+              - heading "Landscape Construction & Builders" [level=3] [ref=e168]
+              - paragraph [ref=e170]: Timelines shift, change orders pile up, and quality slips between trades. It can be easy to lose control. We help construction teams get ahead of the disorder by aligning estimating, job costing, and project management so your clients stay in the loop and out of the stress.
+          - tabpanel "Landscape Maintenance Crews miss billable details, receipts get lost in the fray, and the office spends hours chasing down info. We give your team simple ways to track services and create methodical workflows that grow with your portfolio and make Aspire work for your team." [ref=e172]:
+            - img "Landscape Maintenance" [ref=e174]
+    - generic [ref=e178]:
+      - generic [ref=e181]:
+        - heading "Customer Testimonials" [level=2] [ref=e183]
+        - paragraph [ref=e184]: See what clients are saying about Miri
+      - region "carousel" [ref=e185]
+    - generic [ref=e191]:
+      - generic [ref=e193]:
+        - heading "Our Services" [level=2] [ref=e195]
+        - paragraph [ref=e196]: We offer specialized teams to support each of the core pillars of your business.
+      - generic [ref=e197]:
+        - tablist [ref=e198]:
+          - tab "Operations" [selected] [ref=e199] [cursor=pointer]:
+            - heading "Operations" [level=3] [ref=e200]
+          - tab "Finance" [ref=e201] [cursor=pointer]:
+            - heading "Finance" [level=3] [ref=e202]
+          - tab "Digital" [ref=e203] [cursor=pointer]:
+            - heading "Digital" [level=3] [ref=e204]
+          - tab "HR" [ref=e205] [cursor=pointer]:
+            - heading "HR" [level=3] [ref=e206]
+        - tabpanel "Operations" [ref=e208]:
+          - generic [ref=e209]:
+            - img "Optimize Your Workflow" [ref=e211]
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - heading "Optimize Your Workflow" [level=3] [ref=e215]
+                - paragraph [ref=e216]: We help landscape, snow, and construction companies simplify their operations by implementing software, refining processes, and making tools like Aspire and Buildertrend work for their team.
+              - button "Learn more" [ref=e219] [cursor=pointer]:
+                - generic [ref=e220]: Learn more
+    - generic [ref=e225]:
+      - generic [ref=e227]:
+        - heading "The People Behind Miri" [level=2] [ref=e229]
+        - paragraph [ref=e231]: We're always looking for great talent.
+        - link "Join our team" [ref=e232] [cursor=pointer]:
+          - /url: https://docs.google.com/forms/d/e/1FAIpQLSeBoXrL-grJIQg5PPhon73buKD1aUytT0h6uwXAohbzVDcwlw/viewform?usp=sharing
+          - generic [ref=e233]: Join our team
+      - generic [ref=e235]:
+        - button "Ramel Sanchez Ramel Sanchez Management & Operational Development" [ref=e236] [cursor=pointer]:
+          - img "Ramel Sanchez" [ref=e238]
+          - generic [ref=e239]:
+            - generic [ref=e241]: Ramel Sanchez
+            - generic [ref=e242]: Management & Operational Development
+        - button "Keenan Baird Keenan Baird Management & Operational Development" [ref=e243] [cursor=pointer]:
+          - img "Keenan Baird" [ref=e245]
+          - generic [ref=e246]:
+            - generic [ref=e248]: Keenan Baird
+            - generic [ref=e249]: Management & Operational Development
+        - button "Amber Shoap Amber Shoap Management & Operational Development" [ref=e250] [cursor=pointer]:
+          - img "Amber Shoap" [ref=e252]
+          - generic [ref=e253]:
+            - generic [ref=e255]: Amber Shoap
+            - generic [ref=e256]: Management & Operational Development
+        - button "Daniel Shoap Daniel Shoap Estimating & Sales Systems" [ref=e257] [cursor=pointer]:
+          - img "Daniel Shoap" [ref=e259]
+          - generic [ref=e260]:
+            - generic [ref=e262]: Daniel Shoap
+            - generic [ref=e263]: Estimating & Sales Systems
+        - button "Benjamin Harwood Benjamin Harwood Operations & Field Execution" [ref=e264] [cursor=pointer]:
+          - img "Benjamin Harwood" [ref=e266]
+          - generic [ref=e267]:
+            - generic [ref=e269]: Benjamin Harwood
+            - generic [ref=e270]: Operations & Field Execution
+        - button "Nauman Nadeem Nauman Nadeem Accounting & FP&A Services" [ref=e271] [cursor=pointer]:
+          - img "Nauman Nadeem" [ref=e273]
+          - generic [ref=e274]:
+            - generic [ref=e276]: Nauman Nadeem
+            - generic [ref=e277]: Accounting & FP&A Services
+        - button "Kelvin Man Kelvin Man Digital Design" [ref=e278] [cursor=pointer]:
+          - img "Kelvin Man" [ref=e280]
+          - generic [ref=e281]:
+            - generic [ref=e283]: Kelvin Man
+            - generic [ref=e284]: Digital Design
+        - button "Mika Sanchez Mika Sanchez Development & CTO Services" [ref=e285] [cursor=pointer]:
+          - img "Mika Sanchez" [ref=e287]
+          - generic [ref=e288]:
+            - generic [ref=e290]: Mika Sanchez
+            - generic [ref=e291]: Development & CTO Services
+        - button "Rachel Garner Rachel Garner Digital Design" [ref=e292] [cursor=pointer]:
+          - img "Rachel Garner" [ref=e294]
+          - generic [ref=e295]:
+            - generic [ref=e297]: Rachel Garner
+            - generic [ref=e298]: Digital Design
+        - button "Arianne Rabbitt Arianne Rabbitt Strategic HR Leadership & Development" [ref=e299] [cursor=pointer]:
+          - img "Arianne Rabbitt" [ref=e301]
+          - generic [ref=e302]:
+            - generic [ref=e304]: Arianne Rabbitt
+            - generic [ref=e305]: Strategic HR Leadership & Development
+    - generic [ref=e310]:
+      - heading "Schedule a Call to explore if Miri is right for you" [level=2] [ref=e313]
+      - paragraph [ref=e315]: No strings attached.
+      - link "Connect" [ref=e317] [cursor=pointer]:
+        - /url: https://calendly.com/ramelsanchez/chat
+    - generic [ref=e321]:
+      - generic [ref=e323]:
+        - link "Miri Consulting" [ref=e324] [cursor=pointer]:
+          - /url: index.html#header
+          - img "Miri Consulting" [ref=e325]
+        - generic [ref=e326]:
+          - link "About" [ref=e327] [cursor=pointer]:
+            - /url: index.html#about
+          - link "Industries" [ref=e328] [cursor=pointer]:
+            - /url: index.html#industries
+          - link "Testimonials" [ref=e329] [cursor=pointer]:
+            - /url: index.html#testimonials
+          - link "Services" [ref=e330] [cursor=pointer]:
+            - /url: index.html#services
+          - link "People" [ref=e331] [cursor=pointer]:
+            - /url: index.html#people
+      - generic [ref=e334]:
+        - generic [ref=e335]: © 2025 Miri. All rights reserved.
+        - generic [ref=e336]:
+          - link "Privacy Policy" [ref=e337] [cursor=pointer]:
+            - /url: /privacy-policy
+          - link "Terms of Service" [ref=e338] [cursor=pointer]:
+            - /url: /terms-of-service
+  - generic [ref=e341]:
+    - button "Menu" [ref=e342]:
+      - img [ref=e344]
+      - generic: Menu
+    - button "Inspect" [ref=e348]:
+      - img [ref=e350]
+      - generic: Inspect
+    - button "Audit" [ref=e352]:
+      - generic [ref=e353]:
+        - img [ref=e354]
+        - img [ref=e357]
+      - generic: Audit
+    - button "Settings" [ref=e360]:
+      - img [ref=e362]
+      - generic: Settings

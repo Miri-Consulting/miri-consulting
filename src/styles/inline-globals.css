@@ -229,35 +229,28 @@ margin: 0rem !important;
 }
 
 .logo-marquee-list .logo3_wrapper {
-  width: 11.5rem;
-  min-width: 11.5rem;
+  width: 8rem;
+  min-width: 8rem;
   height: 4.5rem;
-  flex: 0 0 11.5rem;
+  flex: 0 0 8rem;
   align-items: center;
   justify-content: center;
   padding-inline: .5rem;
 }
 
+/* Inside the marquee, let the per-class rules from the Webflow shared
+   bundle drive logo size (.logo3_logo defaults to 2.5rem tall; .max-3 to
+   4rem; .max-2-25 to 2.25rem; .max-2 to 2rem; .max-1-75 to 1.75rem;
+   .osprey to 3.75rem). The wrapper above pins each slot to
+   8rem × 4.5rem so the marquee animation has consistent slot widths;
+   `object-fit: contain` keeps tall/wide logos from distorting when their
+   auto-derived width exceeds the slot. Previously this rule capped every
+   logo at 3rem tall, which flattened max-3/osprey logos to 48px instead
+   of the 64/60px prod renders. */
 .logo-marquee-list .logo3_logo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 10rem;
-  max-height: 3rem;
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
-}
-
-.logo-marquee-list .logo3_logo.max-3,
-.logo-marquee-list .logo3_logo.osprey {
-  height: 100%;
-  max-height: 3rem;
-  padding-bottom: 0;
-}
-
-.logo-marquee-list .logo3_logo.max-1-75,
-.logo-marquee-list .logo3_logo.max-2,
-.logo-marquee-list .logo3_logo.max-2-25 {
-  height: 100%;
 }
 
 .logo3_external-logo-link {
@@ -294,4 +287,83 @@ margin: 0rem !important;
     animation: none;
     transform: none;
   }
+}
+
+/* Desktop-only marquee scale-up. The mobile / tablet sizes above keep
+   `.section_logo3` compact in small viewports, but at desktop the section
+   sits between the hero and "How We Work" with ~4rem of section padding top
+   and bottom, leaving the strip looking small and the section visually thin.
+   Growing the wrapper + the size-class max-heights ~1.4x at >=992px keeps
+   the marquee proportionally balanced against its surrounding whitespace
+   without disturbing mobile (where ClientLogoMarqueeMobile takes over). */
+@media screen and (min-width: 992px) {
+  .logo-marquee {
+    min-height: 7rem;
+  }
+
+  .logo-marquee-list .logo3_wrapper {
+    width: 11rem;
+    min-width: 11rem;
+    height: 6.25rem;
+    flex: 0 0 11rem;
+  }
+
+  .logo-marquee-list .logo3_logo {
+    max-height: 3.5rem;
+  }
+
+  .logo-marquee-list .logo3_logo.max-3 {
+    max-height: 5.5rem;
+  }
+
+  .logo-marquee-list .logo3_logo.max-2-25 {
+    max-height: 3.15rem;
+  }
+
+  .logo-marquee-list .logo3_logo.max-2 {
+    max-height: 2.8rem;
+  }
+
+  .logo-marquee-list .logo3_logo.max-1-75 {
+    max-height: 2.45rem;
+  }
+
+  .logo-marquee-list .logo3_logo.osprey {
+    max-height: 5.25rem;
+  }
+
+  .logo-marquee-logo {
+    max-height: 4.2rem;
+  }
+
+  .logo-marquee-logo.brand-logo-black-diamond {
+    max-height: 3.55rem;
+  }
+
+  .logo-marquee-logo.brand-logo-willis {
+    max-height: 3.1rem;
+  }
+
+  .logo-marquee-logo.brand-logo-greenfield {
+    max-height: 4.55rem;
+  }
+
+  .logo-marquee-logo.brand-logo-los-alamos {
+    max-height: 3.9rem;
+  }
+}
+
+/* Testimonial card backgrounds rotate by slide position: orange → light-blue
+   → dark-blue. Avoids having to set `color:` on every content entry, and
+   guarantees the rotation stays consistent as testimonials are added or
+   reordered. Colors match the legacy .testimonial23_card.{orange,light-blue,blue}
+   rules in the Webflow shared bundle. */
+.testimonial23_mask .testimonial23_slide:nth-child(3n + 1) .testimonial23_card {
+  background-color: #fa6e41; /* orange */
+}
+.testimonial23_mask .testimonial23_slide:nth-child(3n + 2) .testimonial23_card {
+  background-color: #27baf9; /* light-blue */
+}
+.testimonial23_mask .testimonial23_slide:nth-child(3n) .testimonial23_card {
+  background-color: #3457fa; /* dark-blue */
 }

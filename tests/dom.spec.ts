@@ -17,11 +17,16 @@ const expectedTeam = [
 
 const expectedTestimonialNames = [
   'Will Jameson',
-  'Elliott MacIsaac',
+  'Jeff Margulies',
   'Mark Meahl',
+  'Deborah Jay',
+  'Elliott MacIsaac',
   'Alex Ostblom',
   'Jamie Brady',
   'Ramu Veerappan',
+  'Ryan Gillam',
+  'Spencer Tanner',
+  'Carrie Toms',
 ];
 
 const expectedTestimonialQuoteFragments = [
@@ -92,12 +97,19 @@ test.describe('home page DOM', () => {
       .locator('.testimonial23_client-info strong')
       .allTextContents();
     expect(renderedNames.map((s) => s.trim())).toEqual(expectedTestimonialNames);
-    // Color variants must match each entry's `color` field.
+    // Card background colors rotate positionally via CSS (orange →
+    // light-blue → dark-blue), so the class list on each card stays the same
+    // bare `testimonial23_card`. Per-card color is asserted via the computed
+    // background-color below to keep the rotation honest as entries are
+    // added or reordered.
     const cards = page.locator('.section_testimonial23 .testimonial23_card');
-    const cardClassLists = await cards.evaluateAll((els) =>
-      els.map((el) => el.className.replace('testimonial23_card', '').trim()),
+    const colorCycle = ['rgb(250, 110, 65)', 'rgb(39, 186, 249)', 'rgb(52, 87, 250)'];
+    const bgColors = await cards.evaluateAll((els) =>
+      els.map((el) => getComputedStyle(el).backgroundColor),
     );
-    expect(cardClassLists).toEqual(['light-blue', 'blue', 'orange', 'orange', 'light-blue', 'blue']);
+    bgColors.forEach((bg, i) => {
+      expect(bg).toBe(colorCycle[i % colorCycle.length]);
+    });
     // First testimonial's quote fragment present.
     for (const fragment of expectedTestimonialQuoteFragments) {
       await expect(

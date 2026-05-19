@@ -1,5 +1,5 @@
 ---
-name: "Hr"
+name: "HR"
 slug: "hr"
 order: 4
 cardHeading: "Build Stronger Teams"
