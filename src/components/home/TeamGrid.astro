@@ -3,9 +3,10 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
 import { site } from '../../data/site';
+import { rootPath } from '../../utils/rootPath';
 
 const team = sortByOrder(await getCollection('team'));
-const arrowIconSrc = '/media/arrow-up-right.svg';
+const arrowIconSrc = rootPath('/media/arrow-up-right.svg');
 const joinTeamUrl = site.joinTeamFormUrl;
 ---
 

@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import { site, cta } from '../../data/site';
 import { calendlyPopupOnclick } from '../../utils/calendly';
+import { rootPath } from '../../utils/rootPath';
 
 interface Props {
   headline?: string;
@@ -21,7 +22,7 @@ const subheadline =
   subheadlineProp ??
   hero?.data.subheadline ??
   'We help landscape and construction companies streamline systems, master their software, and gain confidence in their numbers to drive profitable growth.';
-const splineSrc = site.splineSceneLocal;
+const splineSrc = rootPath(site.splineSceneLocal);
 const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
 ---
 
