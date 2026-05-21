@@ -1,6 +1,5 @@
 ---
 import { analytics, vendor } from '../../data/site';
-import { rootPath } from '../../utils/rootPath';
 
 interface Props {
   includeFinsweet?: boolean;
@@ -11,21 +10,18 @@ const gaId = analytics.gaMeasurementId;
 const gtmId = analytics.gtmId;
 const crispId = analytics.crispWebsiteId;
 const clarityId = analytics.clarityProjectId;
+
+// GA4 (gtag.js) loads directly from Google so hits go straight to
+// google-analytics.com/g/collect. The Webflow export shipped a "first-party
+// mode" tag (public/tracking/first-party) that monkey-patched XHR/sendBeacon
+// to proxy every hit through a masked same-origin path (/haqt6.../). That path
+// only resolved behind Webflow's server-side container and 405s on a static
+// host, so the tag and its `google_tags_first_party` bootstrap were removed.
+// The plain gtag('config', ...) below sets no transport_url, so GA4 collects
+// directly — and `gtag('event', 'calendly_booking', ...)` reaches GA4
+// regardless of GTM-container configuration.
 ---
 
-<script is:inline define:vars={{ gaId }}>
-  (function (w, i, g) {
-    w[g] = w[g] || [];
-    if (typeof w[g].push == 'function') w[g].push.apply(w[g], Array.isArray(i) ? i : [i]);
-  })(window, [gaId], 'google_tags_first_party');
-</script>
-<script async is:inline src={rootPath(vendor.firstPartyTag)}></script>
-<!-- Load the GA4 library directly so window.gtag() actually sends events to
-     google-analytics.com/g/collect. The Webflow-era setup defined window.gtag
-     as a dataLayer push and relied on the GTM container to forward events;
-     loading gtag.js explicitly decouples our analytics from GTM-container
-     configuration so events from `gtag('event', 'calendly_booking', ...)`
-     reach GA4 regardless of whether GTM is wired correctly. -->
 <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
 <script is:inline define:vars={{ gaId }}>
   window.dataLayer = window.dataLayer || [];

@@ -52,7 +52,6 @@ export const vendor = {
   webfont: 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
   cookieYes: `https://cdn-cookieyes.com/client_data/${analytics.cookieYesClientId}/script.js`,
   finsweetModal: 'https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js',
-  firstPartyTag: '/tracking/first-party',
   favicon: '/media/favicon.png',
   webclip: '/media/webclip.png',
 } as const;
