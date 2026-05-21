@@ -13,3 +13,12 @@ export function rootPath(path: string): string {
   }
   return `${base.replace(/\/$/, '')}${normalized}`;
 }
+
+export function homeAnchorPath(anchor: string): string {
+  return rootPath(`/#${anchor.replace(/^#/, '')}`);
+}
+
+export function localOrHomeAnchorPath(anchor: string, local: boolean): string {
+  const normalized = `#${anchor.replace(/^#/, '')}`;
+  return local ? normalized : homeAnchorPath(normalized);
+}

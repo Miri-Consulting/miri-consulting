@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+test.skip(
+  Boolean(process.env.CI) && process.env.RUN_VISUAL_TESTS !== '1',
+  'Visual screenshots are OS-specific; CI runs DOM tests unless RUN_VISUAL_TESTS=1 is set.',
+);
+
 const pages = [
   { name: 'home', path: '/' },
   { name: 'aspire-landscape', path: '/aspire-consulting-for-landscape-companies' },

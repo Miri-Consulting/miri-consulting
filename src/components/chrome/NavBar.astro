@@ -1,7 +1,7 @@
 ---
 import { cta, navLinks, webflow } from '../../data/site';
 import { calendlyPopupOnclick } from '../../utils/calendly';
-import { rootPath } from '../../utils/rootPath';
+import { localOrHomeAnchorPath, rootPath } from '../../utils/rootPath';
 
 interface Props {
   /** Home uses a different IX2 target id than legal pages. */
@@ -9,8 +9,10 @@ interface Props {
 }
 
 const { variant = 'home' } = Astro.props;
+const linksAreLocal = variant === 'home';
 const navInteractionId =
   variant === 'legal' ? webflow.navInteractionId.legal : webflow.navInteractionId.home;
+const logoHref = localOrHomeAnchorPath('header', linksAreLocal);
 
 const logoBase = '/media/logo-horizontal-white';
 const logoSrc = rootPath(`${logoBase}.png`);
@@ -33,7 +35,7 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
   data-duration="400"
 >
   <div class="navbar2_container">
-    <a href="index.html#header" class="navbar2_logo-link w-nav-brand">
+    <a href={logoHref} class="navbar2_logo-link w-nav-brand">
       <img
         src={logoSrc}
         loading="lazy"
@@ -46,7 +48,7 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
     </a>
     <nav role="navigation" class="navbar2_menu w-nav-menu">
       {navLinks.map((link) => (
-        <a href={link.href} class="navbar2_link w-nav-link">{link.label}</a>
+        <a href={localOrHomeAnchorPath(link.anchor, linksAreLocal)} class="navbar2_link w-nav-link">{link.label}</a>
       ))}
     </nav>
     <div

@@ -6,7 +6,7 @@
 - First-party images live in `src/assets/` and flow through Astro's `<Image>` component (Sharp pipeline → content-hashed `/_assets/<name>.<hash>.<ext>`).
 - Shared site constants (nav links, Calendly URL, analytics IDs, vendor paths) live in `src/data/site.ts`.
 - Legal pages still render a few static Webflow HTML partials (`src/partials/legal-*.html`, `src/partials/home/how-we-work.html`, `src/partials/aspire-landscape-landing-body.html`, `src/partials/body-scripts-home.html`) through `RawHtml`. `src/utils/rewriteAssetPaths.ts` only prepends Astro's `BASE_URL` for non-`/` deploys (GitHub Pages project sites) — the partials reference `/styles/`, `/scripts/`, `/media/`, `/tracking/` directly. Promoting those partials to native is optional follow-up work.
-- `public/` holds the committed self-hosted vendor assets: `public/styles/site.css` (Webflow shared bundle, pruned 55%), `public/scripts/{runtime,easing,slider,forms,spline-loader,jquery.min}.js`, `public/media/` (logo, favicon, OG image, process-tab images), `public/tracking/first-party`. No `prepare-vendor` script — what's in the repo is what gets served. Re-run `node scripts/prune-webflow-css.mjs` after content additions to shrink the CSS again.
+- `public/` holds the committed self-hosted vendor assets: `public/styles/site.css` (Webflow shared bundle, pruned 55%), `public/scripts/{runtime,easing,tabs,forms,spline-loader,jquery.min}.js`, `public/media/` (logo, favicon, OG image, process-tab images), `public/tracking/first-party`. No `prepare-vendor` script — what's in the repo is what gets served. Re-run `node scripts/prune-webflow-css.mjs` after content additions to shrink the CSS again. `tabs.js` is a Webflow chunk that registers the shared `tabs` module plus a no-op `slider` module shape; it intentionally does not ship Webflow slider behavior.
 - `tech-debt-cleanup.md` is the long-form tracker for the multi-phase cleanup; see it for phase status and decisions.
 
 ## Add a team member
@@ -64,7 +64,7 @@ In another:
 npm run test:visual
 ```
 
-Playwright defaults `BASE_URL` to `http://localhost:4321` (matching `astro preview`). DOM tests live in `tests/dom.spec.ts` (one viewport via the `dom` project); visual screenshot tests live in `tests/visual.spec.ts` (six viewport projects). On PRs and pushes to `master`, `.github/workflows/test.yml` runs `check` + `build` + the DOM project; visual screenshot tests stay local until a Linux-baseline workflow is set up.
+Playwright defaults `BASE_URL` to `http://localhost:4321` (matching `astro preview`). DOM tests live in `tests/dom.spec.ts` (one viewport via the `dom` project); visual screenshot tests live in `tests/visual.spec.ts` (six viewport projects). On PRs and pushes to `master`, `.github/workflows/test.yml` runs `check` + `build` + `npm run test:dom`; visual screenshot tests self-skip in CI unless `RUN_VISUAL_TESTS=1` is set because the committed screenshot baselines are OS-specific. Keep visual tests local until a Linux-baseline workflow is set up.
 
 ## Run visual regression against production
 

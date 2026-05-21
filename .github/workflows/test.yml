@@ -33,7 +33,7 @@ jobs:
           echo "Preview never became ready"
           exit 1
       - name: Run DOM tests
-        run: npx playwright test --project=dom
+        run: npm run test:dom
       - if: failure()
         uses: actions/upload-artifact@v4
         with:

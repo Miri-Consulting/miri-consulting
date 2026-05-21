@@ -4,6 +4,7 @@ import NavBar from '../components/chrome/NavBar.astro';
 import Footer from '../components/chrome/Footer.astro';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
+import { rootPath } from '../utils/rootPath';
 import { sanitizeLegalHead } from '../utils/sanitizeLegalHead';
 import { site, webflow } from '../data/site';
 import inlineGlobals from '../styles/inline-globals.css?raw';
@@ -20,6 +21,15 @@ interface Props {
 
 const { canonicalPath, bodyClass, bodyHtml, headHtml, webflowPageId } = Astro.props;
 const canonical = new URL(canonicalPath, site.url).href;
+const body = rewriteAssetPaths(
+  bodyHtml.replace(
+    /href=(["'])\/(?!\/)([^"']*)/g,
+    (_match, quote: string, rest: string) => `href=${quote}${rootPath(`/${rest}`)}`,
+  ),
+).replace(
+  /style="opacity:0"\s+(class="button-group is-center"><a href="[^"]*" class="button w-button">Back to Home<\/a>)/g,
+  '$1',
+);
 const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
   .replace(/<meta content="[^"]*" name="google-site-verification"\/>/, '')
   .replace(
@@ -52,8 +62,8 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
       </div>
       <main class="main-wrapper">
         <NavBar variant="legal" />
-        <RawHtml html={bodyHtml} />
-        <Footer />
+        <RawHtml html={body} />
+        <Footer variant="legal" />
       </main>
     </div>
     <RawHtml html={bodyScripts} />

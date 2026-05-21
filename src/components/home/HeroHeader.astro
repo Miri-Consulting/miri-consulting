@@ -13,7 +13,7 @@ interface Props {
 const {
   headline: headlineProp,
   subheadline: subheadlineProp,
-  learnMoreHref = 'index.html#services',
+  learnMoreHref = '#services',
 } = Astro.props;
 
 const hero = await getEntry('home', 'hero');
@@ -95,7 +95,7 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                                   event_label: 'hero',
                                 });
                               }
-                              window.location.href = '/thank-you';
+                              window.location.href = new URL('thank-you', document.baseURI).href;
                             }
                           });
                         </script>

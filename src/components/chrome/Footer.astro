@@ -1,6 +1,14 @@
 ---
 import { site, navLinks } from '../../data/site';
-import { rootPath } from '../../utils/rootPath';
+import { localOrHomeAnchorPath, rootPath } from '../../utils/rootPath';
+
+interface Props {
+  variant?: 'home' | 'legal';
+}
+
+const { variant = 'home' } = Astro.props;
+const linksAreLocal = variant === 'home';
+const logoHref = localOrHomeAnchorPath('header', linksAreLocal);
 
 const logoBase = '/media/logo-horizontal-white';
 const logoSrc = rootPath(`${logoBase}.png`);
@@ -17,7 +25,7 @@ const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
         <div class="padding-bottom padding-medium">
           <div class="footer7_top-wrapper">
             <a
-              href="index.html#header"
+              href={logoHref}
               id="w-node-_01b1c673-753b-abc2-cf46-8525606d7233-606d722d"
               class="footer7_logo-link w-nav-brand"
             >
@@ -39,7 +47,7 @@ const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
                       ? 'w-node-bd8d8176-1f60-eb7c-c62d-081e0b0578ce-606d722d'
                       : undefined;
                 return (
-                  <a href={link.href} id={id} class="footer7_link">{link.label}</a>
+                  <a href={localOrHomeAnchorPath(link.anchor, linksAreLocal)} id={id} class="footer7_link">{link.label}</a>
                 );
               })}
             </div>

@@ -12,11 +12,11 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { href: 'index.html#about', label: 'About' },
-  { href: 'index.html#industries', label: 'Industries' },
-  { href: 'index.html#testimonials', label: 'Testimonials' },
-  { href: 'index.html#services', label: 'Services' },
-  { href: 'index.html#people', label: 'People' },
+  { anchor: 'about', label: 'About' },
+  { anchor: 'industries', label: 'Industries' },
+  { anchor: 'testimonials', label: 'Testimonials' },
+  { anchor: 'services', label: 'Services' },
+  { anchor: 'people', label: 'People' },
 ] as const;
 export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',

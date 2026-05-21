@@ -61,6 +61,8 @@ const expectedDesktopLogoAlts = [
 ];
 
 const expectedServices = ['Operations', 'Finance', 'Digital', 'HR'];
+const expectedHomeNavHrefs = ['#about', '#industries', '#testimonials', '#services', '#people'];
+const expectedLegalNavHrefs = expectedHomeNavHrefs.map((href) => `/${href}`);
 
 test.describe('home page DOM', () => {
   test.beforeEach(async ({ page }) => {
@@ -151,6 +153,87 @@ test.describe('home page DOM', () => {
       await expect(
         page.locator('.section_layout507').getByText(service, { exact: false }).first(),
       ).toBeVisible();
+    }
+  });
+
+  test('Webflow tab runtime switches home and modal tab groups', async ({ page }) => {
+    const serviceTabs = page.locator('.section_layout507 .layout507_tabs.w-tabs');
+    await serviceTabs
+      .locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]')
+      .click();
+    await expect(
+      serviceTabs.locator(':scope > .w-tab-content > .w-tab-pane[data-w-tab="Tab 2"]'),
+    ).toHaveClass(/w--tab-active/);
+
+    const industryTabs = page.locator('.section_layout494 .layout493_tabs.w-tabs');
+    await industryTabs
+      .locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]')
+      .click();
+    await expect(
+      industryTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]'),
+    ).toHaveClass(/w--current/);
+    await expect(
+      industryTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 1"] .layout493_paragraph'),
+    ).toHaveCSS('height', '0px');
+
+    await page.locator('.team8_item').first().click();
+    const teamModalTabs = page.locator(
+      '.fs_modal-1_popup-2.team-modal-popup:visible .layout494_tabs.w-tabs',
+    );
+    await teamModalTabs
+      .locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]')
+      .click();
+    await expect(
+      teamModalTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]'),
+    ).toHaveClass(/w--current/);
+    await expect(
+      teamModalTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 1"] .layout494_paragraph'),
+    ).toHaveCSS('height', '0px');
+
+    await page.locator('.fs_modal-1_popup-2.team-modal-popup:visible .fs_modal-1_close-2').click();
+    await expect(page.locator('.fs_modal-1_popup-2.team-modal-popup:visible')).toHaveCount(0);
+    await serviceTabs.locator(':scope > .w-tab-content > .w-tab-pane.w--tab-active a[fs-modal-element]').click();
+    const serviceModalTabs = page.locator(
+      '.fs_modal-1_popup-2.service-modal-popup:visible .layout493_tabs.w-tabs',
+    );
+    await serviceModalTabs
+      .locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]')
+      .click();
+    await expect(
+      serviceModalTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]'),
+    ).toHaveClass(/w--current/);
+    await expect(
+      serviceModalTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 1"] .layout493_paragraph'),
+    ).toHaveCSS('height', '0px');
+  });
+
+  test('home header and footer links use local section anchors', async ({ page }) => {
+    const navHrefs = await page.locator('.navbar2_menu .navbar2_link').evaluateAll((els) =>
+      els.map((el) => el.getAttribute('href')),
+    );
+    expect(navHrefs).toEqual(expectedHomeNavHrefs);
+    await expect(page.locator('.navbar2_logo-link')).toHaveAttribute('href', '#header');
+
+    const footerHrefs = await page.locator('.footer7_link-list .footer7_link:not(.is-secondary)').evaluateAll((els) =>
+      els.map((el) => el.getAttribute('href')),
+    );
+    expect(footerHrefs).toEqual(expectedHomeNavHrefs);
+    await expect(page.locator('.footer7_logo-link')).toHaveAttribute('href', '#header');
+  });
+
+  test('legal-page navigation and back-home links point to the home page', async ({ page }) => {
+    for (const legalPath of ['/privacy-policy', '/terms-of-service']) {
+      await page.goto(legalPath, { waitUntil: 'networkidle' });
+
+      const navHrefs = await page.locator('.navbar2_menu .navbar2_link').evaluateAll((els) =>
+        els.map((el) => el.getAttribute('href')),
+      );
+      expect(navHrefs).toEqual(expectedLegalNavHrefs);
+      await expect(page.locator('.navbar2_logo-link')).toHaveAttribute('href', '/#header');
+
+      const backHome = page.getByRole('link', { name: 'Back to Home' });
+      await expect(backHome).toBeVisible();
+      await expect(backHome).toHaveAttribute('href', '/');
     }
   });
 
