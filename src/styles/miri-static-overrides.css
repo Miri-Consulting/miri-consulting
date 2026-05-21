@@ -243,12 +243,16 @@
   }
 
   .fs_modal-1_wrapper-2.team-modal .layout507_image-wrapper {
-    min-height: 12rem;
-    max-height: 58vh;
+    align-self: stretch;
+    min-height: 14rem;
+    height: 100%;
+    max-height: none;
   }
 
   .fs_modal-1_wrapper-2.team-modal .layout507_image {
-    max-height: 58vh;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
   }
 
   .fs_modal-1_heading-2,

@@ -16,21 +16,22 @@ const expectedTeam = [
 ];
 
 const expectedTestimonialNames = [
-  'Will Jameson',
-  'Jeff Margulies',
-  'Mark Meahl',
+  'Carrie Toms',
+  'Austin Evans',
   'Deborah Jay',
+  'Jeff Margulies',
   'Elliott MacIsaac',
+  'Will Jameson',
+  'Ryan Gillam',
+  'Spencer Tanner',
+  'Mark Meahl',
   'Alex Ostblom',
   'Jamie Brady',
   'Ramu Veerappan',
-  'Ryan Gillam',
-  'Spencer Tanner',
-  'Carrie Toms',
 ];
 
 const expectedTestimonialQuoteFragments = [
-  'Working with Miri has been one of the best decisions',
+  'In a few months with Miri',
 ];
 
 const expectedExternalLogos = [
@@ -41,18 +42,18 @@ const expectedExternalLogos = [
 ];
 
 const expectedDesktopLogoAlts = [
-  'wj-landscape-logo-full-color-rgb',
-  'Midlands Landscape',
-  'MD Property Services',
-  'GetLogoFileById',
-  'REDWOOD VERT',
-  'Brach Horizontal',
-  'Cutting-Edge-Logo-for-website-PNG',
-  'CleanShot 2025-03-24 at 14.01.09%402x 1',
-  'CleanShot 2025-03-24 at 14.02.06%402x 1',
-  'Midlands Landscape %283%29',
-  'Gillam Lawncare',
-  'GoodEarch Logo %281%29',
+  'WJ Landscape logo',
+  'Midlands Landscape logo',
+  'MD Property Services logo',
+  'Garden View logo',
+  'Redwood logo',
+  'Branch logo',
+  'Energyscapes logo',
+  'Cutting Edge logo',
+  'Repaymint logo',
+  'Osprey Landscape logo',
+  'Gillam Lawncare logo',
+  'Good Earth Aspen logo',
   'Black Diamond Landscape logo',
   'Willis Commercial Landscaping logo',
   'Greenfield Capital Partners logo',
@@ -88,21 +89,26 @@ test.describe('home page DOM', () => {
   });
 
   test('testimonial slider renders one slide per collection entry in order', async ({ page }) => {
-    // Phase 12.2 made the slider native. One slide per testimonial (was 10 in
-    // the partial via apply-util duplication). data-autoplay="false" keeps
-    // slide 1 visible by default.
-    const slides = page.locator('.section_testimonial23 .testimonial23_slide');
+    // The native infinite slider clones `slidesPerView` slides on each side
+    // for its loop; clones carry data-clone. Real slides = collection entries.
+    const slides = page.locator(
+      '.section_testimonial23 .testimonial23_slide:not([data-clone])',
+    );
     await expect(slides).toHaveCount(expectedTestimonialNames.length);
     const renderedNames = await slides
       .locator('.testimonial23_client-info strong')
       .allTextContents();
     expect(renderedNames.map((s) => s.trim())).toEqual(expectedTestimonialNames);
-    // Card background colors rotate positionally via CSS (orange →
-    // light-blue → dark-blue), so the class list on each card stays the same
-    // bare `testimonial23_card`. Per-card color is asserted via the computed
-    // background-color below to keep the rotation honest as entries are
-    // added or reordered.
-    const cards = page.locator('.section_testimonial23 .testimonial23_card');
+    // One nav dot per testimonial.
+    await expect(
+      page.locator('.section_testimonial23 .testimonial23_dot'),
+    ).toHaveCount(expectedTestimonialNames.length);
+    // Card background colors rotate by position (orange → light-blue →
+    // dark-blue). Asserted via computed background-color so the rotation
+    // stays honest as entries are added or reordered.
+    const cards = page.locator(
+      '.section_testimonial23 .testimonial23_slide:not([data-clone]) .testimonial23_card',
+    );
     const colorCycle = ['rgb(250, 110, 65)', 'rgb(39, 186, 249)', 'rgb(52, 87, 250)'];
     const bgColors = await cards.evaluateAll((els) =>
       els.map((el) => getComputedStyle(el).backgroundColor),

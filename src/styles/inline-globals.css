@@ -292,6 +292,15 @@ margin: 0rem !important;
   padding-bottom: 1rem;
 }
 
+/* On desktop + big tablets (≥768) the marquee gets ~3rem of breathing room
+   above and below the logo strip. Mobile keeps the tighter base spacing. */
+@media screen and (min-width: 768px) {
+  .section_logo3 .padding-section-small.logo {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
 /* Desktop/tablet-wide slots (≥992): prod-like width, logos fill slot height. */
 @media screen and (min-width: 992px) {
   .logo-marquee {
@@ -338,17 +347,7 @@ margin: 0rem !important;
   }
 }
 
-/* Testimonial card backgrounds rotate by slide position: orange → light-blue
-   → dark-blue. Avoids having to set `color:` on every content entry, and
-   guarantees the rotation stays consistent as testimonials are added or
-   reordered. Colors match the legacy .testimonial23_card.{orange,light-blue,blue}
-   rules in the Webflow shared bundle. */
-.testimonial23_mask .testimonial23_slide:nth-child(3n + 1) .testimonial23_card {
-  background-color: #fa6e41; /* orange */
-}
-.testimonial23_mask .testimonial23_slide:nth-child(3n + 2) .testimonial23_card {
-  background-color: #27baf9; /* light-blue */
-}
-.testimonial23_mask .testimonial23_slide:nth-child(3n) .testimonial23_card {
-  background-color: #3457fa; /* dark-blue */
-}
+/* Testimonial card colors rotate by slide position (orange → light-blue →
+   dark-blue). The native slider in TestimonialSlider.astro applies the
+   rotation as explicit classes per index so the infinite-loop clones carry
+   the right color — see that component's scoped styles. */
