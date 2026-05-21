@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-test.skip(
-  Boolean(process.env.CI) && process.env.RUN_VISUAL_TESTS !== '1',
-  'Visual screenshots are OS-specific; CI runs DOM tests unless RUN_VISUAL_TESTS=1 is set.',
-);
+// Visual screenshots are OS-specific: baselines are committed per platform
+// (*-darwin.png for local macOS dev, *-linux.png for CI). The CI `visual` job
+// runs this spec inside the pinned Playwright Docker image so its rendering
+// matches the committed *-linux.png baselines.
 
 const pages = [
   { name: 'home', path: '/' },
@@ -25,11 +25,11 @@ for (const pageInfo of pages) {
     await page.route('**/cdn-cookieyes.com/**', (route) => route.abort());
     await page.goto(pageInfo.path, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
-    // .spline-scene is the only remaining mask. The 3D scene render is
-    // non-deterministic frame-to-frame. The logo marquee unmasked at Phase
-    // 12.1; the testimonial slider unmasked at Phase 12.2 — Webflow's slider
-    // auto-advances when data-autoplay="true" but our data-autoplay="false" +
-    // Playwright's animations: 'disabled' keeps it on slide 1 deterministically.
+    // .spline-scene is the only remaining mask — the 3D scene render is
+    // non-deterministic frame-to-frame. The logo marquee and the native
+    // testimonial slider are both deterministic at rest: the slider has no
+    // autoplay and initialises at position 0, and Playwright's global
+    // animations: 'disabled' freezes the marquee.
     const masks = [page.locator('.spline-scene')];
     await expect(page).toHaveScreenshot(`${pageInfo.name}.png`, {
       fullPage: true,

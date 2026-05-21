@@ -42,3 +42,41 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+  visual:
+    runs-on: ubuntu-latest
+    # Pinned Playwright image: rendering must match the committed *-linux.png
+    # baselines, which are generated locally with this exact image. Bump this
+    # tag and @playwright/test together, then refresh the baselines.
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Start preview server
+        run: |
+          npm run preview &
+          for i in $(seq 1 60); do
+            if curl -fs http://localhost:4321 > /dev/null; then
+              echo "Preview ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Preview never became ready"
+          exit 1
+      - name: Run visual tests
+        run: npx playwright test tests/visual.spec.ts
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-visual-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
