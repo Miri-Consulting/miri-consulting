@@ -1,0 +1,45 @@
+# Miri Consulting
+
+> Miri Consulting helps US landscape, snow, and construction companies get more value from their software and systems — especially Aspire — by improving setup, accounting workflows, job costing, estimating, reporting, and day-to-day operations.
+
+Miri works with landscape maintenance, snow, landscape construction, and other service-based companies that need stronger systems, clearer numbers, and better execution. Engagements span four practice areas — Operations, Finance, Digital, and HR — and the team specializes in implementing and cleaning up industry-standard software such as Aspire, Buildertrend, and QuickBooks, then connecting that software to how the business actually runs.
+
+Service area: United States. Primary contact path: book an introductory call through the Calendly scheduling link on the site.
+
+This is the full-text version. A concise index is available at https://www.miri-consulting.com/llms.txt.
+
+## Core pages
+
+- [Home](https://www.miri-consulting.com/): Overview of Miri Consulting — services (Operations, Finance, Digital, HR), industries served, client testimonials, and the team.
+- [Aspire Consulting for Landscape Companies](https://www.miri-consulting.com/aspire-consulting-for-landscape-companies): Miri's Aspire consulting offering for US landscape companies — detailed below.
+
+## Aspire consulting for landscape companies
+
+What an Aspire consultant does: helps a landscape company configure, clean up, and use Aspire so the software supports real business decisions. This spans workflows for estimating, scheduling, purchasing, invoicing, job costing, reporting, permissions, item catalogs, and accounting handoffs to systems such as QuickBooks. The goal is not just to "use Aspire" — it is to get operations and finance teams working from the same clean, consistent system.
+
+Signs a landscape company should engage Miri:
+
+- Messy setup — item catalogs, kits, production factors, permissions, and templates have drifted over time.
+- Unclear numbers — job costing reports do not match what finance expects, and month-end close takes too long.
+- Inconsistent workflows — crews, managers, and office teams capture details differently.
+- Weak visibility — dashboards show data, but owners, CFOs, and operators do not fully trust it.
+
+How Miri helps, across three service tracks:
+
+- Aspire setup and cleanup — item catalog review, estimate templates and kits, role and permission recommendations, dashboard and reporting alignment.
+- Aspire + QuickBooks month-end close — close workflow design, QuickBooks handoff review, billing and receivables workflows, job cost variance review.
+- Landscape operations consulting — field-to-office workflow design, account manager workflows, crew information capture, and KPI review cadence.
+
+Best fit: US landscape maintenance, snow, and landscape construction companies — those implementing Aspire, those already live on Aspire but not getting clean reporting, and those running QuickBooks alongside Aspire, including multi-branch operators. Typical stakeholders are owners, CFOs, COOs, and operations leaders.
+
+Key facts about the engagement:
+
+- Miri does not replace Aspire's own product or implementation support. It connects Aspire to how a business operates across operations, finance, reporting, and team adoption.
+- Miri helps after Aspire go-live, not only during implementation — reviewing configuration, workflows, item catalogs, reporting, permissions, billing, job costing, and accounting handoffs to find what needs cleanup.
+- Aspire job costing depends on clean estimating, production factors, purchasing, time capture, billing, and financial review. Miri identifies where the data breaks down and designs practical workflows to improve confidence in the numbers.
+- The strongest Aspire consulting projects involve an executive sponsor, an operations leader, a finance or accounting lead, and a manager who understands how work moves from sales to the field to billing.
+
+## Optional
+
+- [Privacy Policy](https://www.miri-consulting.com/privacy-policy): How Miri Consulting collects and handles personal information.
+- [Terms of Service](https://www.miri-consulting.com/terms-of-service): Terms governing use of the Miri Consulting website.
