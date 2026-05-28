@@ -336,7 +336,9 @@ test.describe('home page DOM', () => {
 
   test('legal-page navigation and back-home links point to the home page', async ({ page }) => {
     for (const legalPath of ['/privacy-policy', '/terms-of-service']) {
-      await page.goto(legalPath, { waitUntil: 'networkidle' });
+      // This test only asserts static navigation hrefs. Legal pages may load
+      // third-party scripts, so waiting for networkidle is brittle in CI.
+      await page.goto(legalPath, { waitUntil: 'domcontentloaded' });
 
       const navHrefs = await page.locator('.navbar2_menu .navbar2_link').evaluateAll((els) =>
         els.map((el) => el.getAttribute('href')),
