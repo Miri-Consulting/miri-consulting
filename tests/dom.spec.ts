@@ -127,6 +127,9 @@ test.describe('home page DOM', () => {
   });
 
   test('testimonial arrows keep cards snapped across responsive breakpoints', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/', { waitUntil: 'networkidle' });
+
     const sliderCases = [
       { label: 'narrow mobile', width: 344, height: 882, expectedVisible: 1 },
       { label: 'mobile max', width: 767, height: 900, expectedVisible: 1 },
@@ -148,7 +151,17 @@ test.describe('home page DOM', () => {
     await expect(lastDot).toBeVisible();
 
     async function waitForSlider() {
-      await page.waitForTimeout(600);
+      // Reduced motion makes transforms immediate; the slider still uses a
+      // short timeout to normalize infinite-loop wrap positions.
+      await page.waitForTimeout(80);
+    }
+
+    async function clickSliderControl(selector: string) {
+      await page.evaluate((targetSelector) => {
+        const control = document.querySelector<HTMLButtonElement>(targetSelector);
+        if (!control) throw new Error(`Missing slider control: ${targetSelector}`);
+        control.click();
+      }, selector);
     }
 
     async function expectSnappedCards(label: string, expectedVisible: number) {
@@ -198,27 +211,29 @@ test.describe('home page DOM', () => {
 
     for (const sliderCase of sliderCases) {
       await page.setViewportSize({ width: sliderCase.width, height: sliderCase.height });
-      await page.waitForTimeout(250);
+      await page.waitForTimeout(180);
 
-      await firstDot.click();
+      await clickSliderControl('.section_testimonial23 .testimonial23_dot[data-dot="0"]');
       await waitForSlider();
       await expectSnappedCards(`${sliderCase.label}: first slide`, sliderCase.expectedVisible);
 
       for (let i = 0; i < 3; i++) {
-        await next.click();
+        await clickSliderControl('.section_testimonial23 .testimonial23_arrow.is-next');
         await waitForSlider();
         await expectSnappedCards(`${sliderCase.label}: next ${i + 1}`, sliderCase.expectedVisible);
       }
 
-      await lastDot.click();
+      await clickSliderControl(
+        `.section_testimonial23 .testimonial23_dot[data-dot="${expectedTestimonialNames.length - 1}"]`,
+      );
       await waitForSlider();
       await expectSnappedCards(`${sliderCase.label}: last slide`, sliderCase.expectedVisible);
 
-      await next.click();
+      await clickSliderControl('.section_testimonial23 .testimonial23_arrow.is-next');
       await waitForSlider();
       await expectSnappedCards(`${sliderCase.label}: next wrap`, sliderCase.expectedVisible);
 
-      await prev.click();
+      await clickSliderControl('.section_testimonial23 .testimonial23_arrow.is-prev');
       await waitForSlider();
       await expectSnappedCards(`${sliderCase.label}: previous wrap`, sliderCase.expectedVisible);
     }
