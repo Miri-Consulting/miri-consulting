@@ -144,13 +144,16 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
     will-change: transform;
   }
 
-  /* Three cards per view on desktop, two on tablet, one on mobile. The
-     padding-left/right on .testimonial23_slide (from the shared bundle)
-     supplies the gutter between cards. */
+  /* Three cards per view on desktop, two on tablet, one on mobile. Override
+     the legacy Webflow slider spacing so every native slide occupies one
+     stable, non-overlapping slot. */
   .testimonial23_carousel .testimonial23_slide {
     flex: 0 0 33.3333%;
     max-width: 33.3333%;
     box-sizing: border-box;
+    margin-right: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   @media screen and (max-width: 991px) {
@@ -164,6 +167,9 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
     .testimonial23_carousel .testimonial23_slide {
       flex-basis: 100%;
       max-width: 100%;
+      margin-right: 0;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
   }
 
@@ -246,6 +252,7 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
 
 <script>
   type SliderState = {
+    viewport: HTMLElement;
     track: HTMLElement;
     real: HTMLElement[];
     dots: HTMLButtonElement[];
@@ -268,13 +275,14 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
   }
 
   function initSlider(root: HTMLElement) {
+    const viewport = root.querySelector<HTMLElement>('.testimonial23_viewport');
     const track = root.querySelector<HTMLElement>('.testimonial23_track');
     const prevBtn = root.querySelector<HTMLButtonElement>('.is-prev');
     const nextBtn = root.querySelector<HTMLButtonElement>('.is-next');
     const dots = Array.from(
       root.querySelectorAll<HTMLButtonElement>('.testimonial23_dot'),
     );
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!viewport || !track || !prevBtn || !nextBtn) return;
 
     const real = Array.from(
       track.querySelectorAll<HTMLElement>('.testimonial23_slide'),
@@ -283,6 +291,7 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
     if (count === 0) return;
 
     const state: SliderState = {
+      viewport,
       track,
       real,
       dots,
@@ -296,7 +305,10 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
     const trackIndex = (pos: number) => pos + state.spv;
 
     function measure() {
-      state.slideW = state.real[0].getBoundingClientRect().width;
+      const viewportWidth = state.viewport.getBoundingClientRect().width;
+      state.slideW = viewportWidth > 0
+        ? viewportWidth / Math.max(1, state.spv)
+        : state.real[0].getBoundingClientRect().width;
     }
 
     function setTransform(pos: number, animate: boolean) {
@@ -386,7 +398,7 @@ const cardColors = ['t-orange', 't-light-blue', 't-blue'];
     // Lightweight swipe support.
     let startX = 0;
     let pointerDown = false;
-    root.querySelector('.testimonial23_viewport')?.addEventListener(
+    state.viewport.addEventListener(
       'pointerdown',
       (event) => {
         startX = (event as PointerEvent).clientX;

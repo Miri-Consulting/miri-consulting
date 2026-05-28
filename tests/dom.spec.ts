@@ -126,6 +126,104 @@ test.describe('home page DOM', () => {
     }
   });
 
+  test('testimonial arrows keep cards snapped across responsive breakpoints', async ({ page }) => {
+    const sliderCases = [
+      { label: 'narrow mobile', width: 344, height: 882, expectedVisible: 1 },
+      { label: 'mobile max', width: 767, height: 900, expectedVisible: 1 },
+      { label: 'tablet min', width: 768, height: 1024, expectedVisible: 2 },
+      { label: 'tablet max', width: 991, height: 1024, expectedVisible: 2 },
+      { label: 'desktop min', width: 992, height: 900, expectedVisible: 3 },
+      { label: 'desktop', width: 1440, height: 900, expectedVisible: 3 },
+    ];
+
+    const prev = page.locator('.section_testimonial23 .testimonial23_arrow.is-prev');
+    const next = page.locator('.section_testimonial23 .testimonial23_arrow.is-next');
+    const firstDot = page.locator('.section_testimonial23 .testimonial23_dot[data-dot="0"]');
+    const lastDot = page.locator(
+      `.section_testimonial23 .testimonial23_dot[data-dot="${expectedTestimonialNames.length - 1}"]`,
+    );
+    await expect(prev).toBeVisible();
+    await expect(next).toBeVisible();
+    await expect(firstDot).toBeVisible();
+    await expect(lastDot).toBeVisible();
+
+    async function waitForSlider() {
+      await page.waitForTimeout(600);
+    }
+
+    async function expectSnappedCards(label: string, expectedVisible: number) {
+      const snap = await page.evaluate((expected) => {
+        const section = document.querySelector('.section_testimonial23');
+        const viewport = section?.querySelector('.testimonial23_viewport');
+        if (!(section instanceof HTMLElement) || !(viewport instanceof HTMLElement)) {
+          return {
+            expected,
+            viewportWidth: 0,
+            fullyVisible: [],
+            splitVisible: [],
+          };
+        }
+
+        const viewportRect = viewport.getBoundingClientRect();
+        const cards = Array.from(
+          section.querySelectorAll<HTMLElement>(
+            '.testimonial23_slide .testimonial23_card',
+          ),
+        ).map((card) => {
+          const rect = card.getBoundingClientRect();
+          const visibleWidth = Math.max(
+            0,
+            Math.min(rect.right, viewportRect.right) - Math.max(rect.left, viewportRect.left),
+          );
+          return {
+            width: rect.width,
+            visibleWidth,
+          };
+        });
+
+        return {
+          expected,
+          viewportWidth: viewportRect.width,
+          fullyVisible: cards.filter((card) => Math.abs(card.visibleWidth - card.width) <= 2),
+          splitVisible: cards.filter((card) =>
+            card.visibleWidth > card.width * 0.25 && card.visibleWidth <= card.width * 0.75,
+          ),
+        };
+      }, expectedVisible);
+
+      expect(snap.viewportWidth, label).toBeGreaterThan(0);
+      expect(snap.fullyVisible, label).toHaveLength(expectedVisible);
+      expect(snap.splitVisible, label).toHaveLength(0);
+    }
+
+    for (const sliderCase of sliderCases) {
+      await page.setViewportSize({ width: sliderCase.width, height: sliderCase.height });
+      await page.waitForTimeout(250);
+
+      await firstDot.click();
+      await waitForSlider();
+      await expectSnappedCards(`${sliderCase.label}: first slide`, sliderCase.expectedVisible);
+
+      for (let i = 0; i < 3; i++) {
+        await next.click();
+        await waitForSlider();
+        await expectSnappedCards(`${sliderCase.label}: next ${i + 1}`, sliderCase.expectedVisible);
+      }
+
+      await lastDot.click();
+      await waitForSlider();
+      await expectSnappedCards(`${sliderCase.label}: last slide`, sliderCase.expectedVisible);
+
+      await next.click();
+      await waitForSlider();
+      await expectSnappedCards(`${sliderCase.label}: next wrap`, sliderCase.expectedVisible);
+
+      await prev.click();
+      await waitForSlider();
+      await expectSnappedCards(`${sliderCase.label}: previous wrap`, sliderCase.expectedVisible);
+    }
+  });
+
   test('client logo marquee renders all 16 collection logos in order', async ({ page }) => {
     // Phase 12.1 made the marquees native components. The desktop marquee is
     // the second .section_logo3 (the first is the mobile variant rendered for
