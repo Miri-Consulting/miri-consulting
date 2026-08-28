@@ -433,10 +433,27 @@ test.describe('products and legal SEO', () => {
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle('Miri Relay | SMS service notifications for Aspire');
-    await expect(page.getByRole('heading', { name: 'Advanced SMS service notification for Aspire' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Introducing Miri Relay' })).toBeVisible();
+    await expect(page.getByText('Advanced SMS service notification for Aspire', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Request early access' })).toBeVisible();
     await expect(page.locator('#relay-work-email')).toHaveAttribute('type', 'email');
     await expect(page.locator(".navbar2_menu a[href=\"https://relay.miri-consulting.com\"]")).toHaveAttribute("target", "_blank");
+  });
+
+
+  test('Aspire SEO page nav uses home-prefixed anchors', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/aspire-consulting-for-landscape-companies', { waitUntil: 'domcontentloaded' });
+    const navHrefs = await page.locator('.navbar2_menu .navbar2_link').evaluateAll((els) =>
+      els.map((el) => el.getAttribute('href')),
+    );
+    expect(navHrefs).toEqual(expectedLegalNavHrefs);
+    const footerHrefs = await page.locator('.footer7_link-list .footer7_link:not(.is-secondary)').evaluateAll((els) =>
+      els.map((el) => el.getAttribute('href')),
+    );
+    expect(footerHrefs).toEqual(expectedLegalNavHrefs);
   });
 
   test('privacy and terms are noindexed and thank-you stays noindexed', async ({ page }) => {

@@ -36,7 +36,7 @@ const bodyHtml = syncPrimaryCalendlyUrl(
     <style is:global set:html={aspireLandingCss}></style>
   </Fragment>
   <main class="main-wrapper">
-    <NavBar />
+    <NavBar variant="legal" />
     <HeroHeader
       headline="Aspire Consulting for<br/>Landscape Companies"
       subheadline="Miri helps US landscape companies get more value from Aspire by improving setup, accounting workflows, job costing, estimating, reporting, and day-to-day operations."
@@ -46,7 +46,7 @@ const bodyHtml = syncPrimaryCalendlyUrl(
       <RawHtml html={bodyHtml} />
     </div>
     <div class="aspire-landing-page-gap" aria-hidden="true"></div>
-    <Footer />
+    <Footer variant="legal" />
   </main>
   <Fragment slot="scripts">
     <RawHtml html={bodyScriptsHome} />
