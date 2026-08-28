@@ -3,6 +3,12 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   timeout: 120_000,
   workers: 1,
+  // The service-modal tab test drives Finsweet's modal script, which CI pulls
+  // from cdn.jsdelivr.net; a slow or failed fetch times out the click and fails
+  // the run for reasons that have nothing to do with the site. Retry on CI
+  // only — a real regression still fails all three attempts, while locally a
+  // failure stays a failure so it can't hide during development.
+  retries: process.env.CI ? 2 : 0,
   testDir: './tests',
   expect: {
     timeout: 60_000,
