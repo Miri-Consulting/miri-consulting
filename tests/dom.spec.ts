@@ -465,6 +465,9 @@ test.describe('products and legal SEO', () => {
       els.map((el) => el.getAttribute('href')),
     );
     expect(footerHrefs).toEqual(expectedLegalNavHrefs);
+    await expect(page.locator('.spline-scene')).toHaveCount(0);
+    await expect(page.locator('header').getByRole('link', { name: 'Schedule a call' })).toHaveClass(/button-2/);
+    await expect(page.locator('header .container-large')).toHaveCount(1);
   });
 
   test('privacy and terms are noindexed and thank-you stays noindexed', async ({ page }) => {
