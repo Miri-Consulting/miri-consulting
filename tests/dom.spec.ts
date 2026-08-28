@@ -445,7 +445,7 @@ test.describe('products and legal SEO', () => {
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle('Miri Relay | SMS service notifications for Aspire');
     await expect(page.getByRole('heading', { level: 1, name: 'Introducing Miri Relay' })).toBeVisible();
-    await expect(page.getByText('Advanced SMS service notification for Aspire', { exact: true })).toBeVisible();
+    await expect(page.getByText('Advanced SMS service notifications for Aspire.', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Request early access' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Request access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator(".navbar2_menu a[href=\"https://relay.miri-consulting.com\"]")).toHaveAttribute("target", "_blank");
@@ -466,8 +466,8 @@ test.describe('products and legal SEO', () => {
     );
     expect(footerHrefs).toEqual(expectedLegalNavHrefs);
     await expect(page.locator('.spline-scene')).toHaveCount(0);
-    await expect(page.locator('header').getByRole('link', { name: 'Schedule a call' })).toHaveClass(/button-2/);
-    await expect(page.locator('header .container-large')).toHaveCount(1);
+    await expect(page.locator('header').getByRole('link', { name: 'Schedule a call' })).toHaveClass(/mk-btn/);
+    await expect(page.locator('header .mk-container')).toHaveCount(1);
   });
 
   test('privacy and terms are noindexed and thank-you stays noindexed', async ({ page }) => {
@@ -477,6 +477,18 @@ test.describe('products and legal SEO', () => {
     }
     await page.goto('/thank-you', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+  });
+
+  test('the /ui-kit style guide is noindexed and renders kit specimens', async ({ page }) => {
+    await page.goto('/ui-kit', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+    await expect(page.getByRole('heading', { level: 1, name: 'Miri UI Kit' })).toBeVisible();
+    // The specimens must be rendered by the shipping stylesheet, not a copy of it.
+    await expect(page.locator('.ug-canvas .mk-card').first()).toBeVisible();
+    await expect(page.locator('.ug-canvas .mk-btn--primary').first()).toHaveCSS(
+      'background-color',
+      'rgb(0, 148, 255)',
+    );
   });
 
   test('sitemap excludes noindex routes', async () => {
@@ -490,6 +502,7 @@ test.describe('products and legal SEO', () => {
     expect(xml).not.toContain('privacy-policy');
     expect(xml).not.toContain('terms-of-service');
     expect(xml).not.toContain('thank-you');
+    expect(xml).not.toContain('ui-kit');
   });
 
   test('Our Products CTA uses pool-water button-2', async ({ page }) => {
@@ -502,15 +515,15 @@ test.describe('products and legal SEO', () => {
     await expect(cta).not.toHaveClass(/is-black/);
   });
 
-  test('Relay hero uses homepage tinted panel and button-2 pills', async ({ page }) => {
+  test('Relay hero uses the UI-kit split hero and pill buttons', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('header .header142_component')).toHaveCount(1);
-    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveClass(/button-2/);
+    await expect(page.locator('header.mk-hero .mk-hero__grid')).toHaveCount(1);
+    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveClass(/mk-btn--primary/);
     await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(page.locator('header.products-hero a.button-2.is-secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com');
+    await expect(page.locator('header.mk-hero a.mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com');
   });
 
   test('early access CTAs go to Relay signup', async ({ page }) => {
@@ -518,7 +531,7 @@ test.describe('products and legal SEO', () => {
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#early-access a.button-2')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(page.locator('#early-access a.button-2')).toHaveAttribute('target', '_blank');
+    await expect(page.locator('#early-access a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.locator('#early-access a.mk-btn--primary')).toHaveAttribute('target', '_blank');
   });
 });

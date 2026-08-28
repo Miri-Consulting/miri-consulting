@@ -1,0 +1,590 @@
+---
+/**
+ * Living style guide for the `mk-` UI kit, served at `/ui-kit`.
+ *
+ * Every specimen below is rendered by the real `src/styles/miri-ui.css` that
+ * ships with the site, in the same browser and font environment as the pages
+ * that use it — so it cannot drift from the stylesheet the way a static
+ * screenshot or an external doc would. Change the kit, reload this page.
+ *
+ * INTERNAL ONLY — this page must never reach the public site.
+ *
+ * A page under `src/pages/` is always emitted by a static build, so the only
+ * way to build it conditionally is a rest route whose `getStaticPaths` can
+ * return nothing. `MIRI_DEPLOY=1` (set by .github/workflows/deploy.yml) drops
+ * it, so the deploy build never renders it at all — there is no window where a
+ * stray copy could be uploaded. Local builds and the CI test build leave the
+ * variable unset, so `npm run dev`, `npm run build` and the Playwright suite
+ * all still see it.
+ *
+ * The single returned path (`slug: undefined`) resolves to `/ui-kit`; no other
+ * `/ui-kit/*` URL is generated. It is also noindexed and excluded from the
+ * sitemap — see `noindexPaths` in src/data/site.ts and the matching list in
+ * astro.config.mjs.
+ */
+export function getStaticPaths() {
+  if (process.env.MIRI_DEPLOY === '1') return [];
+  return [{ params: { slug: undefined } }];
+}
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBar from '../../components/chrome/NavBar.astro';
+import Footer from '../../components/chrome/Footer.astro';
+import miriUiCss from '../../styles/miri-ui.css?raw';
+import uiKitPageCss from '../../styles/ui-kit-page.css?raw';
+
+const brandSwatches = [
+  ['--mk-azure', '#0094FF'],
+  ['--mk-sky', '#27BAF9'],
+  ['--mk-royal', '#3457FA'],
+  ['--mk-coral', '#FA6E41'],
+  ['--mk-orange', '#FF5721'],
+  ['--mk-ink', '#1A171F'],
+  ['--mk-sand', '#F4F2F0'],
+  ['--mk-paper', '#F6F6F6'],
+  ['--mk-tint-azure', '#E9F5FF'],
+  ['--mk-tint-coral', '#FFF0EA'],
+  ['--mk-fg-muted', '#5D5C66'],
+  ['--mk-border', '#E5E4E8'],
+];
+
+const typeScale = [
+  ['.mk-display', '44–72px · 300 · −0.025em', 'Introducing Relay', 'var(--mk-display)', '300', '-0.025em'],
+  ['.mk-h1', '40–60px · 300 · −0.022em', 'Aspire Consulting', 'var(--mk-h1)', '300', '-0.022em'],
+  ['.mk-h2', '32–46px · 300 · −0.018em', 'Why we built it', 'var(--mk-h2)', '300', '-0.018em'],
+  ['.mk-h3', '24–32px · 400 · −0.012em', 'Coming next', 'var(--mk-h3)', '400', '-0.012em'],
+  ['.mk-h4', '18–22px · 600 · card titles', 'Notifications are all or nothing', 'var(--mk-h4)', '600', '-0.008em'],
+  ['.mk-lead', '17–20px · 300', 'Advanced SMS notifications for Aspire.', 'var(--mk-lead)', '300', '0'],
+  ['.mk-body', '17px · 300', 'Relay pulls your upcoming schedule from Aspire.', 'var(--mk-body)', '300', '0'],
+];
+
+const radii = [
+  ['12px sm', 'var(--mk-r-sm)'],
+  ['16px md', 'var(--mk-r-md)'],
+  ['24px lg', 'var(--mk-r-lg)'],
+  ['32px xl', 'var(--mk-r-xl)'],
+];
+
+const icons = {
+  message:
+    'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z',
+  chart: 'M3 3v18h18M7 15l4-5 3 3 5-7',
+};
+---
+
+<BaseLayout
+  title="Miri UI Kit | Style guide"
+  description="Living component reference for the Miri UI kit."
+  canonicalPath="/ui-kit"
+  bodyClass="body mk-page ui-kit-page"
+  robots="noindex,nofollow"
+  ogImage={null}
+>
+  <Fragment slot="head">
+    <style is:global set:html={miriUiCss}></style>
+    <style is:global set:html={uiKitPageCss}></style>
+  </Fragment>
+
+  <main class="main-wrapper">
+    <NavBar variant="legal" />
+
+    <section class="ug-wrap ug-mast">
+      <p class="ug-kicker">Design system · v1</p>
+      <h1>Miri UI Kit</h1>
+      <p>
+        The component layer for every Miri page that isn't the Webflow homepage. It re-expresses the
+        homepage's visual DNA — light display type, generous rounded surfaces, azure accent,
+        warm-grey bands — as a scale that holds up in any container width, so product and SEO pages
+        stop borrowing utility classes that were tuned for one specific layout.
+      </p>
+      <p>
+        Every specimen on this page is rendered by the stylesheet the site actually ships. Change
+        the kit and reload; nothing here is a copy.
+      </p>
+      <dl class="ug-meta">
+        <div><dt>Source</dt><dd>src/styles/miri-ui.css</dd></div>
+        <div><dt>Namespace</dt><dd>.mk-*</dd></div>
+        <div><dt>In use on</dt><dd>/products<br />/aspire-consulting-…</dd></div>
+        <div><dt>Palette source</dt><dd>relay-tokens.css</dd></div>
+      </dl>
+    </section>
+
+    <section class="ug-wrap ug-sec" id="foundations">
+      <div class="ug-sec-head">
+        <p class="ug-num">01 — Foundations</p>
+        <h2>Tokens</h2>
+        <p>
+          Colour values mirror <code>relay-tokens.css</code> in the Relay app, so the marketing site
+          and the product share one palette rather than two that drift.
+        </p>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Brand &amp; surface</h3>
+          <p>
+            Azure is the working accent. Sky, royal and coral are the secondary voices — coral marks
+            problems, sky marks product. Sand is the band colour the homepage already uses.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">--mk-azure</span><span class="ug-chip">--mk-sand</span><span class="ug-chip">--mk-ink</span>
+          </div>
+        </div>
+        <div class="ug-swatches">
+          {brandSwatches.map(([name, hex]) => (
+            <div class="ug-swatch">
+              <div class="ug-swatch-chip" style={`background:${hex}`}></div>
+              <div class="ug-swatch-body">
+                <span class="ug-swatch-name">{name}</span>
+                <span class="ug-swatch-hex">{hex}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Type scale</h3>
+          <p>
+            Every size is a <code>clamp()</code> — there are no per-breakpoint font-size overrides
+            in the kit. Weight decreases as size increases: that inverse relationship is the
+            homepage's signature and the reason its hero reads as airy rather than loud.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-display</span><span class="ug-chip">.mk-h1</span><span class="ug-chip">.mk-h2</span><span class="ug-chip">.mk-h3</span><span class="ug-chip">.mk-h4</span><span class="ug-chip">.mk-lead</span><span class="ug-chip">.mk-body</span>
+          </div>
+        </div>
+        <div>
+          {typeScale.map(([cls, meta, sample, size, weight, tracking]) => (
+            <div class="ug-scale-row">
+              <span
+                class="ug-sample"
+                style={`font-size:${size};font-weight:${weight};letter-spacing:${tracking}`}
+              >{sample}</span>
+              <span class="ug-scale-meta"><b>{cls}</b>{meta}</span>
+            </div>
+          ))}
+          <div class="ug-scale-row">
+            <span class="mk-eyebrow" style="margin:0">How it works</span>
+            <span class="ug-scale-meta"><b>.mk-eyebrow</b>13px · 600 · +0.13em · azure</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Radius, elevation, rhythm</h3>
+          <p>
+            Cards take <code>--mk-r-lg</code>, heroes and CTA bands take <code>--mk-r-xl</code>,
+            buttons are always pills. Shadows are cool-tinted and used sparingly — a card on a sand
+            band gets a shadow instead of a border, never both.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">--mk-r-lg</span><span class="ug-chip">--mk-shadow-md</span><span class="ug-chip">--mk-section-y</span>
+          </div>
+        </div>
+        <div class="ug-canvas is-pad is-sand">
+          <div class="ug-tiles">
+            {radii.map(([label, token]) => (
+              <div class="ug-tile" style={`border-radius:${token}`}>{label}</div>
+            ))}
+            <div class="ug-tile" style="border-radius:var(--mk-r-lg);box-shadow:var(--mk-shadow-md)">shadow-md</div>
+            <div class="ug-tile" style="border-radius:var(--mk-r-lg);box-shadow:var(--mk-shadow-lg)">shadow-lg</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ug-wrap ug-sec" id="components">
+      <div class="ug-sec-head">
+        <p class="ug-num">02 — Components</p>
+        <h2>Component reference</h2>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Bands &amp; rail</h3>
+          <p>
+            <code>.mk-section</code> is the full-bleed band; <code>.mk-container</code> is the 78rem
+            rail inside it. Bands alternate white → sand → white so page structure reads at a
+            glance. Ink bands are for CTAs and closing statements only.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-section</span><span class="ug-chip">--sand</span><span class="ug-chip">--ink</span><span class="ug-chip">.mk-container</span>
+          </div>
+        </div>
+        <div class="ug-canvas">
+          <div class="mk-section" style="padding-block:1.25rem">
+            <div class="mk-container"><p class="mk-small" style="margin:0">.mk-section — white</p></div>
+          </div>
+          <div class="mk-section mk-section--sand" style="padding-block:1.25rem">
+            <div class="mk-container"><p class="mk-small" style="margin:0">.mk-section--sand</p></div>
+          </div>
+          <div class="mk-section mk-section--ink" style="padding-block:1.25rem">
+            <div class="mk-container"><p class="mk-small" style="margin:0">.mk-section--ink</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Section header</h3>
+          <p>
+            Eyebrow, heading and lead as one block with correct internal rhythm. Centred for
+            full-width bands, left-aligned when it sits above a grid.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-section-head</span><span class="ug-chip">--center</span><span class="ug-chip">.mk-eyebrow</span>
+          </div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-section-head mk-section-head--center" style="margin-bottom:0">
+            <p class="mk-eyebrow">How it works</p>
+            <p class="mk-h2">Three steps, once a day</p>
+            <p class="mk-lead">Relay pulls your schedule, you review it, and the consolidated text goes out.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Buttons &amp; badges</h3>
+          <p>
+            Pills at 3rem minimum height. Primary carries the brand shadow; secondary is a hairline
+            outline that flips to azure on hover; ghost is for inline actions.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-btn</span><span class="ug-chip">--primary</span><span class="ug-chip">--secondary</span><span class="ug-chip">--ghost</span><span class="ug-chip">.mk-badge</span>
+          </div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-btn-row">
+            <span class="mk-btn mk-btn--primary">Request early access</span>
+            <span class="mk-btn mk-btn--secondary">Sign in</span>
+            <span class="mk-btn mk-btn--ghost">Learn more</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.5rem">
+            <span class="mk-badge"><span class="mk-badge__dot"></span>Limited early access</span>
+            <span class="mk-badge mk-badge--coral">Known issue</span>
+            <span class="mk-badge mk-badge--neutral">Coming next</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Cards</h3>
+          <p>
+            The single biggest quality lever. A card on a white band gets a hairline border; the
+            same card on a sand band drops the border and takes a soft shadow instead. The accent
+            variant is for one pull-out per page — the SEO direct-answer block uses it.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-card</span><span class="ug-chip">--sand</span><span class="ug-chip">--accent</span><span class="ug-chip">--ink</span><span class="ug-chip">--lg</span><span class="ug-chip">.mk-icon</span>
+          </div>
+        </div>
+        <div>
+          <div class="ug-canvas is-pad">
+            <div class="mk-grid mk-grid--2">
+              <article class="mk-card">
+                <span class="mk-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.message} /></svg>
+                </span>
+                <p class="mk-h4">What it is</p>
+                <p class="mk-body">A better way to manage pre- and post-service SMS using data you already have in Aspire.</p>
+              </article>
+              <article class="mk-card mk-card--accent">
+                <p class="mk-h4">Direct answer</p>
+                <p class="mk-body">An Aspire consultant helps a landscape company configure, clean up, and use Aspire so the software supports real business decisions.</p>
+              </article>
+            </div>
+          </div>
+          <div class="ug-canvas is-pad is-sand" style="margin-top:1rem">
+            <div class="mk-section mk-section--sand" style="padding:0">
+              <div class="mk-grid mk-grid--2">
+                <article class="mk-card">
+                  <span class="mk-icon mk-icon--coral" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.chart} /></svg>
+                  </span>
+                  <p class="mk-h4">Unclear numbers</p>
+                  <p class="mk-body">Job costing reports do not match what finance expects.</p>
+                </article>
+                <article class="mk-card mk-card--ink">
+                  <p class="mk-h4">Ink variant</p>
+                  <p class="mk-body">For a single emphasised card in a grid of otherwise light ones.</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Steps</h3>
+          <p>
+            A numbered process, set as typography rather than as bullets. Use it only when order
+            actually carries information.
+          </p>
+          <div class="ug-chips"><span class="ug-chip">.mk-steps</span><span class="ug-chip">.mk-step</span></div>
+        </div>
+        <div class="ug-canvas is-pad is-sand">
+          <ol class="mk-steps">
+            <li class="mk-step">
+              <p class="mk-h4">Sync your Aspire schedule</p>
+              <p class="mk-body">Relay pulls your upcoming schedule, properties, and contacts.</p>
+            </li>
+            <li class="mk-step">
+              <p class="mk-h4">Review and customize</p>
+              <p class="mk-body">Choose which visits and contacts get notified.</p>
+            </li>
+            <li class="mk-step">
+              <p class="mk-h4">Send or schedule</p>
+              <p class="mk-body">Review the consolidated notification, then send it.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Lists</h3>
+          <p>
+            Check lists for deliverables and qualifiers; the dot variant for neutral enumerations.
+            The check is a CSS mask, so it inherits the accent token rather than hard-coding a
+            colour.
+          </p>
+          <div class="ug-chips"><span class="ug-chip">.mk-list</span><span class="ug-chip">--dot</span><span class="ug-chip">--split</span></div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-grid mk-grid--2">
+            <ul class="mk-list">
+              <li>Item catalog review</li>
+              <li>Estimate templates and kits</li>
+              <li>Role and permission recommendations</li>
+              <li>Dashboard and reporting alignment</li>
+            </ul>
+            <ul class="mk-list mk-list--dot">
+              <li>Multi-branch landscape operators</li>
+              <li>Owners, CFOs, COOs</li>
+              <li>Operations leaders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Callout</h3>
+          <p>
+            One sentence that deserves to land. Not a card — a statement. One per page, maximum.
+          </p>
+          <div class="ug-chips"><span class="ug-chip">.mk-callout</span><span class="ug-chip">--coral</span><span class="ug-chip">--sand</span></div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-callout">
+            <span class="mk-callout__mark" aria-hidden="true"></span>
+            <p>Relay was built to give your team the control Aspire’s native notifications are missing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>FAQ accordion</h3>
+          <p>
+            Native <code>&lt;details&gt;</code> styled as cards, with a rotating chevron so the
+            disclosure is actually visible. Keep the on-page copy in sync with the FAQPage JSON-LD.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-faq</span><span class="ug-chip">.mk-faq__item</span><span class="ug-chip">.mk-faq__q</span><span class="ug-chip">.mk-faq__a</span>
+          </div>
+        </div>
+        <div class="ug-canvas is-pad is-sand">
+          <div class="mk-section mk-section--sand" style="padding:0">
+            <div class="mk-faq">
+              <details class="mk-faq__item" open>
+                <summary class="mk-faq__q">Can you help if we already implemented Aspire?</summary>
+                <div class="mk-faq__a">
+                  <p class="mk-body">Yes. Many companies need help after go-live. We can review configuration, workflows, item catalogs, reporting, permissions, billing, and job costing.</p>
+                </div>
+              </details>
+              <details class="mk-faq__item">
+                <summary class="mk-faq__q">Can you help with Aspire and QuickBooks?</summary>
+                <div class="mk-faq__a">
+                  <p class="mk-body">Yes — month-end close, revenue and cost review, billing workflows, and reporting consistency.</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Proof strip</h3>
+          <p>
+            A short trust line under a hero. The hairlines above and below are the point — without
+            them the sentence floats as an orphan.
+          </p>
+          <div class="ug-chips"><span class="ug-chip">.mk-proof</span><span class="ug-chip">.mk-stats</span></div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-proof">
+            <p>Trusted by landscape, snow, and construction companies that need practical systems, clear numbers, and better execution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-row is-wide">
+        <div>
+          <h3>Hero</h3>
+          <p>
+            Two shapes: split (copy plus a figure) and centred (copy only). The surface is a soft
+            azure wash over a faint grid that fades out downward — enough texture that a hero
+            without the homepage's 3D scene still has depth.
+          </p>
+          <div class="ug-chips">
+            <span class="ug-chip">.mk-hero</span><span class="ug-chip">--center</span><span class="ug-chip">.mk-hero__grid</span><span class="ug-chip">.mk-chat</span>
+          </div>
+        </div>
+        <div class="ug-canvas">
+          <div class="mk-hero">
+            <div class="mk-container">
+              <div class="mk-hero__grid">
+                <div class="mk-hero__copy">
+                  <span class="mk-badge"><span class="mk-badge__dot"></span>Limited early access</span>
+                  <p class="mk-h1">Introducing<br />Miri Relay</p>
+                  <p class="mk-lead">Advanced SMS service notifications for Aspire.</p>
+                  <div class="mk-btn-row">
+                    <span class="mk-btn mk-btn--primary">Request early access</span>
+                    <span class="mk-btn mk-btn--secondary">Sign in</span>
+                  </div>
+                </div>
+                <div class="mk-hero__figure">
+                  <figure class="mk-chat">
+                    <div class="mk-chat__head">
+                      <span class="mk-chat__avatar" aria-hidden="true">R</span>
+                      <span class="mk-chat__who">
+                        Northside Landscape
+                        <span class="mk-chat__meta">Tomorrow · 3 services · 1 text</span>
+                      </span>
+                    </div>
+                    <div class="mk-chat__body">
+                      <p class="mk-chat__bubble mk-chat__bubble--out">
+                        Hi Dana — your crew is scheduled at <strong>412 Ridgeview</strong> tomorrow
+                        between 8–10am for <strong>mowing, mulch install, and turf application</strong>.
+                      </p>
+                      <p class="mk-chat__stamp">Scheduled for 4:00 PM today</p>
+                    </div>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="ug-canvas-note">
+            .mk-chat is the product figure: Miri sells messaging, so the message is worth more than a stock photograph.
+          </p>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>CTA band</h3>
+          <p>
+            The one place the palette goes loud: royal and sky bloom over ink. It closes both kit
+            pages, so the same shape ends every journey.
+          </p>
+          <div class="ug-chips"><span class="ug-chip">.mk-cta</span><span class="ug-chip">.mk-cta__inner</span></div>
+        </div>
+        <div class="ug-canvas is-pad">
+          <div class="mk-cta">
+            <div class="mk-cta__inner">
+              <p class="mk-eyebrow">Next step</p>
+              <p class="mk-h2">Make Aspire easier to trust</p>
+              <p class="mk-lead">If Aspire is supposed to be the system that runs your landscape company, the data and workflows need to support that goal.</p>
+              <div class="mk-btn-row"><span class="mk-btn mk-btn--primary">Schedule a call</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ug-wrap ug-sec" id="using">
+      <div class="ug-sec-head">
+        <p class="ug-num">03 — Using it</p>
+        <h2>Adding a page on the kit</h2>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>Wiring</h3>
+          <p>
+            The kit is loaded per page rather than globally, so the Webflow homepage is never
+            touched by it. Nothing in the kit can collide with the Webflow bundle — every class is
+            <code>mk-</code> prefixed.
+          </p>
+        </div>
+        <div>
+          <ol class="ug-howto">
+            <li><span><b>Import the stylesheet</b> into the page's head slot, then the page-specific overrides after it.</span></li>
+            <li><span><b>Put <code>mk-page</code> on the body class</b>, alongside the page's own class.</span></li>
+            <li><span><b>Compose sections:</b> <code>section.mk-section &gt; .mk-container &gt; content</code>. Alternate white and sand.</span></li>
+            <li><span><b>Close with <code>.mk-cta</code>.</b> Every kit page ends on the same shape.</span></li>
+          </ol>
+          <pre><code>{`---
+import miriUiCss from '../../styles/miri-ui.css?raw';
+import pageCss from '../../styles/my-page.css?raw';
+---
+<BaseLayout bodyClass="body mk-page my-page" …>
+  <Fragment slot="head">
+    <style is:global set:html={miriUiCss}></style>
+    <style is:global set:html={pageCss}></style>
+  </Fragment>
+</BaseLayout>`}</code></pre>
+        </div>
+      </div>
+
+      <div class="ug-row">
+        <div>
+          <h3>House rules</h3>
+          <p>
+            These are the decisions that keep the kit coherent as pages get added. Most of them are
+            the inverse of a mistake the pre-kit pages made.
+          </p>
+        </div>
+        <div>
+          <ul class="ug-rules">
+            <li>
+              <span class="ug-mark is-dont">DON'T</span>
+              <span>Use <code>heading-style-*</code>, <code>text-size-*</code>, <code>button-2</code> or <code>padding-section-*</code> off the homepage. <b>They are tuned for one layout and break everywhere else</b> — <code>heading-style-h6</code> is 0.875rem/600, a label rather than a heading.</span>
+            </li>
+            <li>
+              <span class="ug-mark is-do">DO</span>
+              <span>Reach for <code>.mk-h4</code> for card titles. <b>Light weights only work at display sizes;</b> below 24px they read as unfinished.</span>
+            </li>
+            <li>
+              <span class="ug-mark is-do">DO</span>
+              <span>Let the band decide the card treatment. <b>Border on white, shadow on sand</b> — the kit already handles this, so don't add both.</span>
+            </li>
+            <li>
+              <span class="ug-mark is-dont">DON'T</span>
+              <span>Add a font-size media query. <b>Every size in the kit is a <code>clamp()</code></b>; if something is wrong at a width, fix the clamp.</span>
+            </li>
+            <li>
+              <span class="ug-mark is-do">DO</span>
+              <span>Keep <code>.mk-callout</code> to one per page and <code>--ink</code> surfaces to the CTA. <b>Emphasis stops working when everything has it.</b></span>
+            </li>
+            <li>
+              <span class="ug-mark is-do">DO</span>
+              <span>Re-run <code>npm run test:visual:update</code> after an intentional redesign, but <b>check the untouched pages didn't move first.</b></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <Footer variant="legal" />
+  </main>
+</BaseLayout>

@@ -7,6 +7,7 @@ import { test, expect } from '@playwright/test';
 
 const pages = [
   { name: 'home', path: '/' },
+  { name: 'products', path: '/products' },
   { name: 'aspire-landscape', path: '/aspire-consulting-for-landscape-companies' },
   { name: 'privacy', path: '/privacy-policy' },
   { name: 'terms', path: '/terms-of-service' },

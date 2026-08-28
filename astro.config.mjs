@@ -15,7 +15,12 @@ const site =
   process.env.ASTRO_SITE_URL?.trim() || 'https://www.miri-consulting.com';
 
 // Keep in sync with noindexPaths in src/data/site.ts.
-const noindexPathnames = ["/privacy-policy", "/terms-of-service", "/thank-you"];
+const noindexPathnames = [
+  "/privacy-policy",
+  "/terms-of-service",
+  "/thank-you",
+  "/ui-kit",
+];
 
 function sitemapAllows(page) {
   try {

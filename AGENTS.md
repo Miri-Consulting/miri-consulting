@@ -34,8 +34,55 @@
 ## Add a new top-level page
 
 1. Create `src/pages/<slug>.astro` using `BaseLayout` or `LegalLayout`.
-2. Add navigation links in `src/data/site.ts` if needed.
-3. Run `npm run build` and `npm run test:visual`.
+2. Build the page on the **Miri UI kit** (`src/styles/miri-ui.css`) — see below.
+3. Add navigation links in `src/data/site.ts` if needed.
+4. Run `npm run build` and `npm run test:visual`.
+
+## Miri UI kit (`mk-` classes)
+
+`src/styles/miri-ui.css` is the component layer for every page that is not the
+Webflow homepage. `/products` and `/aspire-consulting-for-landscape-companies`
+are both built on it; new marketing and SEO pages should be too.
+
+**The living style guide is `/ui-kit`** (`src/pages/ui-kit/[...slug].astro`).
+It renders every component from the real stylesheet, so it cannot drift: run
+`npm run dev` and open `http://localhost:4321/ui-kit`. Add a specimen there
+whenever you add a component to the kit.
+
+The style guide is **internal — it never reaches the public site.** It is a rest
+route whose `getStaticPaths` returns nothing when `MIRI_DEPLOY=1`, which
+`.github/workflows/deploy.yml` sets on the deploy build; that build then asserts
+`dist/ui-kit` does not exist. Local builds and the CI test build leave the
+variable unset, so `npm run build` and the Playwright suite still see the page.
+To reproduce a deploy build locally:
+
+```bash
+MIRI_DEPLOY=1 npm run build
+```
+
+It is also noindexed and sitemap-excluded for the builds that do emit it — keep
+`noindexPaths` in `src/data/site.ts` and `noindexPathnames` in
+`astro.config.mjs` in sync if that changes.
+
+Do **not** reuse the homepage Designer classes (`heading-style-*`,
+`text-size-*`, `button-2`, `padding-section-*`) outside the homepage. They are
+tuned for that one layout — `heading-style-h2` is 4.5rem/300 and
+`heading-style-h6` is 0.875rem/600 (a label, not a heading), so cards lose their
+typographic anchor and split-column headings wrap to four ragged lines. The kit
+re-expresses the same visual DNA at sizes that hold up in any container.
+
+Wiring, per page:
+
+1. `import miriUiCss from '../../styles/miri-ui.css?raw'`, then the page's own
+   override sheet after it, both rendered as `is:global` styles in the head slot.
+2. Put `mk-page` on `bodyClass`, alongside the page's own class.
+3. Compose sections as `section.mk-section > .mk-container > content`,
+   alternating white and `--sand` bands, and close on `.mk-cta`.
+
+The kit is loaded per page, never globally, so the homepage is untouched by it.
+Every class is `mk-` prefixed and cannot collide with the Webflow bundle. Page
+overrides stay in `src/styles/<page>.css` and should only hold what is genuinely
+page-specific. The header comment in `miri-ui.css` documents each section.
 
 ## Update navigation
 

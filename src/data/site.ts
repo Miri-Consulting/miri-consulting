@@ -31,7 +31,12 @@ export const navLinks: readonly NavLink[] = [
 ];
 
 /** Live pages that must not rank: robots noindex + sitemap exclusion. */
-export const noindexPaths = ['/privacy-policy', '/terms-of-service', '/thank-you'] as const;
+export const noindexPaths = [
+  '/privacy-policy',
+  '/terms-of-service',
+  '/thank-you',
+  '/ui-kit',
+] as const;
 
 export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',

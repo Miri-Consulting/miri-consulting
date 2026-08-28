@@ -1,118 +1,12 @@
-/* Aspire consulting landing — layout only. Type, pills, and page chrome come from homepage Designer classes. */
+/* Aspire consulting landing — page-specific overrides only.
+   Everything structural comes from the `mk-` UI kit (src/styles/miri-ui.css). */
 
-.aspire-page {
-  background-color: #fff;
-  color: #333;
+/* The kit hero sits directly under the fixed 4.5rem navbar. */
+.aspire-page .mk-hero {
+  padding-top: clamp(6rem, 4rem + 6vw, 9.5rem);
 }
 
-.aspire-landing-original {
-  color: #333;
-}
-
-.aspire-landing-original,
-.aspire-landing-original *,
-.aspire-landing-original *::before,
-.aspire-landing-original *::after {
-  box-sizing: border-box;
-}
-
-.aspire-landing-original .al-band {
-  background-color: #f4f2f0;
-}
-
-.aspire-landing-original .al-proof {
-  padding: 0 0 4rem;
-  text-align: center;
-}
-
-.aspire-landing-original .al-split {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 3rem;
-  align-items: start;
-}
-
-.aspire-landing-original .al-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-}
-
-.aspire-landing-original .al-grid.al-grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.aspire-landing-original .al-faq details {
-  background: #fff;
-  border-radius: 1.5rem;
-  padding: 1.5rem;
-}
-
-.aspire-landing-original .heading-style-h2 {
-  margin-bottom: 1.125rem;
-}
-
-.aspire-landing-original .al-card .heading-style-h6 {
-  margin: 0 0 0.65rem;
-}
-
-.aspire-landing-original p {
-  margin: 0;
-}
-
-.aspire-landing-original .al-eyebrow {
-  color: var(--pool-water);
-  margin: 0 0 0.85rem;
-}
-
-.aspire-landing-original ul {
-  margin: 1.125rem 0 0;
-  padding-left: 1.25rem;
-}
-
-.aspire-landing-original li + li {
-  margin-top: 0.5rem;
-}
-
-.aspire-landing-original .al-faq {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.aspire-landing-original .al-faq summary {
-  cursor: pointer;
-}
-
-.aspire-landing-original .al-faq details p {
-  margin-top: 0.65rem;
-}
-
-.aspire-landing-original .al-cta {
-  text-align: center;
-}
-
-.aspire-landing-original .al-cta p {
-  max-width: 42rem;
-  margin: 0.85rem auto 1.5rem;
-}
-
-.aspire-landing-original .al-mt-16 {
-  margin-top: 1rem;
-}
-
-.aspire-landing-original .al-services-intro {
-  margin-bottom: 1.75rem;
-}
-
-@media (max-width: 1099px) {
-  .aspire-landing-original .al-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 860px) {
-  .aspire-landing-original .al-split,
-  .aspire-landing-original .al-grid.al-grid-2 {
-    grid-template-columns: 1fr;
-  }
+/* Hairline between a service card's summary and its deliverables list. */
+.aspire-page .al-card-rule {
+  margin: 0.35rem 0 0.25rem;
 }

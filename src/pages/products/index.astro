@@ -7,6 +7,7 @@ import RelayWaitlistForm from '../../components/products/RelayWaitlistForm.astro
 import RawHtml from '../../components/RawHtml.astro';
 import { webflow } from '../../data/site';
 import bodyScriptsHome from '../../partials/body-scripts-home.html?raw';
+import miriUiCss from '../../styles/miri-ui.css?raw';
 import productsCss from '../../styles/products.css?raw';
 
 const title = 'Miri Relay | SMS service notifications for Aspire';
@@ -18,10 +19,11 @@ const description =
   title={title}
   description={description}
   canonicalPath="/products"
-  bodyClass="body products-page"
+  bodyClass="body mk-page products-page"
   webflowPageId={webflow.pages.privacy}
 >
   <Fragment slot="head">
+    <style is:global set:html={miriUiCss}></style>
     <style is:global set:html={productsCss}></style>
   </Fragment>
   <main class="main-wrapper">

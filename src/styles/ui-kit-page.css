@@ -1,0 +1,350 @@
+/* Style-guide chrome for /ui-kit.
+   The page documents the `mk-` kit, so the chrome has to stay visually
+   separate from the specimens it frames: chrome is neutral grey + system mono,
+   specimens are the kit's own Inter + azure. Nothing here is `mk-` prefixed —
+   none of it is part of the kit. */
+
+.ui-kit-page {
+  --ug-ground: #fbfaf9;
+  --ug-surface: #ffffff;
+  --ug-surface-2: #f4f2f0;
+  --ug-ink: #17151c;
+  --ug-ink-2: #56535e;
+  --ug-ink-3: #8b8892;
+  --ug-rule: #e4e1de;
+  --ug-rule-2: #efedea;
+  --ug-accent: #0074cc;
+  --ug-accent-soft: #e6f2fc;
+  --ug-code-bg: #f2f0ed;
+  --ug-good: #1f7a52;
+  --ug-bad: #b8412a;
+  --ug-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --ug-rail: 72rem;
+
+  background-color: var(--ug-ground);
+  color: var(--ug-ink);
+}
+
+.ui-kit-page .ug-wrap {
+  width: 100%;
+  max-width: var(--ug-rail);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.8rem + 2vw, 3rem);
+}
+
+/* ── Masthead ── */
+.ui-kit-page .ug-mast {
+  padding: clamp(6rem, 4rem + 6vw, 9rem) 0 clamp(2rem, 1.5rem + 2vw, 3rem);
+}
+
+.ui-kit-page .ug-kicker,
+.ui-kit-page .ug-num {
+  margin: 0 0 0.9rem;
+  font-family: var(--ug-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ug-accent);
+}
+
+.ui-kit-page .ug-mast h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 1.7rem + 3.4vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.ui-kit-page .ug-mast > p {
+  margin: 1.25rem 0 0;
+  max-width: 42rem;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.62;
+  color: var(--ug-ink-2);
+}
+
+.ui-kit-page .ug-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1px;
+  margin: 2.75rem 0 0;
+  background: var(--ug-rule);
+  border: 1px solid var(--ug-rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ui-kit-page .ug-meta > div { background: var(--ug-surface); padding: 0.9rem 1.1rem; }
+
+.ui-kit-page .ug-meta dt {
+  margin: 0 0 0.3rem;
+  font-family: var(--ug-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ug-ink-3);
+}
+
+.ui-kit-page .ug-meta dd {
+  margin: 0;
+  font-family: var(--ug-mono);
+  font-size: 0.8125rem;
+  color: var(--ug-ink);
+  overflow-wrap: anywhere;
+}
+
+/* ── Sections ── */
+.ui-kit-page .ug-sec {
+  padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  border-top: 1px solid var(--ug-rule);
+}
+
+.ui-kit-page .ug-sec-head { margin-bottom: 2.25rem; }
+
+.ui-kit-page .ug-sec h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 1.35rem + 1vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ui-kit-page .ug-sec h2 + p {
+  margin: 0.9rem 0 0;
+  max-width: 42rem;
+  color: var(--ug-ink-2);
+}
+
+.ui-kit-page .ug-sec h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ── Component row: spec left, live specimen right ── */
+.ui-kit-page .ug-row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 0.8rem + 2vw, 2.75rem);
+  padding-block: 2rem;
+  border-top: 1px solid var(--ug-rule-2);
+}
+
+.ui-kit-page .ug-row:first-of-type { border-top: 0; padding-top: 0; }
+
+/* Specimens that need the full rail to read honestly — the split hero squeezes
+   its figure into an unrepresentative column at two-thirds width. */
+.ui-kit-page .ug-row.is-wide { grid-template-columns: minmax(0, 1fr); }
+.ui-kit-page .ug-row.is-wide > div:first-child { max-width: 42rem; }
+
+.ui-kit-page .ug-row > div > p {
+  margin: 0 0 0.85rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ug-ink-2);
+}
+
+@media (max-width: 800px) {
+  .ui-kit-page .ug-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ui-kit-page .ug-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.ui-kit-page code,
+.ui-kit-page .ug-chip {
+  font-family: var(--ug-mono);
+  font-size: 0.75rem;
+  background: var(--ug-code-bg);
+  color: var(--ug-ink);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+}
+
+/* Inline code sits in running prose, so it has to wrap; only chips stay whole. */
+.ui-kit-page code { overflow-wrap: anywhere; }
+.ui-kit-page .ug-chip { border: 1px solid var(--ug-rule); white-space: nowrap; }
+
+/* ── Specimen canvas ──
+   Doubled class: the kit's own `.mk-page` rule is a later stylesheet and would
+   otherwise repaint every canvas white. */
+.ui-kit-page .ug-canvas.ug-canvas {
+  --mk-gutter: clamp(1.25rem, 0.8rem + 2vw, 2.25rem);
+  background: #ffffff;
+  color: var(--mk-fg);
+  border: 1px solid var(--ug-rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ui-kit-page .ug-canvas.is-sand { background: var(--mk-sand); }
+.ui-kit-page .ug-canvas.is-pad { padding: clamp(1.25rem, 0.8rem + 2vw, 2.25rem); }
+
+/* Sections inside a canvas lose their page-scale block padding. */
+.ui-kit-page .ug-canvas .mk-section { padding-block: clamp(1.5rem, 1rem + 2vw, 2.5rem); }
+.ui-kit-page .ug-canvas .mk-hero { padding-block: clamp(1.75rem, 1.2rem + 2.4vw, 3rem); }
+.ui-kit-page .ug-canvas .mk-container { max-width: none; }
+
+.ui-kit-page .ug-canvas-note {
+  margin: 0;
+  border-top: 1px solid var(--ug-rule);
+  background: var(--ug-surface-2);
+  color: var(--ug-ink-3);
+  padding: 0.6rem 1rem;
+  font-family: var(--ug-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+/* ── Swatches ── */
+.ui-kit-page .ug-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.75rem;
+}
+
+.ui-kit-page .ug-swatch {
+  border: 1px solid var(--ug-rule);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ug-surface);
+}
+
+.ui-kit-page .ug-swatch-chip { height: 3.5rem; }
+.ui-kit-page .ug-swatch-body { padding: 0.6rem 0.75rem 0.75rem; }
+
+.ui-kit-page .ug-swatch-name,
+.ui-kit-page .ug-swatch-hex {
+  display: block;
+  font-family: var(--ug-mono);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.ui-kit-page .ug-swatch-name { color: var(--ug-ink); }
+.ui-kit-page .ug-swatch-hex { color: var(--ug-ink-3); text-transform: uppercase; }
+
+/* ── Type scale ── */
+.ui-kit-page .ug-scale-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 13rem;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  border-top: 1px solid var(--ug-rule-2);
+}
+
+.ui-kit-page .ug-scale-row:first-child { border-top: 0; }
+
+.ui-kit-page .ug-sample {
+  font-family: var(--mk-font-display);
+  color: var(--mk-fg);
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.ui-kit-page .ug-scale-meta {
+  font-family: var(--ug-mono);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: var(--ug-ink-3);
+}
+
+.ui-kit-page .ug-scale-meta b { display: block; color: var(--ug-ink); font-weight: 500; }
+
+/* Stack before the 13rem meta column squeezes a display-size specimen into a
+   column narrower than a single word of it. */
+@media (max-width: 900px) {
+  .ui-kit-page .ug-scale-row { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+}
+
+/* ── Radius / elevation tiles ── */
+.ui-kit-page .ug-tiles { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+.ui-kit-page .ug-tile {
+  width: 8rem;
+  height: 5rem;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  font-family: var(--ug-mono);
+  font-size: 0.7rem;
+  color: var(--ug-ink-2);
+}
+
+/* ── Rules (do / don't) ── */
+.ui-kit-page .ug-rules { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+
+.ui-kit-page .ug-rules li {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  margin: 0;
+  padding: 0.95rem 1.1rem;
+  background: var(--ug-surface);
+  border: 1px solid var(--ug-rule);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ug-ink-2);
+}
+
+.ui-kit-page .ug-rules b { color: var(--ug-ink); font-weight: 600; }
+
+.ui-kit-page .ug-mark {
+  font-family: var(--ug-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.ui-kit-page .ug-mark.is-do { color: var(--ug-good); }
+.ui-kit-page .ug-mark.is-dont { color: var(--ug-bad); }
+
+/* ── Numbered how-to ── */
+.ui-kit-page .ug-howto { counter-reset: ug; display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+
+.ui-kit-page .ug-howto li {
+  counter-increment: ug;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ug-ink-2);
+}
+
+.ui-kit-page .ug-howto li::before {
+  content: counter(ug);
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 4px;
+  background: var(--ug-accent-soft);
+  color: var(--ug-accent);
+  font-family: var(--ug-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ui-kit-page .ug-howto b { color: var(--ug-ink); font-weight: 600; }
+
+.ui-kit-page pre {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  background: var(--ug-code-bg);
+  border: 1px solid var(--ug-rule);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--ug-mono);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.ui-kit-page pre code { background: none; padding: 0; white-space: pre; }

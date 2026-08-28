@@ -1,146 +1,36 @@
-/* Products / Relay — layout only. Type, pills, and page chrome come from homepage Designer classes. */
+/* Products / Relay — page-specific overrides only.
+   Everything structural comes from the `mk-` UI kit (src/styles/miri-ui.css). */
 
-.products-page {
-  background-color: #fff;
-  color: #333;
+/* The kit hero sits directly under the fixed 4.5rem navbar. */
+.products-page .mk-hero {
+  padding-top: clamp(6rem, 4rem + 6vw, 9.5rem);
 }
 
-.products-page .products-band {
-  background-color: #f4f2f0;
+/* Closing statement under the roadmap grid. */
+.products-page .products-closer {
+  max-width: 44rem;
+  margin: clamp(3rem, 2rem + 3vw, 4.5rem) auto 0;
+  text-align: center;
+  color: var(--mk-fg);
+  text-wrap: balance;
 }
 
-.products-page .header142_content {
-  width: min(46rem, 100%);
+.products-page .products-callout {
+  margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
 }
 
-.products-page .header142_component {
-  height: auto;
-  min-height: 28rem;
-}
-
-.products-eyebrow {
-  color: var(--pool-water);
-  margin: 0 0 0.75rem;
-}
-
-.products-hero .button-group.is-center a {
-  box-sizing: border-box;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 3rem;
-  width: auto;
-  min-width: 9rem;
-  padding: 0.75rem 1.5rem;
-  white-space: nowrap;
-}
-
-.products-prose {
-  max-width: 46rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.products-prose p + p {
-  margin-top: 1rem;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-}
-
-.products-card h2,
-.products-card h3,
-.products-step h3 {
-  margin: 0 0 0.5rem;
-}
-
-.products-steps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  counter-reset: products-step;
-}
-
-.products-step {
-  counter-increment: products-step;
-}
-
-.products-step::before {
-  content: counter(products-step);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  margin-bottom: 0.75rem;
-  border-radius: 50%;
-  background: var(--pool-water);
-  color: var(--white);
-  font-weight: 600;
-}
-
-.products-waitlist-form {
-  display: grid;
-  gap: 0.75rem;
-  max-width: 28rem;
-  margin: 1.25rem auto 0;
-  text-align: left;
-}
-
-.products-waitlist-label {
-  font-weight: 500;
-}
-
-.products-waitlist-input {
-  width: 100%;
-  min-height: 3rem;
-  border-radius: 0.75rem;
-}
-
-.products-waitlist-submit {
-  width: 100%;
-  cursor: pointer;
-}
-
+/* Legacy waitlist form primitives — the section now renders as a CTA band and
+   links out to the Relay signup, but the hidden-state rules stay so a future
+   inline form can drop back in without re-deriving them. */
 .products-waitlist-form[hidden],
 .products-waitlist-success[hidden],
 .products-waitlist-error[hidden] {
   display: none !important;
 }
 
-.products-waitlist-error {
-  color: #b42318;
-  margin: 0;
-}
-
-.products-waitlist-success,
-.products-waitlist-signin {
-  margin-top: 1.25rem;
-}
-
-.products-grid-follow {
-  margin-top: 2rem;
-}
-
-.products-closer {
-  margin-top: 2.5rem;
-}
-
-@media screen and (max-width: 1099px) {
-  .products-grid,
-  .products-steps {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media screen and (max-width: 991px) {
-  .products-page .header142_component {
-    min-height: 0;
-  }
+/* "Coming next" label above the roadmap grid. */
+.products-page .products-subhead {
+  margin: 0 0 clamp(1.25rem, 1rem + 0.8vw, 2rem);
+  text-align: center;
+  color: var(--mk-fg);
 }

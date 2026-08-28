@@ -69,6 +69,16 @@ jobs:
         env:
           ASTRO_BASE: ${{ steps.pages_target.outputs.astro_base }}
           ASTRO_SITE_URL: ${{ steps.pages_target.outputs.site_url }}
+          # Drops the internal /ui-kit style guide from the published site.
+          # See src/pages/ui-kit/[...slug].astro.
+          MIRI_DEPLOY: '1'
+      - name: Verify the style guide is not in the published output
+        run: |
+          set -euo pipefail
+          if [ -e dist/ui-kit ]; then
+            echo "::error::dist/ui-kit exists; the internal style guide would be published."
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

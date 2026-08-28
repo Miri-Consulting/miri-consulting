@@ -1,0 +1,1083 @@
+/* ============================================================================
+   MIRI UI KIT  —  `mk-` component layer
+   ----------------------------------------------------------------------------
+   A small, self-contained design system for Miri's non-Webflow pages
+   (product pages, SEO landing pages, future marketing pages).
+
+   WHY THIS EXISTS
+   The homepage is a Webflow export. Its utility classes (`heading-style-h2`,
+   `heading-style-h6`, `padding-section-large`, …) are tuned for that one
+   layout: `heading-style-h2` is 4.5rem/300 — beautiful centered on a full-bleed
+   band, unusable as a heading inside a two-column split; `heading-style-h6` is
+   0.875rem/600 — a form label, not a card title. Borrowing them on other pages
+   is what made those pages look unfinished.
+
+   This kit re-expresses the same visual DNA (light display type, generous
+   rounded surfaces, azure accent, warm-grey bands) as a scale that holds up in
+   any container width.
+
+   HOW TO USE
+     1. Import into a page:  `import mkCss from '../styles/miri-ui.css?raw'`
+        then render it into the head slot with an is:global style tag.
+        (See src/pages/products/index.astro for the exact wiring.)
+     2. Put `mk-page` on the body class.
+     3. Compose sections:  section.mk-section > .mk-container > content
+
+   CONVENTIONS
+     - Every class is namespaced `mk-`; nothing here can collide with the
+       Webflow bundle, so the kit is safe to load alongside it.
+     - Tokens are `--mk-*` on :root. Brand values mirror
+       `relay-tokens.css` in the Relay app so the marketing site and the
+       product share one palette.
+     - Type sizes are fluid (`clamp`) — no per-breakpoint font-size overrides.
+   ========================================================================== */
+
+:root {
+  /* ---------- Brand core (Miri logo usage guideline v1.0) ---------- */
+  --mk-azure: #0094ff;   /* primary blue — buttons, links, accents */
+  --mk-sky: #27baf9;     /* light brand blue */
+  --mk-royal: #3457fa;   /* secondary blue */
+  --mk-coral: #fa6e41;   /* warm accent */
+  --mk-orange: #ff5721;  /* hot accent, used sparingly */
+  --mk-ink: #1a171f;     /* near-black */
+
+  /* ---------- Surfaces ---------- */
+  --mk-white: #ffffff;
+  --mk-paper: #f6f6f6;   /* cool off-white band */
+  --mk-sand: #f4f2f0;    /* warm band — matches the homepage card band */
+  --mk-ink-surface: #17151c;
+
+  /* ---------- Foreground ---------- */
+  --mk-fg: #1f1d24;
+  --mk-fg-muted: #5d5c66;
+  --mk-fg-subtle: #86858f;
+  --mk-fg-on-dark: #ffffff;
+  --mk-fg-on-dark-muted: rgba(255, 255, 255, 0.72);
+
+  /* ---------- Lines ---------- */
+  --mk-border: #e5e4e8;
+  --mk-border-strong: #d3d2d8;
+  --mk-border-on-dark: rgba(255, 255, 255, 0.14);
+
+  /* ---------- Tints (card washes, badges) ---------- */
+  --mk-tint-azure: #e9f5ff;
+  --mk-tint-azure-strong: #d4ebff;
+  --mk-tint-coral: #fff0ea;
+  --mk-tint-sand: #f4f2f0;
+
+  /* ---------- Type ---------- */
+  --mk-font-display: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mk-font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Fluid scale. Display weights get lighter as they get larger — that
+     inverse relationship is the homepage's signature and the whole reason
+     its hero reads as "airy" rather than "loud". */
+  --mk-display: clamp(2.75rem, 1.95rem + 3.3vw, 4.5rem);
+  --mk-h1: clamp(2.5rem, 1.95rem + 2.4vw, 3.75rem);
+  --mk-h2: clamp(2rem, 1.62rem + 1.6vw, 2.875rem);
+  --mk-h3: clamp(1.5rem, 1.35rem + 0.65vw, 2rem);
+  --mk-h4: clamp(1.125rem, 1.06rem + 0.28vw, 1.375rem);
+  --mk-h5: 1.0625rem;
+  --mk-lead: clamp(1.0625rem, 1rem + 0.28vw, 1.25rem);
+  --mk-body: 1.0625rem;
+  --mk-small: 0.9375rem;
+  --mk-tiny: 0.8125rem;
+
+  /* ---------- Radii ---------- */
+  --mk-r-sm: 0.75rem;
+  --mk-r-md: 1rem;
+  --mk-r-lg: 1.5rem;
+  --mk-r-xl: 2rem;
+  --mk-r-pill: 999px;
+
+  /* ---------- Elevation ---------- */
+  --mk-shadow-sm: 0 1px 2px rgba(26, 23, 31, 0.05);
+  --mk-shadow-md: 0 8px 20px -10px rgba(26, 23, 31, 0.16), 0 2px 6px -3px rgba(26, 23, 31, 0.07);
+  --mk-shadow-lg: 0 28px 56px -24px rgba(26, 23, 31, 0.24), 0 8px 18px -12px rgba(26, 23, 31, 0.12);
+  --mk-shadow-brand: 0 12px 26px -12px rgba(0, 148, 255, 0.55);
+
+  /* ---------- Rhythm ---------- */
+  --mk-gutter: 5%;
+  --mk-rail: 78rem;
+  --mk-rail-narrow: 46rem;
+  --mk-section-y: clamp(3.5rem, 2.4rem + 4vw, 6rem);
+  --mk-section-y-lg: clamp(4.5rem, 3rem + 5.5vw, 8rem);
+  --mk-gap: clamp(1rem, 0.7rem + 0.9vw, 1.5rem);
+
+  --mk-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================================
+   1. PAGE SHELL
+   ========================================================================== */
+
+.mk-page {
+  background-color: var(--mk-white);
+  color: var(--mk-fg);
+}
+
+/* The Webflow bundle sets `box-sizing` inconsistently; lock it for kit trees. */
+.mk-page :where(.mk-section, .mk-section *)::before,
+.mk-page :where(.mk-section, .mk-section *)::after,
+.mk-page :where(.mk-section, .mk-section *) {
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   2. SECTIONS & CONTAINERS
+   `.mk-section` is the band; `.mk-container` is the rail inside it. Bands
+   alternate white → sand → white so page structure reads at a glance.
+   ========================================================================== */
+
+.mk-section {
+  position: relative;
+  padding-block: var(--mk-section-y);
+  background-color: var(--mk-white);
+}
+
+.mk-section--sand { background-color: var(--mk-sand); }
+.mk-section--paper { background-color: var(--mk-paper); }
+
+.mk-section--ink {
+  background-color: var(--mk-ink-surface);
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-section--tight { padding-block: clamp(2.5rem, 1.8rem + 2.6vw, 4rem); }
+.mk-section--lg { padding-block: var(--mk-section-y-lg); }
+.mk-section--flush-top { padding-top: 0; }
+
+.mk-container {
+  width: 100%;
+  max-width: var(--mk-rail);
+  margin-inline: auto;
+  padding-inline: var(--mk-gutter);
+}
+
+.mk-container--narrow { max-width: calc(var(--mk-rail-narrow) + 2 * var(--mk-gutter)); }
+
+/* Hairline divider that stops at the rail rather than bleeding edge-to-edge. */
+.mk-rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background-color: var(--mk-border);
+}
+
+.mk-section--ink .mk-rule { background-color: var(--mk-border-on-dark); }
+
+/* ============================================================================
+   3. TYPE
+   ========================================================================== */
+
+.mk-display,
+.mk-h1,
+.mk-h2,
+.mk-h3,
+.mk-h4,
+.mk-h5 {
+  margin: 0;
+  font-family: var(--mk-font-display);
+  color: inherit;
+  text-wrap: balance;
+}
+
+.mk-display {
+  font-size: var(--mk-display);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+.mk-h1 {
+  font-size: var(--mk-h1);
+  font-weight: 300;
+  line-height: 1.07;
+  letter-spacing: -0.022em;
+}
+
+.mk-h2 {
+  font-size: var(--mk-h2);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+}
+
+.mk-h3 {
+  font-size: var(--mk-h3);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+
+/* h4 / h5 flip to semibold — at these sizes light weights read as unfinished. */
+.mk-h4 {
+  font-size: var(--mk-h4);
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+}
+
+.mk-h5 {
+  font-size: var(--mk-h5);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.004em;
+}
+
+.mk-eyebrow {
+  margin: 0 0 0.9rem;
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-tiny);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mk-azure);
+}
+
+.mk-section--ink .mk-eyebrow { color: var(--mk-sky); }
+
+.mk-lead {
+  margin: 0;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-lead);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--mk-fg-muted);
+}
+
+.mk-body {
+  margin: 0;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-body);
+  font-weight: 300;
+  line-height: 1.62;
+  color: var(--mk-fg-muted);
+}
+
+.mk-small {
+  margin: 0;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-small);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--mk-fg-muted);
+}
+
+.mk-section--ink :where(.mk-lead, .mk-body, .mk-small) { color: var(--mk-fg-on-dark-muted); }
+
+/* Stacked paragraphs inside a card or prose block. */
+.mk-stack > * + * { margin-top: 0.85rem; }
+.mk-stack--lg > * + * { margin-top: 1.5rem; }
+
+.mk-prose {
+  max-width: var(--mk-rail-narrow);
+}
+
+.mk-prose--center { margin-inline: auto; }
+
+.mk-link {
+  color: var(--mk-azure);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 148, 255, 0.35);
+  transition: border-color 0.15s var(--mk-ease);
+}
+
+.mk-link:hover { border-bottom-color: var(--mk-azure); }
+
+/* ============================================================================
+   4. SECTION HEADER
+   Eyebrow + heading + lead, as one block with correct internal rhythm.
+   ========================================================================== */
+
+.mk-section-head {
+  max-width: 44rem;
+  margin-bottom: clamp(2rem, 1.5rem + 1.8vw, 3.25rem);
+}
+
+.mk-section-head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.mk-section-head--wide { max-width: 56rem; }
+
+.mk-section-head > .mk-h2 + .mk-lead,
+.mk-section-head > .mk-h1 + .mk-lead,
+.mk-section-head > .mk-h3 + .mk-lead {
+  margin-top: 1.1rem;
+}
+
+/* ============================================================================
+   5. BUTTONS
+   ========================================================================== */
+
+.mk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--mk-r-pill);
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-small);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.16s var(--mk-ease), border-color 0.16s var(--mk-ease),
+    color 0.16s var(--mk-ease), box-shadow 0.16s var(--mk-ease), transform 0.1s var(--mk-ease);
+}
+
+.mk-btn:active { transform: translateY(1px); }
+
+.mk-btn--primary {
+  background-color: var(--mk-azure);
+  border-color: var(--mk-azure);
+  color: var(--mk-white);
+  box-shadow: var(--mk-shadow-brand);
+}
+
+.mk-btn--primary:hover {
+  background-color: #0a7ad6;
+  border-color: #0a7ad6;
+  color: var(--mk-white);
+}
+
+.mk-btn--secondary {
+  background-color: transparent;
+  border-color: var(--mk-border-strong);
+  color: var(--mk-fg);
+}
+
+.mk-btn--secondary:hover {
+  border-color: var(--mk-azure);
+  color: var(--mk-azure);
+}
+
+.mk-btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--mk-azure);
+  padding-inline: 0.35rem;
+}
+
+.mk-btn--ghost:hover { color: #0a7ad6; }
+
+/* On ink bands the secondary button needs a light outline to stay visible. */
+.mk-section--ink .mk-btn--secondary,
+.mk-btn--on-dark {
+  border-color: var(--mk-border-on-dark);
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-section--ink .mk-btn--secondary:hover,
+.mk-btn--on-dark:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mk-btn-row--center { justify-content: center; }
+
+/* ============================================================================
+   6. BADGE / PILL
+   ========================================================================== */
+
+.mk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--mk-r-pill);
+  background-color: var(--mk-tint-azure);
+  color: #0a6cb8;
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-tiny);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.mk-badge--coral { background-color: var(--mk-tint-coral); color: #c2431c; }
+.mk-badge--neutral { background-color: var(--mk-sand); color: var(--mk-fg-muted); }
+
+.mk-badge--on-dark {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-badge__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* ============================================================================
+   7. GRIDS
+   ========================================================================== */
+
+.mk-grid {
+  display: grid;
+  gap: var(--mk-gap);
+}
+
+.mk-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mk-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mk-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Split: a heading column and a content column. The heading column is the
+   narrower one, so headings inside a split step down a size — a 2.875rem h2
+   in a 450px column wraps to four ragged lines. */
+.mk-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.3fr);
+  gap: clamp(2rem, 1.2rem + 2.4vw, 3.5rem);
+  align-items: start;
+}
+
+.mk-split .mk-h2 {
+  font-size: clamp(1.75rem, 1.5rem + 1.1vw, 2.25rem);
+  line-height: 1.14;
+}
+
+.mk-split--even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mk-split--center { align-items: center; }
+
+/* Sticky heading column on tall split sections (desktop only). */
+@media (min-width: 992px) {
+  .mk-split__sticky {
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+@media (max-width: 1099px) {
+  .mk-grid--3,
+  .mk-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* A split is two columns of prose — it has to stack as soon as the heading
+   column gets narrow. Cards are a different problem: they stay readable at
+   ~320px, so keeping them 2-up down to the phone boundary avoids full-width
+   cards with one icon over two lines of text at tablet widths. */
+@media (max-width: 860px) {
+  .mk-split,
+  .mk-split--even { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .mk-grid--2,
+  .mk-grid--3,
+  .mk-grid--4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================================
+   8. CARDS
+   The single biggest quality lever: real surfaces with a border, radius and
+   generous padding instead of naked text in a grid cell.
+   ========================================================================== */
+
+.mk-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+  border: 1px solid var(--mk-border);
+  border-radius: var(--mk-r-lg);
+  background-color: var(--mk-white);
+}
+
+/* Sand-band pages need the inverse: cards read white on sand, sand on white. */
+.mk-section--sand .mk-card,
+.mk-section--paper .mk-card {
+  border-color: transparent;
+  box-shadow: var(--mk-shadow-sm);
+}
+
+.mk-card--sand {
+  background-color: var(--mk-sand);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.mk-card--tint {
+  background-color: var(--mk-tint-azure);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.mk-card--ink {
+  background-color: var(--mk-ink-surface);
+  border-color: transparent;
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-card--ink :where(.mk-body, .mk-small, .mk-lead) { color: var(--mk-fg-on-dark-muted); }
+
+.mk-card--raised { box-shadow: var(--mk-shadow-md); border-color: transparent; }
+
+.mk-card--lg { padding: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem); }
+
+/* A hairline accent down the left edge — used for the SEO "direct answer"
+   block and any pull-out the eye should land on first. */
+.mk-card--accent {
+  border-left: 3px solid var(--mk-azure);
+  border-radius: var(--mk-r-sm) var(--mk-r-lg) var(--mk-r-lg) var(--mk-r-sm);
+}
+
+/* Hover lift for cards that are links. Static cards must not use this. */
+.mk-card--interactive {
+  transition: transform 0.2s var(--mk-ease), box-shadow 0.2s var(--mk-ease);
+}
+
+.mk-card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mk-shadow-md);
+}
+
+.mk-card__foot {
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+/* ---------- Icon tile ---------- */
+.mk-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.35rem;
+  border-radius: var(--mk-r-sm);
+  background-color: var(--mk-tint-azure);
+  color: var(--mk-azure);
+}
+
+.mk-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+}
+
+.mk-icon--coral { background-color: var(--mk-tint-coral); color: #e04c1b; }
+.mk-icon--sand { background-color: var(--mk-sand); color: var(--mk-fg); }
+.mk-icon--solid { background-color: var(--mk-azure); color: var(--mk-white); }
+
+.mk-card--ink .mk-icon {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--mk-sky);
+}
+
+/* ============================================================================
+   9. STEPS
+   Numbered process list. The numeral is set large and light so it reads as
+   typography rather than as a bullet.
+   ========================================================================== */
+
+.mk-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: mk-step;
+}
+
+.mk-steps--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mk-steps--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.mk-step {
+  counter-increment: mk-step;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--mk-border-strong);
+}
+
+.mk-step::before {
+  content: counter(mk-step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.9rem;
+  font-family: var(--mk-font-display);
+  font-size: 2.25rem;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--mk-azure);
+}
+
+.mk-step > * + * { margin-top: 0.6rem; }
+
+.mk-section--ink .mk-step { border-top-color: var(--mk-border-on-dark); }
+.mk-section--ink .mk-step::before { color: var(--mk-sky); }
+
+@media (max-width: 1099px) {
+  .mk-steps,
+  .mk-steps--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .mk-steps,
+  .mk-steps--2,
+  .mk-steps--4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================================
+   10. LISTS
+   ========================================================================== */
+
+.mk-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mk-list li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.6rem;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-small);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mk-fg-muted);
+}
+
+/* Azure check, drawn as a mask so it inherits the accent token. */
+.mk-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 0.95rem;
+  height: 0.95rem;
+  background-color: var(--mk-azure);
+  -webkit-mask: var(--mk-check) center / contain no-repeat;
+  mask: var(--mk-check) center / contain no-repeat;
+}
+
+:root {
+  --mk-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M8.2 14.4 4 10.2l1.5-1.5 2.7 2.7 6.3-6.3L16 6.6z'/%3E%3C/svg%3E");
+}
+
+/* Plain dot variant for non-benefit lists. */
+.mk-list--dot li::before {
+  top: 0.62em;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background-color: var(--mk-border-strong);
+  mask: none;
+  -webkit-mask: none;
+}
+
+.mk-section--ink .mk-list li { color: var(--mk-fg-on-dark-muted); }
+.mk-section--ink .mk-list li::before { background-color: var(--mk-sky); }
+
+/* Two-column list on wide containers. */
+@media (min-width: 861px) {
+  .mk-list--split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+}
+
+/* ============================================================================
+   11. CALLOUT
+   A single sentence that deserves to land. Not a card — a statement.
+   ========================================================================== */
+
+.mk-callout {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+  border-radius: var(--mk-r-lg);
+  background-color: var(--mk-tint-azure);
+}
+
+.mk-callout__mark {
+  flex: none;
+  width: 3px;
+  align-self: stretch;
+  border-radius: 2px;
+  background-color: var(--mk-azure);
+}
+
+.mk-callout p {
+  margin: 0;
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-h4);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: -0.01em;
+  color: var(--mk-fg);
+  text-wrap: balance;
+}
+
+.mk-callout--coral { background-color: var(--mk-tint-coral); }
+.mk-callout--coral .mk-callout__mark { background-color: var(--mk-orange); }
+.mk-callout--sand { background-color: var(--mk-sand); }
+.mk-callout--sand .mk-callout__mark { background-color: var(--mk-fg); }
+
+/* ============================================================================
+   12. FAQ ACCORDION
+   `<details>` styled as cards with a real disclosure affordance.
+   ========================================================================== */
+
+.mk-faq {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mk-faq__item {
+  border: 1px solid var(--mk-border);
+  border-radius: var(--mk-r-md);
+  background-color: var(--mk-white);
+  overflow: hidden;
+  transition: border-color 0.16s var(--mk-ease), box-shadow 0.16s var(--mk-ease);
+}
+
+.mk-section--sand .mk-faq__item,
+.mk-section--paper .mk-faq__item { border-color: transparent; }
+
+.mk-faq__item[open] {
+  border-color: var(--mk-tint-azure-strong);
+  box-shadow: var(--mk-shadow-sm);
+}
+
+.mk-faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem clamp(1.15rem, 1rem + 0.6vw, 1.6rem);
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-h5);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--mk-fg);
+  cursor: pointer;
+  list-style: none;
+}
+
+.mk-faq__q::-webkit-details-marker { display: none; }
+
+.mk-faq__q::after {
+  content: "";
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: var(--mk-sand);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%231f1d24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.2s var(--mk-ease), background-color 0.2s var(--mk-ease);
+}
+
+.mk-faq__item[open] .mk-faq__q::after {
+  transform: rotate(180deg);
+  background-color: var(--mk-tint-azure);
+}
+
+.mk-faq__q:hover { color: var(--mk-azure); }
+
+.mk-faq__a {
+  padding: 0 clamp(1.15rem, 1rem + 0.6vw, 1.6rem) 1.4rem;
+  max-width: 52rem;
+}
+
+/* ============================================================================
+   13. PROOF STRIP
+   A short trust line under a hero. Hairlines above/below keep it from
+   floating as an orphan sentence.
+   ========================================================================== */
+
+.mk-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.75rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--mk-border);
+  border-bottom: 1px solid var(--mk-border);
+  text-align: center;
+}
+
+.mk-proof p {
+  margin: 0;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-small);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mk-fg-subtle);
+}
+
+/* ============================================================================
+   14. STAT ROW
+   ========================================================================== */
+
+.mk-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+}
+
+.mk-stat { margin: 0; }
+
+.mk-stat__value {
+  display: block;
+  font-family: var(--mk-font-display);
+  font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--mk-fg);
+}
+
+.mk-stat__label {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-small);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--mk-fg-muted);
+}
+
+.mk-section--ink .mk-stat__value { color: var(--mk-fg-on-dark); }
+.mk-section--ink .mk-stat__label { color: var(--mk-fg-on-dark-muted); }
+
+@media (max-width: 640px) {
+  .mk-stats { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================================
+   15. HERO
+   Two shapes: `--split` (copy + figure) and `--center` (copy only).
+   The surface is a soft azure wash with a faint grid — enough texture that a
+   hero without a 3D scene still has depth.
+   ========================================================================== */
+
+.mk-hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 12% 0%, #eaf5ff 0%, rgba(234, 245, 255, 0) 62%),
+    radial-gradient(90% 80% at 100% 8%, #eef8ff 0%, rgba(238, 248, 255, 0) 58%),
+    var(--mk-white);
+}
+
+/* Faint grid, faded out toward the bottom so it never fights the content. */
+.mk-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(0, 148, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 148, 255, 0.075) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 0%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(120% 85% at 50% 0%, #000 0%, transparent 78%);
+}
+
+.mk-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  align-items: center;
+}
+
+.mk-hero__copy > * + * { margin-top: 1.25rem; }
+.mk-hero__copy .mk-btn-row { margin-top: 2rem; }
+
+.mk-hero--center { text-align: center; }
+.mk-hero--center .mk-hero__copy { max-width: 46rem; margin-inline: auto; }
+.mk-hero--center .mk-btn-row { justify-content: center; }
+
+.mk-hero__figure {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 960px) {
+  .mk-hero__grid { grid-template-columns: minmax(0, 1fr); }
+  .mk-hero__figure { order: -1; }
+}
+
+/* ============================================================================
+   16. CHAT FIGURE
+   An SMS thread mock. Miri's products are messaging products — showing the
+   message is worth more than any stock photograph.
+   ========================================================================== */
+
+.mk-chat {
+  width: min(25rem, 100%);
+  padding: 1.25rem;
+  border-radius: var(--mk-r-xl);
+  border: 1px solid var(--mk-border);
+  background-color: var(--mk-white);
+  box-shadow: var(--mk-shadow-lg);
+}
+
+.mk-chat__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--mk-border);
+}
+
+.mk-chat__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mk-sky) 0%, var(--mk-azure) 100%);
+  color: var(--mk-white);
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-tiny);
+  font-weight: 700;
+}
+
+.mk-chat__who {
+  min-width: 0;
+  font-family: var(--mk-font-display);
+  font-size: var(--mk-small);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--mk-fg);
+}
+
+.mk-chat__meta {
+  display: block;
+  font-size: var(--mk-tiny);
+  font-weight: 400;
+  color: var(--mk-fg-subtle);
+}
+
+.mk-chat__body {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: 1rem;
+}
+
+.mk-chat__bubble {
+  max-width: 90%;
+  padding: 0.8rem 1rem;
+  border-radius: 1.15rem 1.15rem 1.15rem 0.35rem;
+  background-color: var(--mk-sand);
+  font-family: var(--mk-font-body);
+  font-size: var(--mk-small);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mk-fg);
+}
+
+.mk-chat__bubble--out {
+  margin-left: auto;
+  border-radius: 1.15rem 1.15rem 0.35rem 1.15rem;
+  background-color: var(--mk-azure);
+  color: var(--mk-white);
+}
+
+.mk-chat__bubble strong { font-weight: 600; }
+
+.mk-chat__stamp {
+  margin-top: 0.35rem;
+  font-size: var(--mk-tiny);
+  color: var(--mk-fg-subtle);
+  text-align: right;
+}
+
+/* Below ~380px the figure's own padding costs more than it's worth. */
+@media (max-width: 380px) {
+  .mk-chat { padding: 1rem; }
+  .mk-chat__bubble { max-width: 100%; }
+}
+
+/* ============================================================================
+   17. CTA BAND
+   ========================================================================== */
+
+.mk-cta {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--mk-r-xl);
+  padding: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem) clamp(1.5rem, 1rem + 3vw, 4rem);
+  background:
+    radial-gradient(90% 140% at 8% 0%, rgba(52, 87, 250, 0.55) 0%, rgba(52, 87, 250, 0) 55%),
+    radial-gradient(80% 130% at 100% 100%, rgba(39, 186, 249, 0.45) 0%, rgba(39, 186, 249, 0) 60%),
+    var(--mk-ink-surface);
+  color: var(--mk-fg-on-dark);
+  text-align: center;
+}
+
+.mk-cta__inner {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.mk-cta__inner > * + * { margin-top: 1.15rem; }
+.mk-cta__inner .mk-btn-row { margin-top: 2rem; justify-content: center; }
+
+.mk-cta .mk-lead,
+.mk-cta .mk-body,
+.mk-cta .mk-small { color: var(--mk-fg-on-dark-muted); }
+
+.mk-cta .mk-btn--secondary {
+  border-color: var(--mk-border-on-dark);
+  color: var(--mk-fg-on-dark);
+}
+
+.mk-cta .mk-btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.mk-cta .mk-link { color: var(--mk-sky); border-bottom-color: rgba(39, 186, 249, 0.4); }
+
+/* ============================================================================
+   18. MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-card--interactive,
+  .mk-btn,
+  .mk-faq__item,
+  .mk-faq__q::after {
+    transition: none;
+  }
+
+  .mk-card--interactive:hover { transform: none; }
+}

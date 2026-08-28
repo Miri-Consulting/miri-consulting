@@ -9,6 +9,7 @@ import { calendlyPopupOnclick, syncPrimaryCalendlyUrl } from '../../utils/calend
 import { rewriteAssetPaths } from '../../utils/rewriteAssetPaths';
 import bodyScriptsHome from '../../partials/body-scripts-home.html?raw';
 import aspireBody from '../../partials/aspire-landscape-landing-body.html?raw';
+import miriUiCss from '../../styles/miri-ui.css?raw';
 import aspireLandingCss from '../../styles/aspire-landing.css?raw';
 
 const canonicalPath = '/aspire-consulting-for-landscape-companies';
@@ -28,39 +29,35 @@ const bodyHtml = syncPrimaryCalendlyUrl(
   title={title}
   description={description}
   canonicalPath={canonicalPath}
-  bodyClass="body aspire-page"
+  bodyClass="body mk-page aspire-page"
 >
   <Fragment slot="head">
     <JsonLdAspireLandscape canonicalPath={canonicalPath} />
+    <style is:global set:html={miriUiCss}></style>
     <style is:global set:html={aspireLandingCss}></style>
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
   </Fragment>
   <main class="main-wrapper">
     <NavBar variant="legal" />
-    <header class="section_header26">
-      <div class="padding-global">
-        <div class="container-large">
-          <div class="padding-section-large">
-            <div class="text-align-center">
-              <div class="margin-bottom margin-small">
-                <h1 class="heading-style-h1">Aspire Consulting for<br/>Landscape Companies</h1>
-              </div>
-              <p class="text-size-medium">
-                Miri helps US landscape companies get more value from Aspire by improving setup, accounting workflows, job costing, estimating, reporting, and day-to-day operations.
-              </p>
-              <div class="margin-top margin-small">
-                <div class="button-group is-center">
-                  <a href={cta.calendlyUrl} class="button-2 w-button" onclick={calendlyOnclick}>Schedule a call</a>
-                </div>
-              </div>
-            </div>
+    <header class="mk-hero mk-hero--center">
+      <div class="mk-container">
+        <div class="mk-hero__copy">
+          <p class="mk-eyebrow">Aspire consulting</p>
+          <h1 class="mk-h1">Aspire Consulting for Landscape Companies</h1>
+          <p class="mk-lead">
+            Miri helps US landscape companies get more value from Aspire by improving setup,
+            accounting workflows, job costing, estimating, reporting, and day-to-day operations.
+          </p>
+          <div class="mk-btn-row">
+            <a href={cta.calendlyUrl} class="mk-btn mk-btn--primary" onclick={calendlyOnclick}>
+              Schedule a call
+            </a>
+            <a href="#services" class="mk-btn mk-btn--secondary">See how Miri helps</a>
           </div>
         </div>
       </div>
     </header>
-    <div class="aspire-landing-original">
-      <RawHtml html={bodyHtml} />
-    </div>
+    <RawHtml html={bodyHtml} />
     <Footer variant="legal" />
   </main>
   <Fragment slot="scripts">

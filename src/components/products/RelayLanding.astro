@@ -3,177 +3,223 @@ import { relay } from '../../data/site';
 
 const signInUrl = relay.signInUrl;
 const earlyAccessHref = relay.signupUrl;
+
+/* Stroke icons are inlined rather than pulled from a sprite: there are six of
+   them, they never change, and an inline <svg> costs less than a request. */
+const icons = {
+  message: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z',
+  users: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  plug: 'M12 22v-5M9 8V2M15 8V2M18 8v4a6 6 0 0 1-12 0V8z',
+  copy: 'M20 9H11a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zM5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1',
+  calendarX: 'M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM16 2v4M8 2v4M3 10h18M14 14l-4 4M10 14l4 4',
+  sliders: 'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6',
+};
 ---
 
-<header class="section_header26 products-hero">
-  <div class="padding-global">
-    <div class="header142_component">
-      <div class="padding-global">
-        <div class="container-large">
-          <div class="padding-section-large">
-            <div class="text-align-center">
-              <div class="header142_content">
-                <p class="heading-style-h6 products-eyebrow">Limited early access for Miri customers.</p>
-                <div class="margin-bottom margin-small">
-                  <h1 class="heading-style-h1 hero">Introducing Miri Relay</h1>
-                </div>
-                <p class="text-size-medium hero">Advanced SMS service notification for Aspire</p>
-                <p class="text-size-medium hero">
-                  Relay connects directly to your Aspire schedule and gives your team control over who gets notified, which services trigger a message, what the message says, and when it gets sent.
-                </p>
-                <div class="margin-top margin-small">
-                  <div class="button-group is-center">
-                    <a href={earlyAccessHref} class="button-2 w-button" target="_blank" rel="noopener">Request early access</a>
-                    <a href={signInUrl} class="button-2 is-secondary w-button" target="_blank" rel="noopener">Sign in</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<header class="mk-hero">
+  <div class="mk-container">
+    <div class="mk-hero__grid">
+      <div class="mk-hero__copy">
+        <span class="mk-badge"><span class="mk-badge__dot"></span>Limited early access</span>
+        <h1 class="mk-display">Introducing<br />Miri Relay</h1>
+        <p class="mk-lead">Advanced SMS service notifications for Aspire.</p>
+        <p class="mk-body">
+          Relay connects directly to your Aspire schedule and gives your team control over who gets
+          notified, which services trigger a message, what the message says, and when it gets sent.
+        </p>
+        <div class="mk-btn-row">
+          <a href={earlyAccessHref} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">
+            Request early access
+          </a>
+          <a href={signInUrl} class="mk-btn mk-btn--secondary" target="_blank" rel="noopener">
+            Sign in
+          </a>
         </div>
+      </div>
+
+      <div class="mk-hero__figure">
+        <figure class="mk-chat">
+          <div class="mk-chat__head">
+            <span class="mk-chat__avatar" aria-hidden="true">R</span>
+            <span class="mk-chat__who">
+              Northside Landscape
+              <span class="mk-chat__meta">Tomorrow · 3 services · 1 text</span>
+            </span>
+          </div>
+          <div class="mk-chat__body">
+            <p class="mk-chat__bubble mk-chat__bubble--out">
+              Hi Dana — your crew is scheduled at <strong>412 Ridgeview</strong> tomorrow between
+              8–10am for <strong>mowing, mulch install, and turf application</strong>. Please leave
+              the side gate unlocked.
+            </p>
+            <p class="mk-chat__stamp">Scheduled for 4:00 PM today</p>
+          </div>
+        </figure>
       </div>
     </div>
   </div>
 </header>
 
-<section class="section_layout507 products-band">
-  <div class="padding-global">
-    <div class="container-large">
-      <div class="padding-section-medium">
-        <div class="products-grid">
-          <article class="products-card">
-            <h2 class="heading-style-h6">What it is</h2>
-            <p class="text-size-medium">
-              A better way to manage pre- and post-service SMS notifications using the schedule, contacts, and service data you already have in Aspire.
-            </p>
-          </article>
-          <article class="products-card">
-            <h2 class="heading-style-h6">Built for</h2>
-            <p class="text-size-medium">
-              Businesses whose clients expect proactive communication, especially high-end residential customers, plant health care and chemical application clients, and detail-oriented commercial property managers who expect advance notice.
-            </p>
-          </article>
-          <article class="products-card">
-            <h2 class="heading-style-h6">Works with</h2>
-            <p class="text-size-medium">
-              Your existing Aspire organization and Quo or Dialpad for SMS.
-            </p>
-          </article>
-        </div>
-      </div>
+<section class="mk-section mk-section--sand">
+  <div class="mk-container">
+    <div class="mk-grid mk-grid--3">
+      <article class="mk-card">
+        <span class="mk-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.message} /></svg>
+        </span>
+        <h2 class="mk-h4">What it is</h2>
+        <p class="mk-body">
+          A better way to manage pre- and post-service SMS notifications using the schedule,
+          contacts, and service data you already have in Aspire.
+        </p>
+      </article>
+
+      <article class="mk-card">
+        <span class="mk-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.users} /></svg>
+        </span>
+        <h2 class="mk-h4">Built for</h2>
+        <p class="mk-body">
+          Companies whose clients expect proactive communication — high-end residential customers,
+          plant health care and chemical application clients, and detail-oriented commercial
+          property managers who expect advance notice.
+        </p>
+      </article>
+
+      <article class="mk-card">
+        <span class="mk-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.plug} /></svg>
+        </span>
+        <h2 class="mk-h4">Works with</h2>
+        <p class="mk-body">
+          Your existing Aspire organization, plus Quo or Dialpad for SMS delivery.
+        </p>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="section_layout507">
-  <div class="padding-global">
-    <div class="container-large">
-      <div class="padding-section-medium">
-        <div class="text-align-center margin-bottom margin-medium">
-          <h2 class="heading-style-h2">Why we built it</h2>
-        </div>
-        <div class="products-prose">
-          <p class="text-size-medium">
-            Aspire already has native SMS service notifications. Many companies try them, get frustrated, and eventually turn them off.
-          </p>
-        </div>
-        <div class="products-grid products-grid-follow">
-          <article class="products-card">
-            <h3 class="heading-style-h6">Multiple services can mean multiple texts.</h3>
-            <p class="text-size-medium">
-              If a customer has several work tickets scheduled for the same day, Aspire sends a separate notification for each one.
-            </p>
-          </article>
-          <article class="products-card">
-            <h3 class="heading-style-h6">Moving a work ticket can trigger a cancellation message.</h3>
-            <p class="text-size-medium">
-              Reschedule on the Schedule Board and Aspire notifies the customer that the visit was cancelled. You cannot customize that message before it goes out.
-            </p>
-          </article>
-          <article class="products-card">
-            <h3 class="heading-style-h6">Notifications are all or nothing.</h3>
-            <p class="text-size-medium">
-              There is little control over which services should generate notifications. A customer may want advance notice for spray applications and mulch but not weekly mowing.
-            </p>
-          </article>
-        </div>
-        <div class="products-prose products-grid-follow">
-          <p class="text-size-medium">
-            Relay was built to give your team the control Aspire’s native notifications are missing.
-          </p>
-        </div>
-      </div>
+<section class="mk-section">
+  <div class="mk-container">
+    <div class="mk-section-head mk-section-head--center">
+      <p class="mk-eyebrow">Why we built it</p>
+      <h2 class="mk-h2">Native Aspire notifications get turned off</h2>
+      <p class="mk-lead">
+        Aspire already has SMS service notifications. Many companies try them, get frustrated, and
+        eventually switch them off. Three reasons come up again and again.
+      </p>
+    </div>
+
+    <div class="mk-grid mk-grid--3">
+      <article class="mk-card">
+        <span class="mk-icon mk-icon--coral" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.copy} /></svg>
+        </span>
+        <h3 class="mk-h4">Multiple services mean multiple texts</h3>
+        <p class="mk-body">
+          If a customer has several work tickets scheduled for the same day, Aspire sends a
+          separate notification for each one.
+        </p>
+      </article>
+
+      <article class="mk-card">
+        <span class="mk-icon mk-icon--coral" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.calendarX} /></svg>
+        </span>
+        <h3 class="mk-h4">Moving a ticket can trigger a cancellation</h3>
+        <p class="mk-body">
+          Reschedule on the Schedule Board and Aspire tells the customer the visit was cancelled.
+          You cannot customize that message before it goes out.
+        </p>
+      </article>
+
+      <article class="mk-card">
+        <span class="mk-icon mk-icon--coral" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={icons.sliders} /></svg>
+        </span>
+        <h3 class="mk-h4">Notifications are all or nothing</h3>
+        <p class="mk-body">
+          There is little control over which services generate a notification. A customer may want
+          advance notice for spray applications and mulch, but not for weekly mowing.
+        </p>
+      </article>
+    </div>
+
+    <div class="mk-callout mk-prose mk-prose--center products-callout">
+      <span class="mk-callout__mark" aria-hidden="true"></span>
+      <p>Relay was built to give your team the control Aspire’s native notifications are missing.</p>
     </div>
   </div>
 </section>
 
-<section class="section_layout507 products-band">
-  <div class="padding-global">
-    <div class="container-large">
-      <div class="padding-section-medium">
-        <div class="text-align-center margin-bottom margin-medium">
-          <h2 class="heading-style-h2">How it works</h2>
-        </div>
-        <ol class="products-steps">
-          <li class="products-step">
-            <h3 class="heading-style-h6">Sync your Aspire schedule.</h3>
-            <p class="text-size-medium">
-              Relay pulls your upcoming schedule, properties, services, and contacts directly from Aspire.
-            </p>
-          </li>
-          <li class="products-step">
-            <h3 class="heading-style-h6">Review and customize.</h3>
-            <p class="text-size-medium">
-              Choose which visits and contacts get notified, then use templates for different services, customers, and pre- or post-visit communication.
-            </p>
-          </li>
-          <li class="products-step">
-            <h3 class="heading-style-h6">Send or schedule.</h3>
-            <p class="text-size-medium">
-              Review the consolidated notification, then send it now or schedule it.
-            </p>
-          </li>
-        </ol>
-      </div>
+<section class="mk-section mk-section--sand">
+  <div class="mk-container">
+    <div class="mk-section-head mk-section-head--center">
+      <p class="mk-eyebrow">How it works</p>
+      <h2 class="mk-h2">Three steps, once a day</h2>
     </div>
+
+    <ol class="mk-steps">
+      <li class="mk-step">
+        <h3 class="mk-h4">Sync your Aspire schedule</h3>
+        <p class="mk-body">
+          Relay pulls your upcoming schedule, properties, services, and contacts directly from
+          Aspire.
+        </p>
+      </li>
+      <li class="mk-step">
+        <h3 class="mk-h4">Review and customize</h3>
+        <p class="mk-body">
+          Choose which visits and contacts get notified, then apply templates for different
+          services, customers, and pre- or post-visit communication.
+        </p>
+      </li>
+      <li class="mk-step">
+        <h3 class="mk-h4">Send or schedule</h3>
+        <p class="mk-body">
+          Review the consolidated notification, then send it now or schedule it for later.
+        </p>
+      </li>
+    </ol>
   </div>
 </section>
 
-<section class="section_layout507">
-  <div class="padding-global">
-    <div class="container-large">
-      <div class="padding-section-medium">
-        <div class="text-align-center margin-bottom margin-medium">
-          <h2 class="heading-style-h2">Relay is the first of several Miri plugins for Aspire</h2>
-          <p class="text-size-medium products-prose">
-            We spend every day in Aspire and see the same pain points across companies. The goal is focused tools that connect to the Aspire data your team already maintains.
-          </p>
-        </div>
-        <h3 class="heading-style-h3 text-align-center margin-bottom margin-small">Coming next</h3>
-        <div class="products-grid">
-          <article class="products-card">
-            <h3 class="heading-style-h6">Directory</h3>
-            <p class="text-size-medium">
-              one-off and scheduled SMS to Aspire contacts without a work ticket.
-            </p>
-          </article>
-          <article class="products-card">
-            <h3 class="heading-style-h6">Proposal follow ups</h3>
-            <p class="text-size-medium">
-              a sequence when an opportunity moves to Delivered.
-            </p>
-          </article>
-          <article class="products-card">
-            <h3 class="heading-style-h6">Invoice reminders</h3>
-            <p class="text-size-medium">
-              automated AR workflows around open and overdue Aspire invoices.
-            </p>
-          </article>
-        </div>
-        <div class="text-align-center products-closer">
-          <p class="text-size-medium">Aspire has the data. Miri helps you do more with it.</p>
-        </div>
-      </div>
+<section class="mk-section">
+  <div class="mk-container">
+    <div class="mk-section-head mk-section-head--center mk-section-head--wide">
+      <p class="mk-eyebrow">The roadmap</p>
+      <h2 class="mk-h2">Relay is the first of several Miri plugins for Aspire</h2>
+      <p class="mk-lead">
+        We spend every day in Aspire and see the same pain points across companies. The goal is
+        focused tools that connect to the Aspire data your team already maintains.
+      </p>
     </div>
+
+    <h3 class="mk-h3 products-subhead">Coming next</h3>
+
+    <div class="mk-grid mk-grid--3">
+      <article class="mk-card mk-card--sand">
+        <h4 class="mk-h4">Directory</h4>
+        <p class="mk-body">
+          One-off and scheduled SMS to any Aspire contact, with no work ticket required.
+        </p>
+      </article>
+
+      <article class="mk-card mk-card--sand">
+        <h4 class="mk-h4">Proposal follow-ups</h4>
+        <p class="mk-body">
+          An automatic sequence that starts when an opportunity moves to Delivered.
+        </p>
+      </article>
+
+      <article class="mk-card mk-card--sand">
+        <h4 class="mk-h4">Invoice reminders</h4>
+        <p class="mk-body">
+          Automated AR workflows around open and overdue Aspire invoices.
+        </p>
+      </article>
+    </div>
+
+    <p class="mk-h3 products-closer">Aspire has the data. Miri helps you do more with it.</p>
   </div>
 </section>
