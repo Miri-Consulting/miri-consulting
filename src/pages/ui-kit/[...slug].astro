@@ -31,6 +31,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import NavBar from '../../components/chrome/NavBar.astro';
 import Footer from '../../components/chrome/Footer.astro';
 import miriUiCss from '../../styles/miri-ui.css?raw';
+import miriChatCss from '../../styles/miri-chat.css?raw';
 import uiKitPageCss from '../../styles/ui-kit-page.css?raw';
 
 const brandSwatches = [
@@ -82,6 +83,7 @@ const icons = {
 >
   <Fragment slot="head">
     <style is:global set:html={miriUiCss}></style>
+    <style is:global set:html={miriChatCss}></style>
     <style is:global set:html={uiKitPageCss}></style>
   </Fragment>
 
@@ -535,11 +537,13 @@ const icons = {
           </ol>
           <pre><code>{`---
 import miriUiCss from '../../styles/miri-ui.css?raw';
+import miriChatCss from '../../styles/miri-chat.css?raw';
 import pageCss from '../../styles/my-page.css?raw';
 ---
 <BaseLayout bodyClass="body mk-page my-page" …>
   <Fragment slot="head">
     <style is:global set:html={miriUiCss}></style>
+    <style is:global set:html={miriChatCss}></style>
     <style is:global set:html={pageCss}></style>
   </Fragment>
 </BaseLayout>`}</code></pre>

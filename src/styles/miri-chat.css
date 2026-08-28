@@ -1,0 +1,103 @@
+/* ============================================================================
+   MIRI CHAT FIGURE  —  `.mk-chat`
+   ----------------------------------------------------------------------------
+   An SMS thread mock. Miri's products are messaging products, so showing the
+   message is worth more than any stock photograph.
+
+   Split out of miri-ui.css because three pages need it and only two of them
+   load the kit: the Webflow homepage uses it in the Our Products section,
+   where inlining the full component layer would cost ~7.4KB gzipped on the
+   most performance-sensitive page in the site for a single figure.
+
+   Every kit token below carries a literal fallback, so this file renders
+   correctly on its own and defers to the kit's tokens when they are present.
+   ========================================================================== */
+
+.mk-chat {
+  width: min(25rem, 100%);
+  padding: 1.25rem;
+  border-radius: var(--mk-r-xl, 2rem);
+  border: 1px solid var(--mk-border, #e5e4e8);
+  background-color: var(--mk-white, #ffffff);
+  box-shadow: var(--mk-shadow-lg, 0 28px 56px -24px rgba(26, 23, 31, 0.24), 0 8px 18px -12px rgba(26, 23, 31, 0.12));
+}
+
+.mk-chat__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--mk-border, #e5e4e8);
+}
+
+.mk-chat__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mk-sky, #27baf9) 0%, var(--mk-azure, #0094ff) 100%);
+  color: var(--mk-white, #ffffff);
+  font-family: var(--mk-font-display, Inter, system-ui, -apple-system, sans-serif);
+  font-size: var(--mk-tiny, 0.8125rem);
+  font-weight: 700;
+}
+
+.mk-chat__who {
+  min-width: 0;
+  font-family: var(--mk-font-display, Inter, system-ui, -apple-system, sans-serif);
+  font-size: var(--mk-small, 0.9375rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--mk-fg, #1f1d24);
+}
+
+.mk-chat__meta {
+  display: block;
+  font-size: var(--mk-tiny, 0.8125rem);
+  font-weight: 400;
+  color: var(--mk-fg-subtle, #86858f);
+}
+
+.mk-chat__body {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: 1rem;
+}
+
+.mk-chat__bubble {
+  max-width: 90%;
+  padding: 0.8rem 1rem;
+  border-radius: 1.15rem 1.15rem 1.15rem 0.35rem;
+  background-color: var(--mk-sand, #f4f2f0);
+  font-family: var(--mk-font-body, Inter, system-ui, -apple-system, sans-serif);
+  font-size: var(--mk-small, 0.9375rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mk-fg, #1f1d24);
+}
+
+.mk-chat__bubble--out {
+  margin-left: auto;
+  border-radius: 1.15rem 1.15rem 0.35rem 1.15rem;
+  background-color: var(--mk-azure, #0094ff);
+  color: var(--mk-white, #ffffff);
+}
+
+.mk-chat__bubble strong { font-weight: 600; }
+
+.mk-chat__stamp {
+  margin-top: 0.35rem;
+  font-size: var(--mk-tiny, 0.8125rem);
+  color: var(--mk-fg-subtle, #86858f);
+  text-align: right;
+}
+
+/* Below ~380px the figure's own padding costs more than it's worth. */
+@media (max-width: 380px) {
+  .mk-chat { padding: 1rem; }
+  .mk-chat__bubble { max-width: 100%; }
+}
+

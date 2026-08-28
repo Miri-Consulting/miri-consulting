@@ -1,0 +1,75 @@
+/* Home — Our Products section.
+   Uses the homepage's own split-card idiom (.layout507_card: sand, 1.5rem
+   radius, 2.5rem padding) so it sits naturally between Our Services and the
+   team grid. The only imported piece is the Relay chat figure, which carries
+   over from the /products hero so the product reads as the same thing in both
+   places. Type, pills and spacing all come from the Webflow Designer classes. */
+
+.home-products_card {
+  align-items: center;
+}
+
+/* The figure column is the narrower half of .layout507_card (1fr of 1fr/1.5fr). */
+.home-products_figure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-products_figure .mk-chat {
+  width: 100%;
+  max-width: 22rem;
+}
+
+.home-products_eyebrow {
+  color: var(--pool-water);
+  margin: 0 0 .5rem;
+}
+
+.home-products_list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .6rem;
+}
+
+.home-products_list li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.6rem;
+  color: #6b6b6a;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Same masked azure check the kit uses, so the two pages agree. */
+.home-products_list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .4em;
+  width: .95rem;
+  height: .95rem;
+  background-color: var(--pool-water);
+  -webkit-mask: var(--home-products-check) center / contain no-repeat;
+  mask: var(--home-products-check) center / contain no-repeat;
+}
+
+:root {
+  --home-products-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M8.2 14.4 4 10.2l1.5-1.5 2.7 2.7 6.3-6.3L16 6.6z'/%3E%3C/svg%3E");
+}
+
+/* Stack figure over copy once the two columns get tight. The Webflow card
+   keeps its grid at all widths, so the breakpoint lives here. */
+@media screen and (max-width: 860px) {
+  .home-products_card {
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
+    padding: 2rem;
+  }
+
+  .home-products_figure .mk-chat {
+    max-width: 24rem;
+  }
+}

@@ -6,23 +6,68 @@ const productsHref = rootPath('/products');
 const signupUrl = relay.signupUrl;
 ---
 
-<section class="section_contact9">
+<section class="section_layout507">
   <div class="padding-global">
     <div class="container-medium">
       <div class="padding-section-medium">
-        <div class="text-align-center">
-          <div class="margin-bottom margin-xxsmall">
-            <h2 class="heading-style-h2">Our Products</h2>
+        <div class="layout507_component">
+          <div class="margin-bottom margin-xlarge">
+            <div class="text-align-center">
+              <div class="margin-bottom margin-xxsmall">
+                <h2 class="heading-style-h2">Our Products</h2>
+              </div>
+              <p class="text-size-medium-smallspace text-color-grey">
+                Focused tools that connect to the Aspire data your team already maintains.
+              </p>
+            </div>
           </div>
-          <p class="text-size-medium-smallspace text-color-grey">
-            Relay turns your Aspire schedule into consolidated pre- and post-visit texts. Your team controls who gets notified, which services trigger a message, what it says, and when it goes out.
-          </p>
-          <div class="margin-top margin-medium">
-            <div class="button-group is-center">
-              <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">Request early access</a>
-              <a href={productsHref} class="button-2 is-secondary w-inline-block">
-                <div>Learn more about Relay</div>
-              </a>
+
+          <div class="layout507_card home-products_card">
+            <div class="home-products_figure">
+              <figure class="mk-chat">
+                <div class="mk-chat__head">
+                  <span class="mk-chat__avatar" aria-hidden="true">R</span>
+                  <span class="mk-chat__who">
+                    Northside Landscape
+                    <span class="mk-chat__meta">Tomorrow · 3 services · 1 text</span>
+                  </span>
+                </div>
+                <div class="mk-chat__body">
+                  <p class="mk-chat__bubble mk-chat__bubble--out">
+                    Hi Dana — your crew is scheduled at <strong>412 Ridgeview</strong> tomorrow
+                    between 8–10am for <strong>mowing, mulch install, and turf application</strong>.
+                  </p>
+                  <p class="mk-chat__stamp">Scheduled for 4:00 PM today</p>
+                </div>
+              </figure>
+            </div>
+
+            <div class="layout507_card-content center">
+              <div class="layout507_card-content-top">
+                <h3 class="heading-style-h6 home-products_eyebrow">Miri Relay</h3>
+                <div class="margin-bottom margin-small">
+                  <h3 class="heading-style-h3">Advanced SMS service notifications for Aspire</h3>
+                </div>
+                <p class="text-size-medium text-color-grey">
+                  Relay turns your Aspire schedule into consolidated pre- and post-visit texts, so
+                  customers hear once about the whole day instead of once per work ticket.
+                </p>
+                <ul class="home-products_list">
+                  <li>One text per visit, however many services are on it</li>
+                  <li>Choose which services trigger a message, and which stay quiet</li>
+                  <li>Templates per service, customer, and pre- or post-visit</li>
+                </ul>
+              </div>
+              <div class="margin-top margin-medium">
+                <div class="button-group">
+                  <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">
+                    Request early access
+                  </a>
+                  <a href={productsHref} class="button-2 is-secondary w-inline-block">
+                    <div>Learn more about Relay</div>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -20,6 +20,8 @@ import RawHtml from '../components/RawHtml.astro';
 import { site } from '../data/site';
 import { rootPath } from '../utils/rootPath';
 import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
+import miriChatCss from '../styles/miri-chat.css?raw';
+import homeProductsCss from '../styles/home-products.css?raw';
 ---
 
 <BaseLayout
@@ -36,6 +38,8 @@ import bodyScriptsHome from '../partials/body-scripts-home.html?raw';
       href={rootPath('/media/logo-horizontal-white.png')}
       fetchpriority="high"
     />
+    <style is:global set:html={miriChatCss}></style>
+    <style is:global set:html={homeProductsCss}></style>
     <JsonLdOrganization />
     <JsonLdService />
     <JsonLdPerson />
