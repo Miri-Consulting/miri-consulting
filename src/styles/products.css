@@ -123,6 +123,12 @@
   cursor: pointer;
 }
 
+.products-waitlist-form[hidden],
+.products-waitlist-success[hidden],
+.products-waitlist-error[hidden] {
+  display: none !important;
+}
+
 .products-waitlist-error {
   color: #b42318;
   margin: 0;
