@@ -111,7 +111,32 @@ In another:
 npm run test:visual
 ```
 
-Playwright defaults `BASE_URL` to `http://localhost:4321` (matching `astro preview`). DOM tests live in `tests/dom.spec.ts` (one viewport via the `dom` project); visual screenshot tests live in `tests/visual.spec.ts` (six viewport projects). On PRs and pushes to `master`, `.github/workflows/test.yml` runs `check` + `build` + `npm run test:dom`; visual screenshot tests self-skip in CI unless `RUN_VISUAL_TESTS=1` is set because the committed screenshot baselines are OS-specific. Keep visual tests local until a Linux-baseline workflow is set up.
+Playwright defaults `BASE_URL` to `http://localhost:4321` (matching `astro preview`). DOM tests live in `tests/dom.spec.ts` (one viewport via the `dom` project); visual screenshot tests live in `tests/visual.spec.ts` (six viewport projects). On PRs and pushes to `master`, `.github/workflows/test.yml` runs two jobs: `test`
+(`check` + `build` + `npm run test:dom`) and `visual`, which runs the full
+screenshot suite inside the pinned `mcr.microsoft.com/playwright` image against
+the committed `*-linux.png` baselines. **The visual job does not skip** — if you
+change rendered output you must refresh the Linux baselines too, or CI fails
+even though the deploy succeeds (they are separate workflows).
+
+Refresh the Linux baselines with the same pinned image the CI job uses:
+
+```bash
+docker run --rm -v "$PWD":/w -w /w --ipc=host mcr.microsoft.com/playwright:v1.60.0-noble bash -c '
+  npm ci && npm run build
+  npx astro preview --host --force >/tmp/p.log 2>&1 &
+  for i in $(seq 1 60); do curl -fs http://localhost:4321 >/dev/null && break; sleep 1; done
+  npx playwright test tests/visual.spec.ts --update-snapshots
+'
+npm ci   # restore host binaries — the container overwrote node_modules via the bind mount
+```
+
+Two gotchas with that command. The container's `npm ci` installs Linux binaries
+into the bind-mounted `node_modules`, so re-run `npm ci` on the host afterwards
+or local builds break. And astro 7 records a running preview in
+`.astro/preview.json`; a container that exits without stopping its server leaves
+a stale PID there and every later `npm run preview` refuses to start with
+"Another astro preview server is already running." Delete the file (it is
+gitignored, so CI never sees it) or pass `--force`.
 
 ## Run visual regression against production
 
