@@ -29,7 +29,7 @@ const bodyHtml = syncPrimaryCalendlyUrl(
   title={title}
   description={description}
   canonicalPath={canonicalPath}
-  bodyClass="body"
+  bodyClass="body aspire-page"
 >
   <Fragment slot="head">
     <JsonLdAspireLandscape canonicalPath={canonicalPath} />
@@ -45,7 +45,6 @@ const bodyHtml = syncPrimaryCalendlyUrl(
     <div class="aspire-landing-original">
       <RawHtml html={bodyHtml} />
     </div>
-    <div class="aspire-landing-page-gap" aria-hidden="true"></div>
     <Footer variant="legal" />
   </main>
   <Fragment slot="scripts">
