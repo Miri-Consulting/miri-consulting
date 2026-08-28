@@ -39,7 +39,7 @@ const head = sanitizeLegalHead(rewriteAssetPaths(headHtml))
   .replace(/<link href="[^"]+" rel="canonical"\/>/, `<link href="${canonical}" rel="canonical"/>`)
   .replace(
     '<meta content="width=device-width, initial-scale=1" name="viewport"/>',
-    '<meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="index,follow" name="robots"/>',
+    '<meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="noindex,follow" name="robots"/>',
   );
 ---
 

@@ -61,8 +61,8 @@ const expectedDesktopLogoAlts = [
 ];
 
 const expectedServices = ['Operations', 'Finance', 'Digital', 'HR'];
-const expectedHomeNavHrefs = ['#about', '#industries', '#testimonials', '#services', '#people'];
-const expectedLegalNavHrefs = expectedHomeNavHrefs.map((href) => `/${href}`);
+const expectedHomeNavHrefs = ['#about', '#industries', '#testimonials', '#services', '/products', '#people', 'https://relay.miri-consulting.com'];
+const expectedLegalNavHrefs = ["/#about", "/#industries", "/#testimonials", "/#services", "/products", "/#people", "https://relay.miri-consulting.com"];
 
 test.describe('home page DOM', () => {
   test.beforeEach(async ({ page }) => {
@@ -414,5 +414,87 @@ test.describe('home page DOM', () => {
     for (const fragment of forbidden) {
       expect(html, `dist/index.html should not contain ${fragment}`).not.toContain(fragment);
     }
+  });
+});
+
+test.describe('products and legal SEO', () => {
+  test('home Our Products block links to /products', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { name: 'Our Products' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Learn more about Relay' })).toHaveAttribute('href', '/products');
+  });
+
+  test('products page renders Relay landing, form, and sign-in', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/products', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveTitle('Miri Relay | SMS service notifications for Aspire');
+    await expect(page.getByRole('heading', { name: 'Advanced SMS service notification for Aspire' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Request early access' })).toBeVisible();
+    await expect(page.locator('#relay-work-email')).toHaveAttribute('type', 'email');
+    await expect(page.locator(".navbar2_menu a[href=\"https://relay.miri-consulting.com\"]")).toHaveAttribute("target", "_blank");
+  });
+
+  test('privacy and terms are noindexed and thank-you stays noindexed', async ({ page }) => {
+    for (const path of ['/privacy-policy', '/terms-of-service']) {
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+    }
+    await page.goto('/thank-you', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+  });
+
+  test('sitemap excludes noindex routes', async () => {
+    const sitemapPath = path.resolve('dist/sitemap-0.xml');
+    const sitemapXml = path.resolve('dist/sitemap.xml');
+    const file = existsSync(sitemapPath) ? sitemapPath : sitemapXml;
+    if (!existsSync(file)) {
+      return;
+    }
+    const xml = readFileSync(file, 'utf8');
+    expect(xml).not.toContain('privacy-policy');
+    expect(xml).not.toContain('terms-of-service');
+    expect(xml).not.toContain('thank-you');
+  });
+
+  test('Our Products CTA uses pool-water button-2', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const cta = page.getByRole('link', { name: 'Learn more about Relay' });
+    await expect(cta).toHaveClass(/button-2/);
+    await expect(cta).not.toHaveClass(/is-black/);
+  });
+
+  test('Relay hero uses homepage tinted panel and button-2 pills', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/products', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('header .header142_component')).toHaveCount(1);
+    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveClass(/button-2/);
+    await expect(page.locator('header.products-hero a.button-2.is-secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com');
+    await expect(page.locator('#relay-waitlist-form')).not.toHaveAttribute('action');
+  });
+
+  test('waitlist form validates email client-side without a destination', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/products', { waitUntil: 'domcontentloaded' });
+    await page.locator('#relay-work-email').fill('not-an-email');
+    await page.locator('#relay-waitlist-form button[type="submit"]').click();
+    await expect(page.locator('#relay-waitlist-error')).toBeVisible();
+    await expect(page.locator('#relay-waitlist-error')).toHaveText('Enter a valid work email.');
+    await expect(page.locator('#relay-waitlist-form')).toBeVisible();
+    await page.locator('#relay-work-email').fill('you@company.com');
+    await page.locator('#relay-waitlist-form button[type="submit"]').click();
+    await expect(page.locator('#relay-waitlist-success')).toBeVisible();
+    await expect(page.locator('#relay-waitlist-form')).toBeHidden();
   });
 });

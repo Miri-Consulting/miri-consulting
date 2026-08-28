@@ -1,7 +1,7 @@
 ---
 import { cta, navLinks, webflow } from '../../data/site';
 import { calendlyPopupOnclick } from '../../utils/calendly';
-import { localOrHomeAnchorPath, rootPath } from '../../utils/rootPath';
+import { localOrHomeAnchorPath, navItemHref, isExternalNavLink, rootPath } from '../../utils/rootPath';
 
 interface Props {
   /** Home uses a different IX2 target id than legal pages. */
@@ -47,9 +47,19 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
       />
     </a>
     <nav role="navigation" class="navbar2_menu w-nav-menu">
-      {navLinks.map((link) => (
-        <a href={localOrHomeAnchorPath(link.anchor, linksAreLocal)} class="navbar2_link w-nav-link">{link.label}</a>
-      ))}
+      {navLinks.map((link) => {
+        const href = navItemHref(link, linksAreLocal);
+        const external = isExternalNavLink(link);
+        return (
+          <a
+            href={href}
+            class="navbar2_link w-nav-link"
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener' : undefined}
+          >{link.label}</a>
+        );
+      })}
+
     </nav>
     <div
       id="w-node-_48410a7f-9d6d-9f18-2a4c-2f70603fdd0b-603fdcfe"

@@ -1,0 +1,158 @@
+/* Products / Relay — layout only. Type, pills, and page chrome come from homepage Designer classes. */
+
+.products-page .header142_content {
+  width: min(46rem, 100%);
+}
+
+.products-page .header142_component {
+  height: auto;
+  min-height: 28rem;
+}
+
+.products-eyebrow {
+  color: var(--pool-water);
+  margin: 0 0 0.75rem;
+}
+
+.products-hero .button-group.is-center a {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3rem;
+  width: auto;
+  min-width: 9rem;
+  padding: 0.75rem 1.5rem;
+  white-space: nowrap;
+}
+
+.products-prose {
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.products-prose p + p {
+  margin-top: 1rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.products-card,
+.products-step {
+  background: #f4f2f0;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+.products-card h3,
+.products-step h3 {
+  margin: 0 0 0.5rem;
+}
+
+.products-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: products-step;
+}
+
+.products-step {
+  counter-increment: products-step;
+}
+
+.products-step::before {
+  content: counter(products-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.75rem;
+  border-radius: 50%;
+  background: var(--pool-water);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.products-screenshot-placeholder {
+  min-height: 18rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: #f4f2f0;
+  color: #6b6b6a;
+}
+
+.products-screenshot figcaption {
+  margin-top: 0.75rem;
+  color: #6b6b6a;
+  font-size: 0.95rem;
+}
+
+.products-waitlist-form {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 28rem;
+  margin: 1.25rem auto 0;
+  text-align: left;
+}
+
+.products-waitlist-label {
+  font-weight: 500;
+}
+
+.products-waitlist-input {
+  width: 100%;
+  min-height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.products-waitlist-submit {
+  width: 100%;
+  cursor: pointer;
+}
+
+.products-waitlist-error {
+  color: #b42318;
+  margin: 0;
+}
+
+.products-waitlist-success,
+.products-waitlist-signin {
+  margin-top: 1.25rem;
+}
+
+.products-grid-follow {
+  margin-top: 2rem;
+}
+
+.products-screenshot {
+  margin: 2.5rem auto 0;
+  max-width: 36rem;
+}
+
+.products-closer {
+  margin-top: 2.5rem;
+}
+
+@media screen and (max-width: 991px) {
+  .products-grid,
+  .products-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .products-page .header142_component {
+    min-height: 0;
+  }
+}

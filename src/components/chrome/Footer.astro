@@ -1,6 +1,6 @@
 ---
 import { site, navLinks } from '../../data/site';
-import { localOrHomeAnchorPath, rootPath } from '../../utils/rootPath';
+import { localOrHomeAnchorPath, navItemHref, isExternalNavLink, rootPath } from '../../utils/rootPath';
 
 interface Props {
   variant?: 'home' | 'legal';
@@ -46,8 +46,10 @@ const logoSrcset = [500, 800, 1080, 1600, 2000, 2600, 3200]
                     : link.label === 'Testimonials'
                       ? 'w-node-bd8d8176-1f60-eb7c-c62d-081e0b0578ce-606d722d'
                       : undefined;
+                const href = navItemHref(link, linksAreLocal);
+                const external = isExternalNavLink(link);
                 return (
-                  <a href={localOrHomeAnchorPath(link.anchor, linksAreLocal)} id={id} class="footer7_link">{link.label}</a>
+                  <a href={href} id={id} class="footer7_link" target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>{link.label}</a>
                 );
               })}
             </div>

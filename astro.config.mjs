@@ -14,6 +14,18 @@ const base = normalizeBase(process.env.ASTRO_BASE);
 const site =
   process.env.ASTRO_SITE_URL?.trim() || 'https://www.miri-consulting.com';
 
+// Keep in sync with noindexPaths in src/data/site.ts.
+const noindexPathnames = ["/privacy-policy", "/terms-of-service", "/thank-you"];
+
+function sitemapAllows(page) {
+  try {
+    const pathname = new URL(page).pathname.replace(/\/$/, "") || "/";
+    return !noindexPathnames.includes(pathname);
+  } catch {
+    return true;
+  }
+}
+
 export default defineConfig({
   site,
   base,
@@ -26,7 +38,7 @@ export default defineConfig({
     format: 'directory',
     assets: '_assets',
   },
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: sitemapAllows })],
   vite: {
     build: {
       cssCodeSplit: false,

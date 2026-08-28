@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBar from '../../components/chrome/NavBar.astro';
+import Footer from '../../components/chrome/Footer.astro';
+import RelayLanding from '../../components/products/RelayLanding.astro';
+import RelayWaitlistForm from '../../components/products/RelayWaitlistForm.astro';
+import RawHtml from '../../components/RawHtml.astro';
+import { webflow } from '../../data/site';
+import bodyScriptsHome from '../../partials/body-scripts-home.html?raw';
+import productsCss from '../../styles/products.css?raw';
+
+const title = 'Miri Relay | SMS service notifications for Aspire';
+const description =
+  'Relay connects to your Aspire schedule so you control who gets notified, which services trigger a message, what it says, and when it goes out.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/products"
+  bodyClass="body products-page"
+  webflowPageId={webflow.pages.privacy}
+>
+  <Fragment slot="head">
+    <style is:global set:html={productsCss}></style>
+  </Fragment>
+  <main class="main-wrapper">
+    <NavBar variant="legal" />
+    <RelayLanding />
+    <RelayWaitlistForm />
+    <Footer variant="legal" />
+  </main>
+  <Fragment slot="scripts">
+    <RawHtml html={bodyScriptsHome} />
+  </Fragment>
+</BaseLayout>

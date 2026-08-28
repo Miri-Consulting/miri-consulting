@@ -11,13 +11,33 @@ export const site = {
   copyright: '© 2025 Miri. All rights reserved.',
 } as const;
 
-export const navLinks = [
+export const relay = {
+  signInUrl: 'https://relay.miri-consulting.com',
+  /**
+   * Early-access waitlist destination. Empty until a real form URL or API
+   * endpoint is supplied. The products page still renders the form and
+   * validates email client-side; it only submits when this is a non-empty URL.
+   */
+  waitlistFormUrl: '',
+} as const;
+
+export type NavLink =
+  | { label: string; anchor: string }
+  | { label: string; href: string; external?: boolean };
+
+export const navLinks: readonly NavLink[] = [
   { anchor: 'about', label: 'About' },
   { anchor: 'industries', label: 'Industries' },
   { anchor: 'testimonials', label: 'Testimonials' },
   { anchor: 'services', label: 'Services' },
+  { href: '/products', label: 'Products' },
   { anchor: 'people', label: 'People' },
-] as const;
+  { href: relay.signInUrl, label: 'Sign in', external: true },
+];
+
+/** Live pages that must not rank: robots noindex + sitemap exclusion. */
+export const noindexPaths = ['/privacy-policy', '/terms-of-service', '/thank-you'] as const;
+
 export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',
 } as const;
