@@ -2,7 +2,7 @@
 import { relay } from '../../data/site';
 
 const signInUrl = relay.signInUrl;
-const earlyAccessHref = '#early-access';
+const earlyAccessHref = relay.signupUrl;
 ---
 
 <header class="section_header26 products-hero">
@@ -23,7 +23,7 @@ const earlyAccessHref = '#early-access';
                 </p>
                 <div class="margin-top margin-small">
                   <div class="button-group is-center">
-                    <a href={earlyAccessHref} class="button-2 w-button">Request early access</a>
+                    <a href={earlyAccessHref} class="button-2 w-button" target="_blank" rel="noopener">Request early access</a>
                     <a href={signInUrl} class="button-2 is-secondary w-button" target="_blank" rel="noopener">Sign in</a>
                   </div>
                 </div>

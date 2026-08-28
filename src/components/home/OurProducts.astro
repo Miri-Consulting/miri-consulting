@@ -1,7 +1,9 @@
 ---
+import { relay } from '../../data/site';
 import { rootPath } from '../../utils/rootPath';
 
 const productsHref = rootPath('/products');
+const signupUrl = relay.signupUrl;
 ---
 
 <section class="section_contact9">
@@ -17,7 +19,8 @@ const productsHref = rootPath('/products');
           </p>
           <div class="margin-top margin-medium">
             <div class="button-group is-center">
-              <a href={productsHref} class="button-2 w-inline-block">
+              <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">Request early access</a>
+              <a href={productsHref} class="button-2 is-secondary w-inline-block">
                 <div>Learn more about Relay</div>
               </a>
             </div>

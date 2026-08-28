@@ -13,12 +13,7 @@ export const site = {
 
 export const relay = {
   signInUrl: 'https://relay.miri-consulting.com',
-  /**
-   * Early-access waitlist destination. Empty until a real form URL or API
-   * endpoint is supplied. The products page still renders the form and
-   * validates email client-side; it only submits when this is a non-empty URL.
-   */
-  waitlistFormUrl: '',
+  signupUrl: 'https://relay.miri-consulting.com/signup',
 } as const;
 
 export type NavLink =

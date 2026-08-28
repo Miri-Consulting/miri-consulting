@@ -435,9 +435,10 @@ test.describe('products and legal SEO', () => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Our Products' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Learn more about Relay' })).toHaveAttribute('href', '/products');
+    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
   });
 
-  test('products page renders Relay landing, form, and sign-in', async ({ page }) => {
+  test('products page renders Relay landing, signup, and sign-in', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
@@ -446,7 +447,7 @@ test.describe('products and legal SEO', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Introducing Miri Relay' })).toBeVisible();
     await expect(page.getByText('Advanced SMS service notification for Aspire', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Request early access' })).toBeVisible();
-    await expect(page.locator('#relay-work-email')).toHaveAttribute('type', 'email');
+    await expect(page.getByRole('link', { name: 'Request access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator(".navbar2_menu a[href=\"https://relay.miri-consulting.com\"]")).toHaveAttribute("target", "_blank");
   });
 
@@ -505,23 +506,16 @@ test.describe('products and legal SEO', () => {
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('header .header142_component')).toHaveCount(1);
     await expect(page.getByRole('link', { name: 'Request early access' })).toHaveClass(/button-2/);
+    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator('header.products-hero a.button-2.is-secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com');
-    await expect(page.locator('#relay-waitlist-form')).not.toHaveAttribute('action');
   });
 
-  test('waitlist form validates email client-side without a destination', async ({ page }) => {
+  test('early access CTAs go to Relay signup', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
-    await page.locator('#relay-work-email').fill('not-an-email');
-    await page.locator('#relay-waitlist-form button[type="submit"]').click();
-    await expect(page.locator('#relay-waitlist-error')).toBeVisible();
-    await expect(page.locator('#relay-waitlist-error')).toHaveText('Enter a valid work email.');
-    await expect(page.locator('#relay-waitlist-form')).toBeVisible();
-    await page.locator('#relay-work-email').fill('you@company.com');
-    await page.locator('#relay-waitlist-form button[type="submit"]').click();
-    await expect(page.locator('#relay-waitlist-success')).toBeVisible();
-    await expect(page.locator('#relay-waitlist-form')).toBeHidden();
+    await expect(page.locator('#early-access a.button-2')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.locator('#early-access a.button-2')).toHaveAttribute('target', '_blank');
   });
 });
