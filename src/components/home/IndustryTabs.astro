@@ -2,8 +2,11 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { sortByOrder } from '../../utils/home/sortEntries';
+import { rootPath } from '../../utils/rootPath';
 
 const industries = sortByOrder(await getCollection('industries'));
+const aspireConsultingHref = rootPath('/aspire-consulting-for-landscape-companies');
+const aspireLinkPhrase = 'make Aspire work for your team';
 ---
 
 <section class="section_layout494">
@@ -46,8 +49,12 @@ const industries = sortByOrder(await getCollection('industries'));
                   {industries.map((entry, i) => {
                     const tabIndex = i + 1;
                     const isFirst = i === 0;
+                    const phraseIndex =
+                      entry.data.slug === 'landscape-maintenance'
+                        ? entry.data.body.lastIndexOf(aspireLinkPhrase)
+                        : -1;
                     return (
-                      <a
+                      <div
                         data-w-tab={`Tab ${tabIndex}`}
                         ms-code-onhover="click"
                         id={isFirst ? 'w-node-_5348f082-0c11-b7a5-8b63-7a387345b99d-f960df05' : undefined}
@@ -56,10 +63,20 @@ const industries = sortByOrder(await getCollection('industries'));
                         <h3 class="heading-style-h6">{entry.data.tabLabel}</h3>
                         <div class="layout493_paragraph">
                           <div class="margin-top margin-xxsmall">
-                            <p class="text-size-small text-color-grey">{entry.data.body}</p>
+                            <p class="text-size-small text-color-grey">
+                              {phraseIndex >= 0 ? (
+                                <>
+                                  {entry.data.body.slice(0, phraseIndex)}
+                                  <a href={aspireConsultingHref} onclick="event.stopPropagation()">{aspireLinkPhrase}</a>
+                                  {entry.data.body.slice(phraseIndex + aspireLinkPhrase.length)}
+                                </>
+                              ) : (
+                                entry.data.body
+                              )}
+                            </p>
                           </div>
                         </div>
-                      </a>
+                      </div>
                     );
                   })}
                 </div>

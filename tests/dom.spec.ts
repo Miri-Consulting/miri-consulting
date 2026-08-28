@@ -418,6 +418,16 @@ test.describe('home page DOM', () => {
 });
 
 test.describe('products and legal SEO', () => {
+
+  test('Landscape Maintenance card links the Aspire clause', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const link = page.getByRole('link', { name: 'make Aspire work for your team' });
+    await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
+  });
+
   test('home Our Products block links to /products', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
