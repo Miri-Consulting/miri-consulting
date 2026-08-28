@@ -479,6 +479,19 @@ test.describe('products and legal SEO', () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
   });
 
+  test('every page footer links the Aspire SEO page', async ({ page }) => {
+    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
+      route.abort(),
+    );
+    // The footer is the page's only site-wide link to the Aspire landing page;
+    // the other one is a single inline anchor in the home Landscape Maintenance card.
+    for (const path of ['/', '/products', '/privacy-policy']) {
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      const link = page.locator('.footer7_link.is-secondary', { hasText: 'Aspire Consulting' });
+      await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
+    }
+  });
+
   test('the /ui-kit style guide is noindexed and renders kit specimens', async ({ page }) => {
     await page.goto('/ui-kit', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
