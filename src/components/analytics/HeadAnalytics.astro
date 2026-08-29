@@ -1,5 +1,6 @@
 ---
 import { analytics, vendor } from '../../data/site';
+import { rootPath } from '../../utils/rootPath';
 
 interface Props {
   includeFinsweet?: boolean;
@@ -71,7 +72,7 @@ const clarityId = analytics.clarityProjectId;
   })(window, document, 'script', 'dataLayer', gtmId);
 </script>
 <script id="cookieyes" type="text/javascript" src={vendor.cookieYes} is:inline></script>
-{includeFinsweet ? <script async src={vendor.finsweetModal} is:inline></script> : null}
+{includeFinsweet ? <script async src={rootPath(vendor.finsweetModal)} is:inline></script> : null}
 <script is:inline define:vars={{ clarityId }}>
   function loadClarity() {
     if (window.__miriClarityLoaded) return;

@@ -71,7 +71,16 @@ export const vendor = {
   jquery: '/scripts/jquery.min.js',
   webfont: 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
   cookieYes: `https://cdn-cookieyes.com/client_data/${analytics.cookieYesClientId}/script.js`,
-  finsweetModal: 'https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js',
+  /**
+   * Self-hosted copy of @finsweet/attributes-modal, pinned to the exact build
+   * that `@1` resolved to on 2026-08-28 (v1.1.3,
+   * sha256 d683e63d2c4e54a5470f1ba32992554028abc1f2c2a8abd75b8842c1ad3633d5).
+   * Previously loaded from cdn.jsdelivr.net, which made the team and service
+   * modals depend on a third party being reachable and let the version float
+   * under a major-only tag. To update: download the new build into
+   * `public/scripts/finsweet-modal.js` and record the version and hash here.
+   */
+  finsweetModal: '/scripts/finsweet-modal.js',
   favicon: '/media/favicon.png',
   webclip: '/media/webclip.png',
 } as const;

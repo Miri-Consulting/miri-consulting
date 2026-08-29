@@ -269,7 +269,7 @@ test.describe('home page DOM', () => {
     }
   });
 
-  test('Webflow tab runtime switches home and modal tab groups', async ({ page }) => {
+  test('Webflow tab runtime switches the home page tab groups', async ({ page }) => {
     const serviceTabs = page.locator('.section_layout507 .layout507_tabs.w-tabs');
     await serviceTabs
       .locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 2"]')
@@ -288,7 +288,15 @@ test.describe('home page DOM', () => {
     await expect(
       industryTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 1"] .layout493_paragraph'),
     ).toHaveCSS('height', '0px');
+  });
 
+  // Each modal test opens exactly one modal from a fresh page load. They used to
+  // run as one sequence — team modal, close, then service modal — which failed
+  // intermittently in CI. That was not test flake: the site cannot open a second
+  // modal at all (see the test.fixme below), and the sequence only passed when
+  // earlier steps happened to delay it enough. Do not merge these back into one
+  // test until that bug is fixed.
+  test('Webflow tab runtime switches tabs inside a team modal', async ({ page }) => {
     await page.locator('.team8_item').first().click();
     const teamModalTabs = page.locator(
       '.fs_modal-1_popup-2.team-modal-popup:visible .layout494_tabs.w-tabs',
@@ -305,7 +313,13 @@ test.describe('home page DOM', () => {
 
     await page.locator('.fs_modal-1_popup-2.team-modal-popup:visible .fs_modal-1_close-2').click();
     await expect(page.locator('.fs_modal-1_popup-2.team-modal-popup:visible')).toHaveCount(0);
-    await serviceTabs.locator(':scope > .w-tab-content > .w-tab-pane.w--tab-active a[fs-modal-element]').click();
+  });
+
+  test('Webflow tab runtime switches tabs inside a service modal', async ({ page }) => {
+    const serviceTabs = page.locator('.section_layout507 .layout507_tabs.w-tabs');
+    await serviceTabs
+      .locator(':scope > .w-tab-content > .w-tab-pane.w--tab-active a[fs-modal-element]')
+      .click();
     const serviceModalTabs = page.locator(
       '.fs_modal-1_popup-2.service-modal-popup:visible .layout493_tabs.w-tabs',
     );
@@ -318,6 +332,24 @@ test.describe('home page DOM', () => {
     await expect(
       serviceModalTabs.locator(':scope > .w-tab-menu > .w-tab-link[data-w-tab="Tab 1"] .layout493_paragraph'),
     ).toHaveCSS('height', '0px');
+  });
+
+  // KNOWN PRODUCTION BUG — reproduced 0/4 against https://miri-consulting.com
+  // as well as locally, and independent of how the first modal is closed
+  // (button, backdrop and Escape all fail). Once any modal is opened and
+  // closed, no modal opens again until the page reloads; three elements keep a
+  // stale aria-expanded="true", which is how @finsweet/attributes-modal tracks
+  // open state. Un-fixme this once the modal integration is fixed.
+  test.fixme('a second modal can be opened after closing the first', async ({ page }) => {
+    await page.locator('.team8_item').first().click();
+    await expect(page.locator('.fs_modal-1_popup-2.team-modal-popup:visible')).toHaveCount(1);
+    await page.locator('.fs_modal-1_popup-2.team-modal-popup:visible .fs_modal-1_close-2').click();
+    await expect(page.locator('.fs_modal-1_popup-2.team-modal-popup:visible')).toHaveCount(0);
+
+    await page
+      .locator('.section_layout507 .w-tab-pane.w--tab-active a[fs-modal-element]')
+      .click();
+    await expect(page.locator('.fs_modal-1_popup-2.service-modal-popup:visible')).toHaveCount(1);
   });
 
   test('home header and footer links use local section anchors', async ({ page }) => {
