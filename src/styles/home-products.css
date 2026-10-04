@@ -45,21 +45,14 @@
   line-height: 1.5;
 }
 
-/* Same masked azure check the kit uses, so the two pages agree. */
-.home-products_list li::before {
-  content: "";
+/* Small blue line icons retain the original list-marker footprint. */
+.home-products_icon {
   position: absolute;
   left: 0;
-  top: .4em;
+  top: .1rem;
   width: .95rem;
   height: .95rem;
-  background-color: var(--pool-water);
-  -webkit-mask: var(--home-products-check) center / contain no-repeat;
-  mask: var(--home-products-check) center / contain no-repeat;
-}
-
-:root {
-  --home-products-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M8.2 14.4 4 10.2l1.5-1.5 2.7 2.7 6.3-6.3L16 6.6z'/%3E%3C/svg%3E");
+  color: var(--pool-water);
 }
 
 /* Stack figure over copy once the two columns get tight. The Webflow card
