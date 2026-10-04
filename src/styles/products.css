@@ -1,36 +1,48 @@
-/* Products / Relay — page-specific overrides only.
-   Everything structural comes from the `mk-` UI kit (src/styles/miri-ui.css). */
-
-/* The kit hero sits directly under the fixed 4.5rem navbar. */
+/* Relay product page extensions of the shared Miri UI kit. */
 .products-page .mk-hero {
   padding-top: clamp(6rem, 4rem + 6vw, 9.5rem);
 }
-
-/* Closing statement under the roadmap grid. */
-.products-page .products-closer {
-  max-width: 44rem;
-  margin: clamp(3rem, 2rem + 3vw, 4.5rem) auto 0;
-  text-align: center;
+.products-page section[id] { scroll-margin-top: 6rem; }
+.products-page .products-spotlight {
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.products-page .products-spotlight > div,
+.products-page .products-spotlight .mk-chat { width: 100%; max-width: 25rem; }
+.products-page .products-spotlight .mk-eyebrow { margin-bottom: .4rem; }
+.products-page .products-line-icon { width: 1.25rem; height: 1.25rem; color: var(--mk-azure); }
+.products-page .products-capability .mk-eyebrow { color: var(--mk-fg); }
+.products-page .products-tools a { text-decoration: none; color: inherit; }
+.products-page .products-tools .mk-link { align-self: flex-start; margin-top: auto; }
+.products-page .products-callout { margin-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
+.products-page .products-setup { margin-top: 2rem; text-align: center; }
+.products-page .products-distinction { margin-top: 1.25rem; }
+.products-page .products-example .mk-eyebrow { color: var(--mk-azure); }
+.products-page .products-example blockquote {
+  margin: .4rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 0;
+  border-left: 2px solid var(--mk-azure);
+  border-radius: 0 .75rem .75rem 0;
+  background: var(--mk-sand);
   color: var(--mk-fg);
-  text-wrap: balance;
+  font-size: .9375rem;
+  line-height: 1.65;
 }
-
-.products-page .products-callout {
-  margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
+.products-page .products-announcements { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--mk-fg-muted); font-size: .9375rem; line-height: 1.65; }
+.products-page .products-announcements li + li { margin-top: .4rem; }
+.products-page .products-plant-benefits .mk-h4 { font-size: .875rem; font-weight: 600; letter-spacing: .04em; }
+.products-page .products-plant-cta { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; justify-content: space-between; align-items: center; margin-top: 2rem; }
+.products-page .products-coming-soon { align-self: flex-start; color: var(--mk-azure); font-size: .75rem; font-weight: 600; letter-spacing: .04em; }
+.products-page .products-pricing .products-bundle { border: 2px solid var(--mk-azure); background: #eef8ff; box-shadow: none; }
+.products-page .products-value-badge { align-self: flex-start; border-radius: 2rem; padding: .4rem .8rem; color: #fff; background: #0075cb; font-size: .8125rem; font-weight: 600; }
+.products-page .products-price { margin: .25rem 0; color: var(--mk-fg); font-size: 2.75rem; font-weight: 300; line-height: 1.2; }
+.products-page .products-price span { font-size: 1rem; color: var(--mk-fg-muted); }
+@media (max-width: 960px) {
+  .products-page .mk-hero__figure { order: 0; }
 }
-
-/* Legacy waitlist form primitives — the section now renders as a CTA band and
-   links out to the Relay signup, but the hidden-state rules stay so a future
-   inline form can drop back in without re-deriving them. */
-.products-waitlist-form[hidden],
-.products-waitlist-success[hidden],
-.products-waitlist-error[hidden] {
-  display: none !important;
-}
-
-/* "Coming next" label above the roadmap grid. */
-.products-page .products-subhead {
-  margin: 0 0 clamp(1.25rem, 1rem + 0.8vw, 2rem);
-  text-align: center;
-  color: var(--mk-fg);
+@media (max-width: 600px) {
+  .products-page .mk-btn { white-space: normal; text-align: center; }
+  .products-page .mk-hero .mk-display { font-size: clamp(2.3rem, 9vw, 3rem); }
 }

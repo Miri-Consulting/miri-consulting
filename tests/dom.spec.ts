@@ -461,17 +461,25 @@ test.describe('products and legal SEO', () => {
     await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
   });
 
-  test('products page renders Relay landing, signup, and sign-in', async ({ page }) => {
+  test('products page separates available tools, roadmap, and pricing', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveTitle('Miri Relay | SMS service notifications for Aspire');
-    await expect(page.getByRole('heading', { level: 1, name: 'Introducing Miri Relay' })).toBeVisible();
-    await expect(page.getByText('Advanced SMS service notifications for Aspire.', { exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Request early access' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Request access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(page.locator(".navbar2_menu a[href=\"https://relay.miri-consulting.com\"]")).toHaveAttribute("target", "_blank");
+    await expect(page).toHaveTitle('Miri Relay | Extend What’s Possible with Aspire');
+    await expect(page.getByRole('heading', { level: 1, name: 'Extend What’s Possible with Aspire' })).toBeVisible();
+    await expect(page.locator('header .mk-btn--primary')).toHaveAttribute('href', '#available-now');
+    await expect(page.locator('header .mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
+    await expect(page.locator('#available-now a')).toHaveCount(3);
+    await expect(page.locator('#directory .products-example')).toHaveCount(6);
+    await expect(page.locator('#roadmap .products-coming-soon')).toHaveCount(5);
+    await expect(page.locator('#roadmap input')).toHaveCount(0);
+    await expect(page.locator('#pricing .products-bundle')).toContainText('$350/mo');
+    await expect(page.locator('#pricing .products-bundle')).toContainText('Best Value · Save $100/mo');
+    await expect(page.locator('#pricing .products-price')).toHaveText(['$350/mo', '$300/mo', '$150/mo', 'Free']);
+    await expect(page.locator('.mk-chat__bubble')).toHaveText('Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!');
+    await expect(page.getByText(/limited early access|request early access|onboarding a limited group/i)).toHaveCount(0);
+    await expect(page.locator('.mk-cta .mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
   });
 
 

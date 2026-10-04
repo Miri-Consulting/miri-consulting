@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import NavBar from '../../components/chrome/NavBar.astro';
 import Footer from '../../components/chrome/Footer.astro';
 import RelayLanding from '../../components/products/RelayLanding.astro';
-import RelayWaitlistForm from '../../components/products/RelayWaitlistForm.astro';
 import RawHtml from '../../components/RawHtml.astro';
 import { webflow } from '../../data/site';
 import bodyScriptsHome from '../../partials/body-scripts-home.html?raw';
@@ -11,9 +10,9 @@ import miriUiCss from '../../styles/miri-ui.css?raw';
 import miriChatCss from '../../styles/miri-chat.css?raw';
 import productsCss from '../../styles/products.css?raw';
 
-const title = 'Miri Relay | SMS service notifications for Aspire';
+const title = 'Miri Relay | Extend What’s Possible with Aspire';
 const description =
-  'Relay connects to your Aspire schedule so you control who gets notified, which services trigger a message, what it says, and when it goes out.';
+  'Explore Miri Relay: Plant Library, Service Notifications, and Directory. Get more value from the Aspire data your team already maintains.';
 ---
 
 <BaseLayout
@@ -31,7 +30,6 @@ const description =
   <main class="main-wrapper">
     <NavBar variant="legal" />
     <RelayLanding />
-    <RelayWaitlistForm />
     <Footer variant="legal" />
   </main>
   <Fragment slot="scripts">
