@@ -56,6 +56,7 @@
 .products-page .products-roadmap-signup button:disabled { opacity: .55; cursor: not-allowed; }
 .products-page .products-pricing .mk-btn { margin-top: auto; align-self: flex-start; }
 .products-page .products-pricing-help { justify-content: center; }
+.products-page .products-onboarding-note { margin-top: 1.5rem; color: var(--mk-fg); font-size: 1rem; line-height: 1.6; text-align: center; }
 @media (max-width: 600px) {
   .products-page .products-tools-band { padding-inline: 1.25rem; }
   .products-page .products-audiences { gap: 1.25rem; }
