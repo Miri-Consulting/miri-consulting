@@ -451,14 +451,14 @@ test.describe('products and legal SEO', () => {
     await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
   });
 
-  test('home Our Products block links to /products', async ({ page }) => {
+  test('home Relay block links to Relay and Free Plant Library', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Our Products' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Learn more about Relay' })).toHaveAttribute('href', '/products');
-    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.getByRole('link', { name: 'Explore Relay', exact: true })).toHaveAttribute('href', 'https://relay.miri-consulting.com');
+    await expect(page.getByRole('link', { name: 'Open Free Plant Library' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
   });
 
   test('products page separates available tools, roadmap, and pricing', async ({ page }) => {
@@ -479,6 +479,7 @@ test.describe('products and legal SEO', () => {
     await expect(page.locator('#available-now h3')).toHaveText(['Service Notifications', 'Directory', 'Free Plant Library']);
     await expect(page.locator('#directory .mk-chat__bubble')).toHaveCount(6);
     await expect(page.locator('#pricing a')).toHaveCount(5);
+    await expect(page.locator('.products-onboarding-note')).toHaveText('A $1,000 onboarding fee applies to Service Notifications and Directory.');
     await expect(page.locator('#pricing .products-bundle')).toContainText('$350/mo');
     await expect(page.locator('#pricing .products-bundle')).toContainText('Best Value · Save $100/mo');
     await expect(page.locator('#pricing .products-price')).toHaveText(['$350/mo', '$300/mo', '$150/mo', 'Free']);
@@ -559,7 +560,7 @@ test.describe('products and legal SEO', () => {
       route.abort(),
     );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    const cta = page.getByRole('link', { name: 'Learn more about Relay' });
+    const cta = page.getByRole('link', { name: 'Explore Relay', exact: true });
     await expect(cta).toHaveClass(/button-2/);
     await expect(cta).not.toHaveClass(/is-black/);
   });
@@ -570,17 +571,17 @@ test.describe('products and legal SEO', () => {
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('header.mk-hero .mk-hero__grid')).toHaveCount(1);
-    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveClass(/mk-btn--primary/);
-    await expect(page.getByRole('link', { name: 'Request early access' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(page.locator('header.mk-hero a.mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com');
+    await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveClass(/mk-btn--primary/);
+    await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveAttribute('href', '#available-now');
+    await expect(page.locator('header.mk-hero a.mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
   });
 
-  test('early access CTAs go to Relay signup', async ({ page }) => {
+  test('closing Relay CTA goes to signup', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#early-access a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(page.locator('#early-access a.mk-btn--primary')).toHaveAttribute('target', '_blank');
+    await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveAttribute('target', '_blank');
   });
 });
