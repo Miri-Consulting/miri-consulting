@@ -1,11 +1,18 @@
 ---
-import { relay } from '../../data/site';
+import { relay, cta } from '../../data/site';
 
 const plantLibraryUrl = new URL('/plants', relay.signInUrl).href;
 const signupUrl = relay.signupUrl;
 
 /* Preserve the existing Service Notifications pain-point icons. */
 const icons = {
+  leaf: 'M20 4C10 1 3 7 5 14s15 6 15-10ZM4 21l10-10',
+  chat: 'M21 11a8 8 0 0 1-8 8H7l-4 3V7a4 4 0 0 1 4-4h6a8 8 0 0 1 8 8ZM8 9h8M8 13h5',
+  calendar: 'M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2ZM3 10h18M8 2v4M16 2v4M8 15l3 3 5-5',
+  search: 'M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
+  heart: 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z',
+  share: 'M12 16V3M7 8l5-5 5 5M5 13H3v8h18v-8h-2',
+  sheet: 'M14 2H4v20h16V8l-6-6ZM14 2v6h6M8 12h8M8 16h8',
   copy: 'M20 9H11a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zM5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1',
   calendarX: 'M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM16 2v4M8 2v4M3 10h18M14 14l-4 4M10 14l4 4',
   sliders: 'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6',
@@ -40,23 +47,27 @@ const icons = {
     </div>
   </div></div>
 </header>
-<section class="mk-section mk-section--sand" aria-label="Relay capabilities"><div class="mk-container"><div class="mk-grid mk-grid--3"><article class="mk-card products-capability"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 4c-7-2-15 1-15 8a6 6 0 0 0 6 6c7 0 9-7 9-14Z"/><path d="M4 21 14 11"/></svg><h2 class="mk-eyebrow">FREE PLANT LIBRARY</h2><p class="mk-body">Browse 15,000+ plants, save reusable palettes, create client PDFs, and build Aspire-ready item sheets.</p></article>
-<article class="mk-card products-capability"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11a8 8 0 0 1-8 8H7l-4 3V7a4 4 0 0 1 4-4h6a8 8 0 0 1 8 8Z"/><path d="M8 9h8M8 13h5"/></svg><h2 class="mk-eyebrow">ADVANCED SMS COMMUNICATION</h2><p class="mk-body">Turn Aspire schedules and contact data into service notifications, customer updates, and team messages.</p></article>
-<article class="mk-card products-capability"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 3 2.5 6.5L19 12l-6.5 2.5L10 21l-2.5-6.5L1 12l6.5-2.5L10 3ZM20 2v6m-3-3h6"/></svg><h2 class="mk-eyebrow">BUILT TO EXPAND</h2><p class="mk-body">Relay is growing with new tools for invoice reminders, proposal follow-ups, recurring workflows, role-based reporting, AI insights, and more.</p></article></div></div></section>
-<section id="available-now" class="mk-section"><div class="mk-container">
+<section id="available-now" class="mk-section"><div class="mk-container"><div class="mk-cta products-tools-band">
   <div class="mk-section-head mk-section-head--center"><p class="mk-eyebrow">Relay tools</p><h2 class="mk-h2">Available Now</h2></div>
   <div class="mk-grid mk-grid--3 products-tools">
-    <a class="mk-card mk-card--interactive" href="#plant-library"><h3 class="mk-h3">Plant Library</h3><p class="mk-body">Find, save, share, and build Aspire-ready plant lists.</p><span class="mk-link">Explore Plant Library →</span></a>
-    <a class="mk-card mk-card--interactive" href="#service-notifications"><h3 class="mk-h3">Service Notifications</h3><p class="mk-body">Customer communication tied to scheduled Aspire work.</p><span class="mk-link">Explore Service Notifications →</span></a>
-    <a class="mk-card mk-card--interactive" href="#directory"><h3 class="mk-h3">Directory</h3><p class="mk-body">Communication outside of a scheduled visit.</p><span class="mk-link">Explore Directory →</span></a>
+    {[
+      {title: 'Service Notifications', description: 'Customer communication tied to scheduled Aspire work.', icon: icons.calendar, anchor: '#service-notifications'},
+      {title: 'Directory', description: 'Communication outside of a scheduled visit.', icon: icons.chat, anchor: '#directory'},
+      {title: 'Free Plant Library', description: 'Find, save, share, and build Aspire-ready plant lists.', icon: icons.leaf, anchor: '#plant-library'},
+    ].map(tool => <article class="mk-card">
+      <svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={tool.icon}/></svg>
+      <h3 class="mk-h3">{tool.title}</h3><p class="mk-body">{tool.description}</p>
+      <div class="products-tool-actions"><a href={signupUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener" aria-label={`Sign up for ${tool.title}`}>Sign up</a><a href={tool.anchor} class="mk-link" aria-label={`Learn more about ${tool.title}`}>Learn more →</a></div>
+    </article>)}
   </div>
-</div></section>
+</div></div></section>
 <section id="service-notifications" class="mk-section mk-section--sand"><div class="mk-container">
-  <div class="mk-section-head mk-section-head--wide"><p class="mk-eyebrow">Service Notifications</p><h2 class="mk-h2">Your schedule. Your message. Your control.</h2><p class="mk-lead">Review your Aspire schedule, choose the visits, customize the message, and send pre- or post-service notifications with control over exactly what your customers receive.</p></div>
-  <div class="mk-grid mk-grid--4"><article class="mk-card"><h3 class="mk-h4">High-End Residential</h3><p class="mk-body">Give customers advance notice before crews arrive for maintenance, enhancements, or other scheduled work.</p></article>
-<article class="mk-card"><h3 class="mk-h4">Plant Health Care</h3><p class="mk-body">Notify customers about upcoming chemical applications, treatments, or other services where advance communication matters.</p></article>
-<article class="mk-card"><h3 class="mk-h4">Commercial Properties</h3><p class="mk-body">Keep detail-oriented property managers informed about upcoming scheduled services.</p></article>
-<article class="mk-card"><h3 class="mk-h4">Snow Service</h3><p class="mk-body">Send service or dispatch notifications tied directly to scheduled snow work in Aspire.</p></article></div>
+  <div class="mk-section-head mk-section-head--wide"><p class="mk-eyebrow">Service Notifications</p><h2 class="mk-h2">Your schedule. Your message. Your control.</h2><p class="mk-lead">Review your Aspire schedule, choose the visits, and personalize token-based message templates with customer and service details. Send pre- or post-service notifications with control over exactly what your customers receive.</p></div>
+  <div class="mk-grid mk-grid--3 products-audiences">
+    <article><h3 class="mk-h4">No surprise arrivals</h3><p class="mk-body">Nobody likes an unannounced crew at their home. Give residential customers a heads-up so they know who’s coming and why.</p></article>
+    <article><h3 class="mk-h4">Help customers prepare</h3><p class="mk-body">Explain upcoming treatments, including service-specific guidance on pets, re-entry, and watering, so customers know what to expect.</p></article>
+    <article><h3 class="mk-h4">Stand out through communication</h3><p class="mk-body">From commercial maintenance to snow service, keep property managers informed. Clear, timely updates set your business apart.</p></article>
+  </div>
 </div></section>
 <section class="mk-section">
   <div class="mk-container">
@@ -114,10 +125,6 @@ const icons = {
 
 <section class="mk-section mk-section--sand">
   <div class="mk-container">
-    <div class="mk-section-head mk-section-head--center">
-      <p class="mk-eyebrow">How it works</p><h2 class="mk-h2">Three steps. Your team stays in control.</h2>
-      <p class="mk-lead">Multiple services scheduled at the same property can be consolidated into one clean customer message.</p>
-    </div>
     <ol class="mk-steps">
       <li class="mk-step"><h3 class="mk-h4">Sync Your Aspire Schedule</h3><p class="mk-body">Relay pulls the upcoming schedule, properties, services, and contacts from Aspire.</p></li>
       <li class="mk-step"><h3 class="mk-h4">Review and Customize</h3><p class="mk-body">Choose which visits and contacts should receive notifications and apply the appropriate message templates.</p></li>
@@ -128,18 +135,28 @@ const icons = {
 </section>
 <section id="directory" class="mk-section"><div class="mk-container">
   <div class="mk-section-head mk-section-head--wide"><p class="mk-eyebrow">Directory</p><h2 class="mk-h2">Reach the right people, even when there isn’t a scheduled visit.</h2><p class="mk-lead">Send one-off or scheduled texts to customers, employees, subcontractors, and other contacts using the information you already maintain in Aspire.</p><p class="mk-body products-distinction">Service Notifications handles communication tied to scheduled Aspire work. Directory handles communication that needs to happen outside of a scheduled visit.</p></div>
-  <div class="mk-grid mk-grid--3"><article class="mk-card products-example"><h3 class="mk-eyebrow">STORM OUTLOOK</h3><p class="mk-body">Customer communication before snow even begins.</p><blockquote>A winter storm is expected later this week. We're monitoring the forecast closely and will keep you updated as conditions develop.</blockquote></article>
-<article class="mk-card products-example"><h3 class="mk-eyebrow">POST-STORM UPDATE</h3><p class="mk-body">Give customers an update after the event, beyond individual service visits.</p><blockquote>The storm has passed and our crews are completing final checks. We'll continue monitoring conditions and will update you if additional service is needed.</blockquote></article>
-<article class="mk-card products-example"><h3 class="mk-eyebrow">EMPLOYEE REMINDERS</h3><p class="mk-body">Company-wide administrative communication.</p><blockquote>Reminder: Benefits enrollment paperwork needs to be submitted by Friday.</blockquote></article>
-<article class="mk-card products-example"><h3 class="mk-eyebrow">WEATHER DELAYS</h3><p class="mk-body">Operational updates to field employees or crews.</p><blockquote>Rain is expected through 11 AM. Please do not report to the office until noon today.</blockquote></article>
-<article class="mk-card products-example"><h3 class="mk-eyebrow">SUBCONTRACTOR REQUIREMENTS</h3><p class="mk-body">Requirements and deadlines for groups of subcontractors.</p><blockquote>All subcontractors who want to participate in snow services this season need to submit proof of insurance and required tax paperwork by Friday.</blockquote></article><article class="mk-card products-example"><h3 class="mk-eyebrow">CUSTOMER ANNOUNCEMENTS</h3><p class="mk-body">Customer communications beyond a specific work ticket.</p><ul class="products-announcements"><li>Seasonal promotions, such as discounts on seasonal color proposals</li><li>Local watering restrictions</li><li>Weather-related notices</li><li>Seasonal operational updates</li><li>Office or holiday announcements</li></ul></article></div>
+  <div class="mk-grid mk-grid--3"><article class="products-example"><h3 class="mk-eyebrow">Storm outlook</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Customers</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Hi Dana, a winter storm is expected later this week. We’re monitoring the forecast and will keep you updated as conditions develop.</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article><article class="products-example"><h3 class="mk-eyebrow">Post-storm update</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Customers</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Hi Dana, the storm has passed and our crews are completing final checks. We’ll continue monitoring conditions and let you know if additional service is needed.</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article><article class="products-example"><h3 class="mk-eyebrow">Employee reminders</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Employees</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Hi Jordan, a quick reminder: benefits enrollment paperwork is due Friday. Please send your completed forms to the office. Thank you!</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article><article class="products-example"><h3 class="mk-eyebrow">Weather delays</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Field crews</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Good morning, team. Rain is expected through 11 AM, so today’s start is delayed until noon. Please report to the office at noon instead of your usual time.</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article><article class="products-example"><h3 class="mk-eyebrow">Subcontractor requirements</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Subcontractors</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Hi Alex, planning to join our snow crews this season? Please send your proof of insurance and required tax paperwork to the office by Friday. Thank you!</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article><article class="products-example"><h3 class="mk-eyebrow">Customer announcements</h3><figure class="mk-chat"><div class="mk-chat__head"><span class="mk-chat__avatar" aria-hidden="true">N</span><span class="mk-chat__who">Northside Landscape<span class="mk-chat__meta">Customers</span></span></div><div class="mk-chat__body"><p class="mk-chat__bubble mk-chat__bubble--out">Hi Dana, we’re planning spring color installations! If you’d like a proposal for fresh seasonal color at your property, reply to this message and we’ll be in touch.</p><figcaption class="mk-chat__stamp">Example message</figcaption></div></figure></article></div>
 </div></section>
 <section id="plant-library" class="mk-section mk-section--sand"><div class="mk-container">
   <div class="mk-section-head mk-section-head--wide"><p class="mk-eyebrow">Plant Library</p><h2 class="mk-h2">Find the right plants. Put them to work.</h2><p class="mk-lead">Explore 15,000+ plants with photos and detailed growing information.</p></div>
-  <div class="mk-grid mk-grid--4 products-plant-benefits"><article class="mk-card"><h3 class="mk-h4">LEARN & DISCOVER</h3><p class="mk-body">Explore new plants and filter to find options for your sun, water, and climate.</p></article>
-<article class="mk-card"><h3 class="mk-h4">SAVE YOUR FAVORITES</h3><p class="mk-body">Build reusable palettes by design style, project, or company favorites.</p></article>
-<article class="mk-card"><h3 class="mk-h4">SHARE WITH CLIENTS</h3><p class="mk-body">Export photo-rich PDFs to present plant palettes with confidence.</p></article>
-<article class="mk-card"><h3 class="mk-h4">PRICE & IMPORT</h3><p class="mk-body">Export plant lists in Aspire’s import format for vendor pricing and availability.</p></article></div>
+  <div class="products-botanical" aria-hidden="true">
+    <svg viewBox="0 0 1000 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 180Q220 145 430 175T1000 165V190H0Z" fill="#dbe8df"/>
+      <g stroke="#527b65" stroke-width="3" stroke-linecap="round">
+        <path d="M165 180V35M165 135l-48-40M165 107l48-38M165 73l-28-31M165 160l56-33"/>
+        <path d="M492 180q-14-80-65-125M490 175q15-95 77-123M490 180V22M490 180q-50-42-93-39M496 180q49-60 106-64"/>
+        <path d="M812 180V38M812 142l-44-38M812 112l47-36M812 77l-31-32"/>
+      </g>
+      <g fill="#76a28b"><ellipse cx="119" cy="93" rx="14" ry="34" transform="rotate(-48 119 93)"/><ellipse cx="211" cy="70" rx="14" ry="33" transform="rotate(48 211 70)"/><ellipse cx="138" cy="42" rx="12" ry="26" transform="rotate(-35 138 42)"/><ellipse cx="218" cy="128" rx="14" ry="33" transform="rotate(55 218 128)"/><ellipse cx="165" cy="34" rx="13" ry="28"/></g>
+      <g fill="#b3a1cb"><ellipse cx="427" cy="55" rx="13" ry="28" transform="rotate(-32 427 55)"/><ellipse cx="565" cy="54" rx="13" ry="28" transform="rotate(35 565 54)"/><ellipse cx="490" cy="29" rx="13" ry="28"/><ellipse cx="398" cy="139" rx="11" ry="25" transform="rotate(-70 398 139)"/><ellipse cx="600" cy="116" rx="11" ry="25" transform="rotate(60 600 116)"/></g>
+      <g fill="#6e9980"><ellipse cx="769" cy="102" rx="16" ry="31" transform="rotate(-48 769 102)"/><ellipse cx="858" cy="75" rx="16" ry="32" transform="rotate(48 858 75)"/><ellipse cx="782" cy="45" rx="13" ry="27" transform="rotate(-30 782 45)"/></g>
+      <g fill="#e7b7b1"><circle cx="812" cy="27" r="18"/><circle cx="794" cy="40" r="18"/><circle cx="805" cy="60" r="18"/><circle cx="826" cy="58" r="18"/><circle cx="832" cy="37" r="18"/></g><circle cx="814" cy="43" r="11" fill="#c99655"/>
+    </svg>
+  </div>
+  <div class="mk-grid mk-grid--4 products-plant-benefits"><article class="mk-card"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons.search}/></svg><h3 class="mk-h4">LEARN & DISCOVER</h3><p class="mk-body">Explore new plants and filter to find options for your sun, water, and climate.</p></article>
+<article class="mk-card"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons.heart}/></svg><h3 class="mk-h4">SAVE YOUR FAVORITES</h3><p class="mk-body">Build reusable palettes by design style, project, or company favorites.</p></article>
+<article class="mk-card"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons.share}/></svg><h3 class="mk-h4">SHARE WITH CLIENTS</h3><p class="mk-body">Export photo-rich PDFs to present plant palettes with confidence.</p></article>
+<article class="mk-card"><svg class="products-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons.sheet}/></svg><h3 class="mk-h4">PRICE & IMPORT</h3><p class="mk-body">Export plant lists in Aspire’s import format for vendor pricing and availability.</p></article></div>
   <div class="products-plant-cta"><p class="mk-h3">All these tools. Included with your free account.</p><a href={plantLibraryUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">Open Free Plant Library</a></div>
 </div></section>
 <section id="roadmap" class="mk-section"><div class="mk-container">
@@ -148,16 +165,25 @@ const icons = {
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Proposal Follow-Ups</h3><p class="mk-body">Keep proposals from going cold with timely follow-ups after an estimate is sent.</p></article>
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Recurring Aspire Issues / Tasks</h3><p class="mk-body">Create Aspire issues automatically on a recurring cadence for admin processes, property tasks, inspections, and recurring team responsibilities.</p></article>
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Role-Based Reports</h3><p class="mk-body">Turn Aspire data into recurring reports for specific roles and deliver the information directly to the people who need it.</p></article>
-<article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">AI Insights</h3><p class="mk-body">Surface accounts, jobs, and trends that need attention before they become problems.</p></article></div>
+<article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">AI Insights</h3><p class="mk-body">Surface accounts, jobs, and trends that need attention before they become problems.</p></article><article class="mk-card products-custom-request"><span class="products-coming-soon">Your ideas</span><h3 class="mk-h4">What would help your team?</h3><p class="mk-body">Have a recurring task or an idea for a new Relay tool? Tell us what you’d like to see.</p><a href={cta.calendlyUrl} class="mk-link" target="_blank" rel="noopener">Share a custom request →</a></article></div>
+  <!-- ======================================================================
+    DEVELOPER TODO — CONNECT RELAY ROADMAP EMAIL SIGNUP BEFORE ENABLING THIS CTA.
+    The Relay app owns the existing notification flow. Supply its verified URL
+    or connect its email subscription endpoint, with success/error feedback.
+    Do not collect emails without a working backend or claim a signup succeeded.
+    Replace this disabled preview button once connected. Requested by the owner.
+  ======================================================================= -->
+  <div class="products-roadmap-signup"><div><h3 class="mk-h3">Be first to hear what’s next.</h3><p class="mk-body" id="roadmap-signup-status">Email updates signup is coming soon.</p></div><button class="mk-btn mk-btn--secondary" type="button" disabled aria-describedby="roadmap-signup-status">Let me know</button></div>
 </div></section>
 <section id="pricing" class="mk-section mk-section--sand"><div class="mk-container">
   <div class="mk-section-head mk-section-head--center"><p class="mk-eyebrow">Pricing</p><h2 class="mk-h2">Choose the Relay tools that fit your team.</h2></div>
   <div class="mk-grid mk-grid--2 products-pricing">
-    <article class="mk-card products-bundle"><span class="products-value-badge">Best Value · Save $100/mo</span><h3 class="mk-h3">Service Notifications + Directory</h3><p class="products-price">$350<span>/mo</span></p><p class="mk-body">Get both Relay messaging tools in one bundle. Use Service Notifications for communication tied to scheduled work and Directory for everything that happens outside the schedule.</p></article>
-    <article class="mk-card"><h3 class="mk-h3">Service Notifications</h3><p class="products-price">$300<span>/mo</span></p><p class="mk-body">Pre- and post-service customer communication built around your Aspire schedule.</p></article>
-    <article class="mk-card"><h3 class="mk-h3">Directory</h3><p class="products-price">$150<span>/mo</span></p><p class="mk-body">One-off and scheduled messaging to Aspire customers, employees, subcontractors, and other contacts.</p></article>
-    <article class="mk-card"><h3 class="mk-h3">Plant Library</h3><p class="products-price">Free</p><p class="mk-body">Browse, save, share, and build Aspire-ready plant lists with a free Relay workspace.</p></article>
+    <article class="mk-card products-bundle"><span class="products-value-badge">Best Value · Save $100/mo</span><h3 class="mk-h3">Service Notifications + Directory</h3><p class="products-price">$350<span>/mo</span></p><p class="mk-body">Get both Relay messaging tools in one bundle. Use Service Notifications for communication tied to scheduled work and Directory for everything that happens outside the schedule.</p><a href={signupUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">Create an account</a></article>
+    <article class="mk-card"><h3 class="mk-h3">Service Notifications</h3><p class="products-price">$300<span>/mo</span></p><p class="mk-body">Pre- and post-service customer communication built around your Aspire schedule.</p><a href={signupUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">Create an account</a></article>
+    <article class="mk-card"><h3 class="mk-h3">Directory</h3><p class="products-price">$150<span>/mo</span></p><p class="mk-body">One-off and scheduled messaging to Aspire customers, employees, subcontractors, and other contacts.</p><a href={signupUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">Create an account</a></article>
+    <article class="mk-card"><h3 class="mk-h3">Plant Library</h3><p class="products-price">Free</p><p class="mk-body">Browse, save, share, and build Aspire-ready plant lists with a free Relay workspace.</p><a href={plantLibraryUrl} class="mk-btn mk-btn--primary" target="_blank" rel="noopener">Open Free Plant Library</a></article>
   </div>
+  <div class="products-pricing-help"><p class="mk-body">Questions or want to see a demo?</p><a href={cta.calendlyUrl} class="mk-btn mk-btn--secondary" target="_blank" rel="noopener">Connect with Miri</a></div>
 </div></section>
 <section class="mk-section"><div class="mk-container"><div class="mk-cta"><div class="mk-cta__inner">
   <h2 class="mk-h2">Aspire has the data. Miri helps you do more with it.</h2>

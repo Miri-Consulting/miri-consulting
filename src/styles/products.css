@@ -12,26 +12,12 @@
 .products-page .products-spotlight .mk-chat { width: 100%; max-width: 25rem; }
 .products-page .products-spotlight .mk-eyebrow { margin-bottom: .4rem; }
 .products-page .products-line-icon { width: 1.25rem; height: 1.25rem; color: var(--mk-azure); }
-.products-page .products-capability .mk-eyebrow { color: var(--mk-fg); }
 .products-page .products-tools a { text-decoration: none; color: inherit; }
 .products-page .products-tools .mk-link { align-self: flex-start; margin-top: auto; }
 .products-page .products-callout { margin-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
 .products-page .products-setup { margin-top: 2rem; text-align: center; }
 .products-page .products-distinction { margin-top: 1.25rem; }
 .products-page .products-example .mk-eyebrow { color: var(--mk-azure); }
-.products-page .products-example blockquote {
-  margin: .4rem 0 0;
-  padding: 1rem 1.1rem;
-  border: 0;
-  border-left: 2px solid var(--mk-azure);
-  border-radius: 0 .75rem .75rem 0;
-  background: var(--mk-sand);
-  color: var(--mk-fg);
-  font-size: .9375rem;
-  line-height: 1.65;
-}
-.products-page .products-announcements { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--mk-fg-muted); font-size: .9375rem; line-height: 1.65; }
-.products-page .products-announcements li + li { margin-top: .4rem; }
 .products-page .products-plant-benefits .mk-h4 { font-size: .875rem; font-weight: 600; letter-spacing: .04em; }
 .products-page .products-plant-cta { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; justify-content: space-between; align-items: center; margin-top: 2rem; }
 .products-page .products-coming-soon { align-self: flex-start; color: var(--mk-azure); font-size: .75rem; font-weight: 600; letter-spacing: .04em; }
@@ -45,4 +31,35 @@
 @media (max-width: 600px) {
   .products-page .mk-btn { white-space: normal; text-align: center; }
   .products-page .mk-hero .mk-display { font-size: clamp(2.3rem, 9vw, 3rem); }
+}
+
+/* Product-page-only treatments; the shared kit and homepage stay unchanged. */
+.products-page .products-tools-band { text-align: left; }
+.products-page .products-tools-band .mk-card { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.2); color: #fff; box-shadow: none; }
+.products-page .products-tools-band .mk-h3 { color: #fff; font-size: clamp(1.4rem, 1.2rem + .4vw, 1.75rem); }
+.products-page .products-tools .products-line-icon { width: 1.75rem; height: 1.75rem; color: #62caff; }
+.products-page .products-tool-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: auto; padding-top: .5rem; }
+.products-page .products-tool-actions .mk-link { align-self: center; margin-top: 0; color: #8ed8ff; }
+.products-page .products-audiences { gap: 1.5rem; }
+.products-page .products-audiences article { border-left: 2px solid var(--mk-azure); padding-left: 1rem; }
+.products-page .products-audiences .mk-body { margin-top: .5rem; font-size: .9375rem; }
+.products-page .products-example { min-width: 0; }
+.products-page .products-example > .mk-eyebrow { margin-bottom: .8rem; }
+.products-page .products-example .mk-chat { margin: 0; width: 100%; height: calc(100% - 2rem); box-shadow: none; border-radius: 1.5rem; }
+.products-page .products-example .mk-chat__bubble { max-width: 100%; }
+.products-page .products-botanical { margin: -1rem 0 2rem; border-radius: 1.5rem; background: #edf3ee; overflow: hidden; }
+.products-page .products-botanical svg { display: block; width: 100%; height: clamp(8rem, 17vw, 13rem); }
+.products-page .products-plant-benefits .products-line-icon { width: 1.65rem; height: 1.65rem; margin-bottom: .5rem; }
+.products-page .products-custom-request { border: 1px solid var(--mk-azure); }
+.products-page .products-custom-request .mk-link { margin-top: auto; align-self: flex-start; }
+.products-page .products-roadmap-signup, .products-pricing-help { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+.products-page .products-roadmap-signup { padding: 1.5rem 2rem; border-radius: 1.5rem; background: var(--mk-sand); }
+.products-page .products-roadmap-signup .mk-body { margin-top: .5rem; }
+.products-page .products-roadmap-signup button:disabled { opacity: .55; cursor: not-allowed; }
+.products-page .products-pricing .mk-btn { margin-top: auto; align-self: flex-start; }
+.products-page .products-pricing-help { justify-content: center; }
+@media (max-width: 600px) {
+  .products-page .products-tools-band { padding-inline: 1.25rem; }
+  .products-page .products-audiences { gap: 1.25rem; }
+  .products-page .products-roadmap-signup { padding: 1.25rem; }
 }

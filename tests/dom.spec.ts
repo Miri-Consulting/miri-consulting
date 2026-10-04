@@ -470,16 +470,21 @@ test.describe('products and legal SEO', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Extend What’s Possible with Aspire' })).toBeVisible();
     await expect(page.locator('header .mk-btn--primary')).toHaveAttribute('href', '#available-now');
     await expect(page.locator('header .mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
-    await expect(page.locator('#available-now a')).toHaveCount(3);
+    await expect(page.locator('#available-now a')).toHaveCount(6);
     await expect(page.locator('#directory .products-example')).toHaveCount(6);
-    await expect(page.locator('#roadmap .products-coming-soon')).toHaveCount(5);
+    await expect(page.locator('#roadmap .products-coming-soon')).toHaveCount(6);
     await expect(page.locator('#roadmap input')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Let me know' })).toBeDisabled();
+    await expect(page.locator('[aria-label="Relay capabilities"]')).toHaveCount(0);
+    await expect(page.locator('#available-now h3')).toHaveText(['Service Notifications', 'Directory', 'Free Plant Library']);
+    await expect(page.locator('#directory .mk-chat__bubble')).toHaveCount(6);
+    await expect(page.locator('#pricing a')).toHaveCount(5);
     await expect(page.locator('#pricing .products-bundle')).toContainText('$350/mo');
     await expect(page.locator('#pricing .products-bundle')).toContainText('Best Value · Save $100/mo');
     await expect(page.locator('#pricing .products-price')).toHaveText(['$350/mo', '$300/mo', '$150/mo', 'Free']);
-    await expect(page.locator('.mk-chat__bubble')).toHaveText('Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!');
+    await expect(page.locator('header .mk-chat__bubble')).toHaveText('Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!');
     await expect(page.getByText(/limited early access|request early access|onboarding a limited group/i)).toHaveCount(0);
-    await expect(page.locator('.mk-cta .mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.locator('.mk-cta__inner .mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
   });
 
 
