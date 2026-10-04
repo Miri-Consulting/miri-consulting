@@ -47,8 +47,6 @@
 .products-page .products-example > .mk-eyebrow { margin-bottom: .8rem; }
 .products-page .products-example .mk-chat { margin: 0; width: 100%; height: calc(100% - 2rem); box-shadow: none; border-radius: 1.5rem; }
 .products-page .products-example .mk-chat__bubble { max-width: 100%; }
-.products-page .products-botanical { margin: -1rem 0 2rem; border-radius: 1.5rem; background: #edf3ee; overflow: hidden; }
-.products-page .products-botanical svg { display: block; width: 100%; height: clamp(8rem, 17vw, 13rem); }
 .products-page .products-plant-benefits .products-line-icon { width: 1.65rem; height: 1.65rem; margin-bottom: .5rem; }
 .products-page .products-custom-request { border: 1px solid var(--mk-azure); }
 .products-page .products-custom-request .mk-link { margin-top: auto; align-self: flex-start; }
@@ -62,4 +60,30 @@
   .products-page .products-tools-band { padding-inline: 1.25rem; }
   .products-page .products-audiences { gap: 1.25rem; }
   .products-page .products-roadmap-signup { padding: 1.25rem; }
+}
+
+.products-page .products-how-label { text-align: center; margin-bottom: 2rem; }
+.products-page .products-plant-section { position: relative; isolation: isolate; overflow: hidden; background: #001c27; color: #fff; }
+.products-page .products-plant-background { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.products-page .products-plant-section::before { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, transparent, rgba(0,24,34,.6) 22%, rgba(0,24,34,.6) 78%, transparent); }
+.products-page .products-plant-content { width: min(76%, 960px); }
+.products-page .products-plant-section .mk-h2, .products-page .products-plant-section .mk-h3, .products-page .products-plant-section .mk-h4 { color: #fff; }
+.products-page .products-plant-section .mk-eyebrow, .products-page .products-plant-section .products-line-icon { color: #35c1ff; }
+.products-page .products-plant-section .mk-body, .products-page .products-plant-section .mk-lead { color: #d5e3e8; }
+.products-page .products-plant-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+.products-page .products-plant-benefits .mk-card { border: 0; border-radius: 0; box-shadow: none; background: rgba(0,24,34,.65); padding: 1.5rem; }
+.products-page .products-plant-benefits .mk-card:nth-child(odd) { border-right: 1px solid #276277; }
+.products-page .products-plant-benefits .mk-card:nth-child(-n+2) { border-bottom: 1px solid #276277; }
+.products-page .products-plant-cta { padding-top: 1.5rem; border-top: 1px solid #276277; }
+@media (max-width: 960px) {
+  .products-page .products-plant-section { padding-top: 9rem; }
+  .products-page .products-plant-background { height: 14rem; object-fit: cover; object-position: center 25%; }
+  .products-page .products-plant-section::before { background: linear-gradient(180deg, transparent, #001c27 14rem); }
+  .products-page .products-plant-content { width: 90%; }
+}
+@media (max-width: 600px) {
+  .products-page .products-plant-benefits { grid-template-columns: 1fr; }
+  .products-page .products-plant-benefits .mk-card { padding: 1.25rem 0; background: transparent; }
+  .products-page .products-plant-benefits .mk-card:nth-child(odd) { border-right: 0; }
+  .products-page .products-plant-benefits .mk-card:not(:last-child) { border-bottom: 1px solid #276277; }
 }
