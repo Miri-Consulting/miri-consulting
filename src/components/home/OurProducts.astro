@@ -1,12 +1,11 @@
 ---
 import { relay } from '../../data/site';
-import { rootPath } from '../../utils/rootPath';
 
-const productsHref = rootPath('/products');
-const signupUrl = relay.signupUrl;
+const plantLibraryUrl = new URL('/plants', relay.signInUrl).href;
+const relayUrl = relay.signInUrl;
 ---
 
-<section class="section_layout507">
+<section id="miri-relay" class="section_layout507">
   <div class="padding-global">
     <div class="container-medium">
       <div class="padding-section-medium">
@@ -24,6 +23,10 @@ const signupUrl = relay.signupUrl;
 
           <div class="layout507_card home-products_card">
             <div class="home-products_figure">
+              <div class="home-products_spotlight">
+                <p class="home-products_spotlight-label">FEATURE SPOTLIGHT</p>
+                <h3 class="home-products_spotlight-title">Advanced SMS Service Notifications for Aspire</h3>
+              </div>
               <figure class="mk-chat">
                 <div class="mk-chat__head">
                   <span class="mk-chat__avatar" aria-hidden="true">R</span>
@@ -34,8 +37,7 @@ const signupUrl = relay.signupUrl;
                 </div>
                 <div class="mk-chat__body">
                   <p class="mk-chat__bubble mk-chat__bubble--out">
-                    Hi Dana — your crew is scheduled at <strong>412 Ridgeview</strong> tomorrow
-                    between 8–10am for <strong>mowing, mulch install, and turf application</strong>.
+                    Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!
                   </p>
                   <p class="mk-chat__stamp">Scheduled for 4:00 PM today</p>
                 </div>
@@ -46,25 +48,24 @@ const signupUrl = relay.signupUrl;
               <div class="layout507_card-content-top">
                 <h3 class="heading-style-h6 home-products_eyebrow">Miri Relay</h3>
                 <div class="margin-bottom margin-small">
-                  <h3 class="heading-style-h3">Aspire has the data, Miri helps you do more with it.</h3>
+                  <h3 class="heading-style-h3">Extend What’s Possible with Aspire</h3>
                 </div>
                 <p class="text-size-medium text-color-grey">
-                  Relay turns your Aspire schedule into consolidated pre- and post-visit texts, so
-                  customers hear once about the whole day instead of once per work ticket.
+                  Relay is a growing suite of tools built around the Aspire data your team already maintains, helping you improve communication, streamline recurring work, and make that data more useful across your business.
                 </p>
                 <ul class="home-products_list">
-                  <li>One text per visit, however many services are on it</li>
-                  <li>Choose which services trigger a message, and which stay quiet</li>
-                  <li>Templates per service, customer, and pre- or post-visit</li>
+                  <li><strong>FREE PLANT LIBRARY</strong>Browse 15,000+ plants, save reusable palettes, create client PDFs, and build Aspire-ready item sheets.</li>
+                  <li><strong>BETTER COMMUNICATION</strong>Send service notifications from your Aspire schedule or one-off and scheduled messages to customers and your team.</li>
+                  <li><strong>MORE FROM YOUR ASPIRE DATA</strong>Use Relay for follow-ups, recurring processes, role-based reporting, insights, and more as the platform grows.</li>
                 </ul>
               </div>
               <div class="margin-top margin-medium">
                 <div class="button-group">
-                  <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">
-                    Request early access
+                  <a href={relayUrl} class="button-2 w-button" target="_blank" rel="noopener">
+                    Explore Relay
                   </a>
-                  <a href={productsHref} class="button-2 is-secondary w-inline-block">
-                    <div>Learn more about Relay</div>
+                  <a href={plantLibraryUrl} target="_blank" rel="noopener" class="button-2 is-secondary w-inline-block">
+                    <div>Open Free Plant Library</div>
                   </a>
                 </div>
               </div>

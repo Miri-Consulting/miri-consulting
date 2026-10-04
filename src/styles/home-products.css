@@ -12,6 +12,8 @@
 /* The figure column is the narrower half of .layout507_card (1fr of 1fr/1.5fr). */
 .home-products_figure {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 }
@@ -64,7 +66,7 @@
    keeps its grid at all widths, so the breakpoint lives here. */
 @media screen and (max-width: 860px) {
   .home-products_card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-row-gap: 2rem;
     padding: 2rem;
   }
@@ -73,3 +75,55 @@
     max-width: 24rem;
   }
 }
+
+/* Scoped to the homepage Relay card; spotlight stays attached to the SMS. */
+.home-products_spotlight {
+  width: 100%;
+  max-width: 22rem;
+}
+
+.home-products_spotlight-label {
+  margin: 0 0 .4rem;
+  color: var(--pool-water);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+.home-products_spotlight-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.home-products_list strong {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--charcoal, #363635);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.home-products_card .text-size-medium {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.home-products_card .button-group {
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 860px) {
+  .home-products_spotlight { max-width: 24rem; }
+}
+
+@media screen and (max-width: 479px) {
+  .home-products_card { padding: 1.5rem; }
+}
+
+.home-products_card > * { min-width: 0; }
+.home-products_card .button-2 { max-width: 100%; white-space: normal; text-align: center; }
+#miri-relay { scroll-margin-top: 6rem; }
+.home-products_card .margin-bottom.margin-small { width: auto; }
