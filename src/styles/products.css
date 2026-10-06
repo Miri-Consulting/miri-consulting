@@ -49,11 +49,24 @@
 .products-page .products-example .mk-chat__bubble { max-width: 100%; }
 .products-page .products-plant-benefits .products-line-icon { width: 1.65rem; height: 1.65rem; margin-bottom: .5rem; }
 .products-page .products-custom-request { border: 1px solid var(--mk-azure); }
-.products-page .products-custom-request .mk-link { margin-top: auto; align-self: flex-start; }
+.products-page .products-custom-request .mk-link { margin-top: auto; align-self: flex-start; appearance: none; background: none; border-top: 0; border-right: 0; border-left: 0; padding: 0; font-family: inherit; font-size: inherit; line-height: inherit; text-align: left; cursor: pointer; }
 .products-page .products-roadmap-signup, .products-pricing-help { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
 .products-page .products-roadmap-signup { padding: 1.5rem 2rem; border-radius: 1.5rem; background: var(--mk-sand); }
 .products-page .products-roadmap-signup .mk-body { margin-top: .5rem; }
-.products-page .products-roadmap-signup button:disabled { opacity: .55; cursor: not-allowed; }
+.products-page .products-dialog { width: min(32rem, calc(100vw - 2rem)); max-width: calc(100vw - 2rem); margin: auto; padding: 0; border: 0; background: transparent; color: var(--mk-fg); }
+.products-page .products-dialog::backdrop { background: rgba(26, 23, 31, .56); }
+.products-page .products-dialog__panel { position: relative; padding: 1.75rem 1.5rem 1.5rem; border-radius: 1.5rem; background: var(--mk-white); box-shadow: var(--mk-shadow-lg); }
+.products-page .products-dialog__close { position: absolute; top: .85rem; right: .85rem; display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px; background: var(--mk-sand); color: var(--mk-fg); font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.products-page .products-dialog__lead { margin-top: .5rem; }
+.products-page .products-dialog__form { position: relative; }
+.products-page .products-dialog__fields { display: grid; gap: 1rem; margin-top: 1.25rem; }
+.products-page .products-dialog [hidden] { display: none; }
+.products-page .products-dialog__fields label { display: grid; gap: .4rem; color: var(--mk-fg); font-family: var(--mk-font-body); font-size: .9375rem; font-weight: 500; }
+.products-page .products-dialog input, .products-page .products-dialog textarea { width: 100%; margin: 0; padding: .75rem .9rem; border: 1px solid var(--mk-border-strong); border-radius: .75rem; background: var(--mk-white); color: var(--mk-fg); font-family: var(--mk-font-body); font-size: 1rem; font-weight: 400; line-height: 1.4; box-shadow: none; }
+.products-page .products-dialog textarea { min-height: 8rem; resize: vertical; }
+.products-page .products-dialog__actions { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+.products-page .products-dialog__success { margin: 1.25rem 0 0; }
+.products-page .products-honeypot { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .products-page .products-pricing .mk-btn { margin-top: auto; align-self: flex-start; }
 .products-page .products-pricing-help { justify-content: center; }
 .products-page .products-onboarding-note { margin-top: 1.5rem; color: var(--mk-fg); font-size: 1rem; line-height: 1.6; text-align: center; }

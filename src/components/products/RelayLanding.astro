@@ -1,7 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import plantLibraryBackground from '../../assets/products/plant-library-background.png';
-import { relay, cta } from '../../data/site';
+import { relay, cta, productForms } from '../../data/site';
+import ProductFormDialog from './ProductFormDialog.astro';
 
 const plantLibraryUrl = new URL('/plants', relay.signInUrl).href;
 const signupUrl = relay.signupUrl;
@@ -156,15 +157,31 @@ const icons = {
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Proposal Follow-Ups</h3><p class="mk-body">Keep proposals from going cold with timely follow-ups after an estimate is sent.</p></article>
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Recurring Aspire Issues / Tasks</h3><p class="mk-body">Create Aspire issues automatically on a recurring cadence for admin processes, property tasks, inspections, and recurring team responsibilities.</p></article>
 <article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">Role-Based Reports</h3><p class="mk-body">Turn Aspire data into recurring reports for specific roles and deliver the information directly to the people who need it.</p></article>
-<article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">AI Insights</h3><p class="mk-body">Surface accounts, jobs, and trends that need attention before they become problems.</p></article><article class="mk-card products-custom-request"><span class="products-coming-soon">Your ideas</span><h3 class="mk-h4">What would help your team?</h3><p class="mk-body">Have a recurring task or an idea for a new Relay tool? Tell us what you’d like to see.</p><a href={cta.calendlyUrl} class="mk-link" target="_blank" rel="noopener">Share a custom request →</a></article></div>
-  <!-- ======================================================================
-    DEVELOPER TODO — CONNECT RELAY ROADMAP EMAIL SIGNUP BEFORE ENABLING THIS CTA.
-    The Relay app owns the existing notification flow. Supply its verified URL
-    or connect its email subscription endpoint, with success/error feedback.
-    Do not collect emails without a working backend or claim a signup succeeded.
-    Replace this disabled preview button once connected. Requested by the owner.
-  ======================================================================= -->
-  <div class="products-roadmap-signup"><div><h3 class="mk-h3">Be first to hear what’s next.</h3><p class="mk-body" id="roadmap-signup-status">Email updates signup is coming soon.</p></div><button class="mk-btn mk-btn--secondary" type="button" disabled aria-describedby="roadmap-signup-status">Let me know</button></div>
+<article class="mk-card mk-card--sand"><span class="products-coming-soon">Coming Soon</span><h3 class="mk-h4">AI Insights</h3><p class="mk-body">Surface accounts, jobs, and trends that need attention before they become problems.</p></article><article class="mk-card products-custom-request"><span class="products-coming-soon">Your ideas</span><h3 class="mk-h4">What would help your team?</h3><p class="mk-body">Have a recurring task or an idea for a new Relay tool? Tell us what you’d like to see.</p><button class="mk-link" type="button" data-products-dialog-open="custom-request-dialog">Share a custom request →</button></article></div>
+  <div class="products-roadmap-signup"><div><h3 class="mk-h3">Be first to hear what’s next.</h3><p class="mk-body" id="roadmap-signup-status">Get an email when a new Relay tool is ready.</p></div><button class="mk-btn mk-btn--secondary" type="button" data-products-dialog-open="roadmap-signup-dialog" aria-describedby="roadmap-signup-status">Let me know</button></div>
+  <ProductFormDialog
+    id="roadmap-signup-dialog"
+    title="Roadmap updates"
+    lead="Leave your email and we’ll write when a new Relay tool is ready. No account needed."
+    action={productForms.roadmap.action}
+    emailEntry={productForms.roadmap.email}
+    honeypotEntry={productForms.roadmap.honeypot}
+    submitLabel="Notify me"
+    success="You’re on the list. We’ll email you when a new Relay tool is ready."
+    statusTarget="roadmap-signup-status"
+  />
+  <ProductFormDialog
+    id="custom-request-dialog"
+    title="Share a custom request"
+    lead="Tell us the recurring task or Relay tool you wish you had. We’ll read every note."
+    action={productForms.request.action}
+    emailEntry={productForms.request.email}
+    honeypotEntry={productForms.request.honeypot}
+    requestEntry={productForms.request.request}
+    submitLabel="Send request"
+    success="Thanks. We have your request and will follow up if we need more detail."
+  />
+  <iframe name="products-form-sink" hidden tabindex="-1" title="Form response"></iframe>
 </div></section>
 <section id="pricing" class="mk-section mk-section--sand"><div class="mk-container">
   <div class="mk-section-head mk-section-head--center"><p class="mk-eyebrow">Pricing</p><h2 class="mk-h2">Choose the Relay tools that fit your team.</h2></div>

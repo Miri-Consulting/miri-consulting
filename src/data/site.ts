@@ -42,6 +42,27 @@ export const cta = {
   calendlyUrl: 'https://calendly.com/ramelsanchez/chat',
 } as const;
 
+/**
+ * Public Google Forms for the Relay product page. The modal posts
+ * `application/x-www-form-urlencoded` to `action` and never embeds Google's UI.
+ * Company website is an optional honeypot: a filled value is not submitted.
+ */
+export const productForms = {
+  roadmap: {
+    action:
+      'https://docs.google.com/forms/d/e/1FAIpQLSdlLjBEabqjW1AG2TgeGxMX4EEgIlfOoypOYNKeOvUB5JwUgw/formResponse',
+    email: 'entry.646876814',
+    honeypot: 'entry.1723606719',
+  },
+  request: {
+    action:
+      'https://docs.google.com/forms/d/e/1FAIpQLSf7QwS9JDdCpEzQJs6ISUO7Sq6B1jZmSTqHcuvMHo_CYqGQHQ/formResponse',
+    email: 'entry.2021038196',
+    request: 'entry.653178605',
+    honeypot: 'entry.1121868504',
+  },
+} as const;
+
 export const analytics = {
   gtmId: 'GTM-N3PHMJQQ',
   gaMeasurementId: 'G-C1T2VCV7HD',
