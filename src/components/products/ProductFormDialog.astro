@@ -1,0 +1,164 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  lead: string;
+  action: string;
+  emailEntry: string;
+  honeypotEntry: string;
+  requestEntry?: string;
+  submitLabel: string;
+  success: string;
+  statusTarget?: string;
+}
+
+const {
+  id,
+  title,
+  lead,
+  action,
+  emailEntry,
+  honeypotEntry,
+  requestEntry,
+  submitLabel,
+  success,
+  statusTarget,
+} = Astro.props;
+
+const titleId = `${id}-title`;
+const emailId = `${id}-email`;
+const requestId = `${id}-request`;
+const honeypotId = `${id}-website`;
+---
+
+<dialog class="products-dialog" id={id} aria-labelledby={titleId}>
+  <div class="products-dialog__panel">
+    <button class="products-dialog__close" type="button" data-products-dialog-close aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h2 class="mk-h4" id={titleId}>{title}</h2>
+    <p class="mk-body products-dialog__lead">{lead}</p>
+    <form
+      class="products-dialog__form"
+      method="POST"
+      action={action}
+      target="products-form-sink"
+      accept-charset="UTF-8"
+      data-products-form
+      data-success={success}
+      data-status-target={statusTarget}
+    >
+      <div class="products-dialog__fields">
+        <label for={emailId}>
+          Email
+          <input id={emailId} name={emailEntry} type="email" autocomplete="email" required maxlength="200" />
+        </label>
+        {requestEntry ? (
+          <label for={requestId}>
+            Request
+            <textarea id={requestId} name={requestEntry} required maxlength="5000"></textarea>
+          </label>
+        ) : null}
+        <div class="products-honeypot" aria-hidden="true">
+          <label for={honeypotId}>
+            Company website
+            <input
+              id={honeypotId}
+              name={honeypotEntry}
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+              data-honeypot
+            />
+          </label>
+        </div>
+      </div>
+      <p class="products-dialog__success mk-body" role="status" hidden></p>
+      <div class="products-dialog__actions">
+        <button class="mk-btn mk-btn--primary" type="submit">{submitLabel}</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  function showSuccess(form: HTMLFormElement) {
+    form.querySelector('.products-dialog__fields')?.setAttribute('hidden', '');
+    form.querySelector('.products-dialog__actions')?.setAttribute('hidden', '');
+    const success = form.querySelector('.products-dialog__success');
+    if (success) {
+      success.textContent = form.dataset.success ?? '';
+      success.removeAttribute('hidden');
+    }
+    const statusId = form.dataset.statusTarget;
+    const status = statusId ? document.getElementById(statusId) : null;
+    if (status && form.dataset.success) status.textContent = form.dataset.success;
+  }
+
+  function resetForm(form: HTMLFormElement) {
+    form.reset();
+    form.querySelector('.products-dialog__fields')?.removeAttribute('hidden');
+    form.querySelector('.products-dialog__actions')?.removeAttribute('hidden');
+    const success = form.querySelector('.products-dialog__success');
+    if (success) {
+      success.textContent = '';
+      success.setAttribute('hidden', '');
+    }
+    const request = form.querySelector('textarea');
+    if (request instanceof HTMLTextAreaElement) request.setCustomValidity('');
+  }
+
+  document.querySelectorAll('[data-products-dialog-open]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const dialogId = button.getAttribute('data-products-dialog-open');
+      const dialog = dialogId ? document.getElementById(dialogId) : null;
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      dialog.showModal();
+      dialog.querySelector<HTMLElement>('input[type="email"]')?.focus();
+    });
+  });
+
+  document.querySelectorAll('dialog.products-dialog').forEach((node) => {
+    if (!(node instanceof HTMLDialogElement)) return;
+    const dialog = node;
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      const form = dialog.querySelector('form');
+      if (form instanceof HTMLFormElement) resetForm(form);
+    });
+    dialog.querySelector('[data-products-dialog-close]')?.addEventListener('click', () => {
+      dialog.close();
+    });
+  });
+
+  document.querySelectorAll('[data-products-form]').forEach((form) => {
+    if (!(form instanceof HTMLFormElement)) return;
+    const request = form.querySelector('textarea');
+    request?.addEventListener('input', () => {
+      if (request instanceof HTMLTextAreaElement) request.setCustomValidity('');
+    });
+
+    form.querySelector('button[type="submit"]')?.addEventListener('click', (event) => {
+      const honeypot = form.querySelector('[data-honeypot]');
+      if (!(honeypot instanceof HTMLInputElement) || honeypot.value.trim() === '') return;
+      event.preventDefault();
+      showSuccess(form);
+    });
+
+    form.addEventListener('submit', (event) => {
+      const email = form.querySelector('input[type="email"]');
+      if (email instanceof HTMLInputElement) email.value = email.value.trim();
+      const requestField = form.querySelector('textarea');
+      if (requestField instanceof HTMLTextAreaElement && requestField.value.trim() === '') {
+        requestField.setCustomValidity('Tell us what you would like Relay to do.');
+        requestField.reportValidity();
+        event.preventDefault();
+        return;
+      }
+      if (requestField instanceof HTMLTextAreaElement) requestField.value = requestField.value.trim();
+      window.setTimeout(() => showSuccess(form), 0);
+    });
+  });
+</script>

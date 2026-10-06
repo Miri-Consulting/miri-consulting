@@ -1,12 +1,11 @@
 ---
 import { relay } from '../../data/site';
-import { rootPath } from '../../utils/rootPath';
 
-const productsHref = rootPath('/products');
-const signupUrl = relay.signupUrl;
+const plantLibraryUrl = new URL('/plants', relay.signInUrl).href;
+const relayUrl = relay.signInUrl;
 ---
 
-<section class="section_layout507">
+<section id="miri-relay" class="section_layout507">
   <div class="padding-global">
     <div class="container-medium">
       <div class="padding-section-medium">
@@ -24,6 +23,10 @@ const signupUrl = relay.signupUrl;
 
           <div class="layout507_card home-products_card">
             <div class="home-products_figure">
+              <div class="home-products_spotlight">
+                <p class="home-products_spotlight-label">FEATURE SPOTLIGHT</p>
+                <h3 class="home-products_spotlight-title">Service Notifications</h3>
+              </div>
               <figure class="mk-chat">
                 <div class="mk-chat__head">
                   <span class="mk-chat__avatar" aria-hidden="true">R</span>
@@ -34,8 +37,7 @@ const signupUrl = relay.signupUrl;
                 </div>
                 <div class="mk-chat__body">
                   <p class="mk-chat__bubble mk-chat__bubble--out">
-                    Hi Dana — your crew is scheduled at <strong>412 Ridgeview</strong> tomorrow
-                    between 8–10am for <strong>mowing, mulch install, and turf application</strong>.
+                    Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!
                   </p>
                   <p class="mk-chat__stamp">Scheduled for 4:00 PM today</p>
                 </div>
@@ -46,25 +48,24 @@ const signupUrl = relay.signupUrl;
               <div class="layout507_card-content-top">
                 <h3 class="heading-style-h6 home-products_eyebrow">Miri Relay</h3>
                 <div class="margin-bottom margin-small">
-                  <h3 class="heading-style-h3">Advanced SMS service notifications for Aspire</h3>
+                  <h3 class="heading-style-h3">Extend What’s Possible with Aspire</h3>
                 </div>
                 <p class="text-size-medium text-color-grey">
-                  Relay turns your Aspire schedule into consolidated pre- and post-visit texts, so
-                  customers hear once about the whole day instead of once per work ticket.
+                  Relay is a growing suite of tools built around the Aspire data your team already maintains, helping you improve communication, streamline recurring work, and get more value from the software your business already relies on.
                 </p>
                 <ul class="home-products_list">
-                  <li>One text per visit, however many services are on it</li>
-                  <li>Choose which services trigger a message, and which stay quiet</li>
-                  <li>Templates per service, customer, and pre- or post-visit</li>
+                  <li><svg class="home-products_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 4c-7-2-15 1-15 8a6 6 0 0 0 6 6c7 0 9-7 9-14Z"/><path d="M4 21 14 11"/></svg><strong>FREE PLANT LIBRARY</strong>Browse 15,000+ plants, save reusable palettes, create client PDFs, and build Aspire-ready item sheets.</li>
+                  <li><svg class="home-products_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11a8 8 0 0 1-8 8H7l-4 3V7a4 4 0 0 1 4-4h6a8 8 0 0 1 8 8Z"/><path d="M8 9h8M8 13h5"/></svg><strong>ADVANCED SMS COMMUNICATION</strong>Turn Aspire schedules and contact data into service notifications, customer updates, and team messages.</li>
+                  <li><svg class="home-products_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 3 2.5 6.5L19 12l-6.5 2.5L10 21l-2.5-6.5L1 12l6.5-2.5L10 3ZM20 2v6m-3-3h6"/></svg><strong>BUILT TO EXPAND</strong>Relay is growing with new tools for invoice reminders, proposal follow-ups, recurring workflows, role-based reporting, AI insights, and more.</li>
                 </ul>
               </div>
               <div class="margin-top margin-medium">
                 <div class="button-group">
-                  <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">
-                    Request early access
+                  <a href={relayUrl} class="button-2 w-button" target="_blank" rel="noopener">
+                    Explore Relay
                   </a>
-                  <a href={productsHref} class="button-2 is-secondary w-inline-block">
-                    <div>Learn more about Relay</div>
+                  <a href={plantLibraryUrl} target="_blank" rel="noopener" class="button-2 is-secondary w-inline-block">
+                    <div>Open Free Plant Library</div>
                   </a>
                 </div>
               </div>
