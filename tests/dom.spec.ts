@@ -451,14 +451,17 @@ test.describe('products and legal SEO', () => {
     await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
   });
 
-  test('home Relay block links to Relay and Free Plant Library', async ({ page }) => {
+  test('home Relay block separates signup, product details, and the plant library', async ({ page }) => {
     await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
       route.abort(),
     );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Our Products' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Explore Relay', exact: true })).toHaveAttribute('href', 'https://relay.miri-consulting.com');
-    await expect(page.getByRole('link', { name: 'Open Free Plant Library' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
+    const relay = page.locator('#miri-relay');
+    await expect(relay.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(relay.getByRole('link', { name: 'Learn more', exact: true })).toHaveAttribute('href', '/products');
+    await expect(relay.getByRole('link', { name: 'Open Free Plant Library' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
+    await expect(relay.getByRole('link', { name: 'Explore Relay' })).toHaveCount(0);
   });
 
   test('products page separates available tools, roadmap, and pricing', async ({ page }) => {
@@ -468,8 +471,23 @@ test.describe('products and legal SEO', () => {
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle('Miri Relay | Extend What’s Possible with Aspire');
     await expect(page.getByRole('heading', { level: 1, name: 'Extend What’s Possible with Aspire' })).toBeVisible();
-    await expect(page.locator('header .mk-btn--primary')).toHaveAttribute('href', '#available-now');
+    await expect(page.locator('header .mk-btn--primary')).toHaveText('Sign up');
+    await expect(page.locator('header .mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    await expect(page.locator('header .mk-btn--primary')).toHaveAttribute('target', '_blank');
     await expect(page.locator('header .mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
+    const signupSitsBetweenHowItWorksAndDirectory = await page.evaluate(() => {
+      const how = document.querySelector('.products-how-label');
+      const signup = document.querySelector('.products-inline-signup a');
+      const directory = document.querySelector('#directory');
+      if (!how || !signup || !directory) return false;
+      return (
+        how.compareDocumentPosition(signup) === Node.DOCUMENT_POSITION_FOLLOWING &&
+        signup.compareDocumentPosition(directory) === Node.DOCUMENT_POSITION_FOLLOWING
+      );
+    });
+    expect(signupSitsBetweenHowItWorksAndDirectory).toBe(true);
+    await expect(page.locator('.products-inline-signup a')).toHaveText('Sign up');
+    await expect(page.locator('.products-inline-signup a')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator('#available-now a')).toHaveCount(6);
     await expect(page.locator('#directory .products-example')).toHaveCount(6);
     await expect(page.locator('#roadmap .products-coming-soon')).toHaveCount(6);
@@ -487,6 +505,7 @@ test.describe('products and legal SEO', () => {
     await expect(page.locator('#pricing .products-price')).toHaveText(['$350/mo', '$300/mo', '$150/mo', 'Free']);
     await expect(page.locator('header .mk-chat__bubble')).toHaveText('Hi Dana, just a reminder that your Routine Maintenance, Spring Clean, and Round 3 Turf Application are scheduled for tomorrow. Thank you!');
     await expect(page.getByText(/limited early access|request early access|onboarding a limited group/i)).toHaveCount(0);
+    await expect(page.locator('.mk-cta__inner .mk-btn--primary')).toHaveText('Sign up');
     await expect(page.locator('.mk-cta__inner .mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
   });
 
@@ -637,7 +656,7 @@ test.describe('products and legal SEO', () => {
       route.abort(),
     );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    const cta = page.getByRole('link', { name: 'Explore Relay', exact: true });
+    const cta = page.locator('#miri-relay').getByRole('link', { name: 'Create an account' });
     await expect(cta).toHaveClass(/button-2/);
     await expect(cta).not.toHaveClass(/is-black/);
   });
@@ -649,7 +668,8 @@ test.describe('products and legal SEO', () => {
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('header.mk-hero .mk-hero__grid')).toHaveCount(1);
     await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveClass(/mk-btn--primary/);
-    await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveAttribute('href', '#available-now');
+    await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveText('Sign up');
+    await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator('header.mk-hero a.mk-btn--secondary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
   });
 
@@ -658,6 +678,7 @@ test.describe('products and legal SEO', () => {
       route.abort(),
     );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveText('Sign up');
     await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
     await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveAttribute('target', '_blank');
   });

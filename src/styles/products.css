@@ -16,6 +16,7 @@
 .products-page .products-tools .mk-link { align-self: flex-start; margin-top: auto; }
 .products-page .products-callout { margin-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
 .products-page .products-setup { margin-top: 2rem; text-align: center; }
+.products-page .products-inline-signup { display: flex; justify-content: center; margin-top: 2rem; }
 .products-page .products-distinction { margin-top: 1.25rem; }
 .products-page .products-example .mk-eyebrow { color: var(--mk-azure); }
 .products-page .products-plant-benefits .mk-h4 { font-size: .875rem; font-weight: 600; letter-spacing: .04em; }

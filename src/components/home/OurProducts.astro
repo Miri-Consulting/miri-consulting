@@ -1,8 +1,10 @@
 ---
 import { relay } from '../../data/site';
+import { rootPath } from '../../utils/rootPath';
 
 const plantLibraryUrl = new URL('/plants', relay.signInUrl).href;
-const relayUrl = relay.signInUrl;
+const signupUrl = relay.signupUrl;
+const productsHref = rootPath('/products');
 ---
 
 <section id="miri-relay" class="section_layout507">
@@ -61,8 +63,11 @@ const relayUrl = relay.signInUrl;
               </div>
               <div class="margin-top margin-medium">
                 <div class="button-group">
-                  <a href={relayUrl} class="button-2 w-button" target="_blank" rel="noopener">
-                    Explore Relay
+                  <a href={signupUrl} class="button-2 w-button" target="_blank" rel="noopener">
+                    Create an account
+                  </a>
+                  <a href={productsHref} class="button-2 is-secondary w-inline-block">
+                    <div>Learn more</div>
                   </a>
                   <a href={plantLibraryUrl} target="_blank" rel="noopener" class="button-2 is-secondary w-inline-block">
                     <div>Open Free Plant Library</div>
