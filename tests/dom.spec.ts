@@ -486,8 +486,17 @@ test.describe('products and legal SEO', () => {
       );
     });
     expect(signupSitsBetweenHowItWorksAndDirectory).toBe(true);
-    await expect(page.locator('.products-inline-signup a')).toHaveText('Sign up');
-    await expect(page.locator('.products-inline-signup a')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    const inlineSignups = page.locator('.products-inline-signup a');
+    await expect(inlineSignups).toHaveText(['Sign up', 'Sign up']);
+    for (const signup of await inlineSignups.all()) {
+      await expect(signup).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
+    }
+    const signupClosesDirectory = await page.evaluate(() => {
+      const lastExample = [...document.querySelectorAll('#directory .products-example')].at(-1);
+      const signup = document.querySelector('#directory .products-inline-signup a');
+      return !!lastExample && !!signup && lastExample.compareDocumentPosition(signup) === Node.DOCUMENT_POSITION_FOLLOWING;
+    });
+    expect(signupClosesDirectory).toBe(true);
     await expect(page.locator('#available-now a')).toHaveCount(6);
     await expect(page.locator('#directory .products-example')).toHaveCount(6);
     await expect(page.locator('#roadmap .products-coming-soon')).toHaveCount(6);
