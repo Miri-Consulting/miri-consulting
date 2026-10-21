@@ -19,16 +19,39 @@ const clarityId = analytics.clarityProjectId;
 // only resolved behind Webflow's server-side container and 405s on a static
 // host, so the tag and its `google_tags_first_party` bootstrap were removed.
 // The plain gtag('config', ...) below sets no transport_url, so GA4 collects
-// directly — and `gtag('event', 'calendly_booking', ...)` reaches GA4
-// regardless of GTM-container configuration.
+// directly.
+//
+// Consent: CookieYes runs in opt-in mode for every visitor. It blocks
+// non-Google scripts such as Clarity itself, but for Google tags it only
+// pushes `gtag('consent', 'update', ...)` — it never sets a default. Without
+// the default below, GA4 and the Google Ads tags in the GTM container sent
+// hits with no consent state (treated as granted) before the visitor chose.
 ---
 
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  // Global on purpose: inline `define:vars` scripts are wrapped in a function
+  // scope, so a `function gtag` declared in one never reached `window`, and
+  // `window.gtag(...)` calls elsewhere silently did nothing.
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'denied',
+    personalization_storage: 'denied',
+    security_storage: 'granted',
+    // CookieYes loads below GTM; give its stored-choice update time to land.
+    wait_for_update: 500,
+  });
+  window.gtag('set', 'ads_data_redaction', true);
+</script>
 <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
 <script is:inline define:vars={{ gaId }}>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
+  const gtag = window.gtag;
   gtag('set', 'developer_id.dZGVlNj', true);
   gtag('set', 'developer_id.dYWYxNW', true);
   gtag('js', new Date());
@@ -95,4 +118,18 @@ const clarityId = analytics.clarityProjectId;
   } else {
     window.setTimeout(loadClarity, 2000);
   }
+</script>
+<script is:inline>
+  // Relay signup clicks, as a named event GA4 can mark as a key event. GA4's
+  // automatic outbound-click tracking already records other external links;
+  // it just can't single these out. The links open in a new tab, so the page
+  // stays alive for the hit, and GA4 holds it to consent like any other.
+  document.addEventListener('click', (event) => {
+    const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+    if (!link) return;
+    const url = new URL(link.href, document.baseURI);
+    if (url.hostname === 'relay.miri-consulting.com' && url.pathname.startsWith('/signup')) {
+      window.gtag('event', 'relay_signup_click', { link_url: url.href, link_text: link.textContent.trim().slice(0, 100) });
+    }
+  });
 </script>

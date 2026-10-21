@@ -73,29 +73,24 @@ const calendlyOnclick = calendlyPopupOnclick(cta.calendlyUrl);
                           }
                         </style>
                         <script is:inline>
-                          // When the visitor completes a Calendly booking, fire a GA4
-                          // conversion event and send them to /thank-you. Previously this
-                          // path went through a hidden Webflow <form> whose only real
-                          // job was POSTing metadata to webflow.com/api/v1/form/<siteId>
-                          // for Webflow-dashboard tracking — but Webflow is being
-                          // retired, so the endpoint goes away. GA4 (already loaded by
-                          // HeadAnalytics) captures the same conversion signal without
-                          // any Webflow dependency. The form was named "Captcha" but
-                          // had no captcha widget; Calendly's own iframe handles its
-                          // bot protection.
+                          // When the visitor completes a Calendly booking, send them to
+                          // /thank-you. Previously this path went through a hidden Webflow
+                          // <form> whose only real job was POSTing metadata to
+                          // webflow.com/api/v1/form/<siteId> for Webflow-dashboard
+                          // tracking — but Webflow is being retired, so the endpoint goes
+                          // away. The booking itself is already measured twice over:
+                          // Calendly's GA4 integration sends `invitee_meeting_scheduled`,
+                          // and the GTM container turns the same message into a Google
+                          // Ads conversion. A site-side GA4 event here only duplicated
+                          // those. The form was named "Captcha" but had no captcha widget;
+                          // Calendly's own iframe handles its bot protection.
                           window.addEventListener('message', function (e) {
                             if (
                               e.data &&
                               typeof e.data.event === 'string' &&
                               e.data.event === 'calendly.event_scheduled'
                             ) {
-                              if (typeof window.gtag === 'function') {
-                                window.gtag('event', 'calendly_booking', {
-                                  event_category: 'conversion',
-                                  event_label: 'hero',
-                                });
-                              }
-                              window.location.href = new URL('thank-you', document.baseURI).href;
+                              window.location.href = new URL('thank-you/', document.baseURI).href;
                             }
                           });
                         </script>

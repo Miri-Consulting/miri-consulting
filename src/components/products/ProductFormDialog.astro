@@ -10,6 +10,8 @@ interface Props {
   submitLabel: string;
   success: string;
   statusTarget?: string;
+  /** GA4 event sent when a visitor (not the honeypot) submits the form. */
+  analyticsEvent: string;
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   submitLabel,
   success,
   statusTarget,
+  analyticsEvent,
 } = Astro.props;
 
 const titleId = `${id}-title`;
@@ -47,6 +50,7 @@ const honeypotId = `${id}-website`;
       data-products-form
       data-success={success}
       data-status-target={statusTarget}
+      data-analytics-event={analyticsEvent}
     >
       <div class="products-dialog__fields">
         <label for={emailId}>
@@ -158,6 +162,7 @@ const honeypotId = `${id}-website`;
         return;
       }
       if (requestField instanceof HTMLTextAreaElement) requestField.value = requestField.value.trim();
+      if (form.dataset.analyticsEvent) window.gtag('event', form.dataset.analyticsEvent);
       window.setTimeout(() => showSuccess(form), 0);
     });
   });
