@@ -1,1 +1,1 @@
-Sitemap: https://www.miri-consulting.com/sitemap.xml
+Sitemap: https://miri-consulting.com/sitemap-index.xml

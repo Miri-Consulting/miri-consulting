@@ -5,8 +5,9 @@ import Footer from '../components/chrome/Footer.astro';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import { rewriteAssetPaths } from '../utils/rewriteAssetPaths';
 import { rootPath } from '../utils/rootPath';
+import { canonicalUrl } from '../utils/canonicalUrl';
 import { sanitizeLegalHead } from '../utils/sanitizeLegalHead';
-import { site, webflow } from '../data/site';
+import { webflow } from '../data/site';
 import inlineGlobals from '../styles/inline-globals.css?raw';
 import staticOverrides from '../styles/miri-static-overrides.css?raw';
 import bodyScripts from '../partials/body-scripts-home.html?raw';
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const { canonicalPath, bodyClass, bodyHtml, headHtml, webflowPageId } = Astro.props;
-const canonical = new URL(canonicalPath, site.url).href;
+const canonical = canonicalUrl(canonicalPath);
 const body = rewriteAssetPaths(
   bodyHtml.replace(
     /href=(["'])\/(?!\/)([^"']*)/g,

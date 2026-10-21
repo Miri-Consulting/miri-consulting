@@ -1,6 +1,7 @@
 ---
 import { site, vendor, webflow } from '../data/site';
 import { rootPath } from '../utils/rootPath';
+import { canonicalUrl } from '../utils/canonicalUrl';
 import HeadAnalytics from '../components/analytics/HeadAnalytics.astro';
 import inlineGlobals from '../styles/inline-globals.css?raw';
 import staticOverrides from '../styles/miri-static-overrides.css?raw';
@@ -28,7 +29,7 @@ const {
   webflowPageId = webflow.pages.home,
 } = Astro.props;
 
-const canonical = new URL(canonicalPath, site.url).href;
+const canonical = canonicalUrl(canonicalPath);
 ---
 
 <!DOCTYPE html>

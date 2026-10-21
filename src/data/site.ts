@@ -3,8 +3,14 @@ export const site = {
   title: 'Miri Consulting | Consulting Services for Landscape and Construction Companies',
   description:
     "Miri is a consulting company that helps landscape, construction, and snow removal companies customize and integrate Aspire, Buildertrend, Quickbooks, and other industry standard softwares. Our Teams specialize in project management, financial forecasting and month-end close, HR onboarding and counseling, and digital design assistance. We work with you directly to strategize solutions for your company's specific needs, and we continue to support you as you implement new systems and grow your business.",
-  url: 'https://www.miri-consulting.com',
-  ogImage: 'https://www.miri-consulting.com/media/og-image.png',
+  /**
+   * The origin production actually serves. GitHub Pages' custom domain is the
+   * apex, so www 301s here; canonicals, JSON-LD, and the sitemap must all name
+   * this host or Google gets a canonical that redirects. Keep in sync with the
+   * `site` fallback in astro.config.mjs and the Sitemap line in robots.txt.
+   */
+  url: 'https://miri-consulting.com',
+  ogImage: 'https://miri-consulting.com/media/og-image.png',
   splineSceneLocal: '/assets/spline/hero.scene.splinecode',
   joinTeamFormUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSeBoXrL-grJIQg5PPhon73buKD1aUytT0h6uwXAohbzVDcwlw/viewform?usp=sharing',
@@ -25,7 +31,7 @@ export const navLinks: readonly NavLink[] = [
   { anchor: 'industries', label: 'Industries' },
   { anchor: 'testimonials', label: 'Testimonials' },
   { anchor: 'services', label: 'Services' },
-  { href: '/products', label: 'Products' },
+  { href: '/products/', label: 'Products' },
   { anchor: 'people', label: 'People' },
   { href: relay.signInUrl, label: 'Sign in', external: true },
 ];

@@ -6,12 +6,12 @@ Miri works with landscape maintenance, snow, landscape construction, and other s
 
 Service area: United States. Primary contact path: book an introductory call through the Calendly scheduling link on the site.
 
-This is the full-text version. A concise index is available at https://www.miri-consulting.com/llms.txt.
+This is the full-text version. A concise index is available at https://miri-consulting.com/llms.txt.
 
 ## Core pages
 
-- [Home](https://www.miri-consulting.com/): Overview of Miri Consulting — services (Operations, Finance, Digital, HR), industries served, client testimonials, and the team.
-- [Aspire Consulting for Landscape Companies](https://www.miri-consulting.com/aspire-consulting-for-landscape-companies): Miri's Aspire consulting offering for US landscape companies — detailed below.
+- [Home](https://miri-consulting.com/): Overview of Miri Consulting — services (Operations, Finance, Digital, HR), industries served, client testimonials, and the team.
+- [Aspire Consulting for Landscape Companies](https://miri-consulting.com/aspire-consulting-for-landscape-companies/): Miri's Aspire consulting offering for US landscape companies — detailed below.
 
 ## Aspire consulting for landscape companies
 
@@ -41,5 +41,5 @@ Key facts about the engagement:
 
 ## Optional
 
-- [Privacy Policy](https://www.miri-consulting.com/privacy-policy): How Miri Consulting collects and handles personal information.
-- [Terms of Service](https://www.miri-consulting.com/terms-of-service): Terms governing use of the Miri Consulting website.
+- [Privacy Policy](https://miri-consulting.com/privacy-policy/): How Miri Consulting collects and handles personal information.
+- [Terms of Service](https://miri-consulting.com/terms-of-service/): Terms governing use of the Miri Consulting website.

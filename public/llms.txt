@@ -6,11 +6,11 @@ Miri works across four practice areas — Operations, Finance, Digital, and HR �
 
 ## Pages
 
-- [Home](https://www.miri-consulting.com/): Overview of Miri Consulting — services (Operations, Finance, Digital, HR), industries served, client testimonials, and the team.
-- [Aspire Consulting for Landscape Companies](https://www.miri-consulting.com/aspire-consulting-for-landscape-companies): Aspire consulting for US landscape companies — Aspire setup and cleanup (item catalogs, kits, production factors, permissions, templates, dashboards and reporting), Aspire + QuickBooks month-end close and job-cost variance review, and landscape operations consulting (field-to-office workflows, estimating, job costing, KPI cadence). For companies implementing Aspire, or already live but not getting clean, trusted reporting.
+- [Home](https://miri-consulting.com/): Overview of Miri Consulting — services (Operations, Finance, Digital, HR), industries served, client testimonials, and the team.
+- [Aspire Consulting for Landscape Companies](https://miri-consulting.com/aspire-consulting-for-landscape-companies/): Aspire consulting for US landscape companies — Aspire setup and cleanup (item catalogs, kits, production factors, permissions, templates, dashboards and reporting), Aspire + QuickBooks month-end close and job-cost variance review, and landscape operations consulting (field-to-office workflows, estimating, job costing, KPI cadence). For companies implementing Aspire, or already live but not getting clean, trusted reporting.
 
 ## Optional
 
-- [Full text](https://www.miri-consulting.com/llms-full.txt): Every page above with the Aspire offering expanded inline — when to engage, the three service tracks, best-fit profile, and key engagement facts.
-- [Privacy Policy](https://www.miri-consulting.com/privacy-policy): How Miri Consulting collects and handles personal information.
-- [Terms of Service](https://www.miri-consulting.com/terms-of-service): Terms governing use of the Miri Consulting website.
+- [Full text](https://miri-consulting.com/llms-full.txt): Every page above with the Aspire offering expanded inline — when to engage, the three service tracks, best-fit profile, and key engagement facts.
+- [Privacy Policy](https://miri-consulting.com/privacy-policy/): How Miri Consulting collects and handles personal information.
+- [Terms of Service](https://miri-consulting.com/terms-of-service/): Terms governing use of the Miri Consulting website.

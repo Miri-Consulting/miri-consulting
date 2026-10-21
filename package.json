@@ -13,7 +13,7 @@
     "check": "astro check",
     "test:dom": "playwright test --project=dom",
     "test:visual": "playwright test",
-    "test:visual:production": "BASE_URL=https://www.miri-consulting.com playwright test",
+    "test:visual:production": "BASE_URL=https://miri-consulting.com playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "baseline:capture": "node scripts/capture-baseline.mjs"
   },

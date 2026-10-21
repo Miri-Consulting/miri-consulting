@@ -11,8 +11,9 @@ function normalizeBase(raw) {
 }
 
 const base = normalizeBase(process.env.ASTRO_BASE);
+// Keep in sync with site.url in src/data/site.ts.
 const site =
-  process.env.ASTRO_SITE_URL?.trim() || 'https://www.miri-consulting.com';
+  process.env.ASTRO_SITE_URL?.trim() || 'https://miri-consulting.com';
 
 // Keep in sync with noindexPaths in src/data/site.ts.
 const noindexPathnames = [

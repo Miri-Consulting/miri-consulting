@@ -1,12 +1,13 @@
 ---
 import { site } from '../../data/site';
+import { canonicalUrl } from '../../utils/canonicalUrl';
 
 interface Props {
   canonicalPath: string;
 }
 
 const { canonicalPath } = Astro.props;
-const pageUrl = new URL(canonicalPath, site.url).href;
+const pageUrl = canonicalUrl(canonicalPath);
 
 const graph = [
   {

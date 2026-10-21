@@ -2,7 +2,7 @@ import { chromium } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const BASE_URL = process.env.BASE_URL ?? 'https://www.miri-consulting.com';
+const BASE_URL = process.env.BASE_URL ?? 'https://miri-consulting.com';
 
 /**
  * Join an absolute path onto BASE_URL without losing BASE_URL's own pathname.
