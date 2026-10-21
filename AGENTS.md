@@ -119,7 +119,17 @@ the committed `*-linux.png` baselines. **The visual job does not skip** — if y
 change rendered output you must refresh the Linux baselines too, or CI fails
 even though the deploy succeeds (they are separate workflows).
 
-Refresh the Linux baselines with the same pinned image the CI job uses:
+The easiest way to refresh them is on GitHub: push your work to a branch named
+`baselines/<anything>`. `.github/workflows/update-visual-baselines.yml`
+regenerates the Linux baselines in the pinned image, re-runs the suite twice to
+prove they are stable, and commits them back to that branch. Review the image
+diff, then merge.
+
+Tests block third-party tags (analytics, chat, consent banner, Calendly) and the
+hero's Spline runtime in `tests/fixtures.ts`; import `test`/`expect` from there,
+not from `@playwright/test`, in new specs.
+
+To refresh the Linux baselines locally instead, use the same pinned image the CI job uses:
 
 ```bash
 docker run --rm -v "$PWD":/w -w /w --ipc=host mcr.microsoft.com/playwright:v1.60.0-noble bash -c '
@@ -141,7 +151,7 @@ gitignored, so CI never sees it) or pass `--force`.
 
 ## Run visual regression against production
 
-After GitHub Pages is live at `https://www.miri-consulting.com`:
+After GitHub Pages is live at `https://miri-consulting.com`:
 
 ```bash
 npm run test:visual:production
@@ -155,7 +165,7 @@ npm run test:visual:update
 
 **Before updating baselines, verify the new render matches prod.** A baseline update silently locks in whatever's currently rendered — if a refactor accidentally drops a Webflow grid ID or shifts layout, "refresh baselines" hides the regression. Discipline:
 
-1. Run `npm run test:visual:production` first. This runs the suite against `https://www.miri-consulting.com` using the *currently committed* baselines as expectations. If the suite passes, the committed baselines reflect prod and any local diff must be intentional.
+1. Run `npm run test:visual:production` first. This runs the suite against `https://miri-consulting.com` using the *currently committed* baselines as expectations. If the suite passes, the committed baselines reflect prod and any local diff must be intentional.
 2. If a baseline diff arises during normal local work, capture local + prod screenshots side-by-side (e.g. open both URLs at the same viewport in a headless browser and screenshot both with `fullPage: true`) and confirm they're the same shape before running `test:visual:update`.
 3. The Webflow shared CSS positions many grid children by ID (~166 `#w-node-...` rules). Native Astro rewrites that drop those IDs collapse layout to a 1-column fallback. When porting a partial to a native component, preserve any `id="w-node-..."` attribute that the partial had — those are load-bearing for layout, not decorative.
 

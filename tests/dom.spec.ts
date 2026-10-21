@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 
@@ -61,14 +61,11 @@ const expectedDesktopLogoAlts = [
 ];
 
 const expectedServices = ['Operations', 'Finance', 'Digital', 'HR'];
-const expectedHomeNavHrefs = ['#about', '#industries', '#testimonials', '#services', '/products', '#people', 'https://relay.miri-consulting.com'];
-const expectedLegalNavHrefs = ["/#about", "/#industries", "/#testimonials", "/#services", "/products", "/#people", "https://relay.miri-consulting.com"];
+const expectedHomeNavHrefs = ['#about', '#industries', '#testimonials', '#services', '/products/', '#people', 'https://relay.miri-consulting.com'];
+const expectedLegalNavHrefs = ["/#about", "/#industries", "/#testimonials", "/#services", "/products/", "/#people", "https://relay.miri-consulting.com"];
 
 test.describe('home page DOM', () => {
   test.beforeEach(async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/', { waitUntil: 'networkidle' });
   });
 
@@ -443,31 +440,22 @@ test.describe('home page DOM', () => {
 test.describe('products and legal SEO', () => {
 
   test('Landscape Maintenance card links the Aspire clause', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const link = page.getByRole('link', { name: 'make Aspire work for your team' });
-    await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
+    await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies/');
   });
 
   test('home Relay block separates signup, product details, and the plant library', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Our Products' })).toBeVisible();
     const relay = page.locator('#miri-relay');
     await expect(relay.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');
-    await expect(relay.getByRole('link', { name: 'Learn more', exact: true })).toHaveAttribute('href', '/products');
+    await expect(relay.getByRole('link', { name: 'Learn more', exact: true })).toHaveAttribute('href', '/products/');
     await expect(relay.getByRole('link', { name: 'Open Free Plant Library' })).toHaveAttribute('href', 'https://relay.miri-consulting.com/plants');
     await expect(relay.getByRole('link', { name: 'Explore Relay' })).toHaveCount(0);
   });
 
   test('products page separates available tools, roadmap, and pricing', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle('Miri Relay | Extend What’s Possible with Aspire');
     await expect(page.getByRole('heading', { level: 1, name: 'Extend What’s Possible with Aspire' })).toBeVisible();
@@ -595,9 +583,6 @@ test.describe('products and legal SEO', () => {
 
 
   test('Aspire SEO page nav uses home-prefixed anchors', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/aspire-consulting-for-landscape-companies', { waitUntil: 'domcontentloaded' });
     const navHrefs = await page.locator('.navbar2_menu .navbar2_link').evaluateAll((els) =>
       els.map((el) => el.getAttribute('href')),
@@ -622,15 +607,12 @@ test.describe('products and legal SEO', () => {
   });
 
   test('every page footer links the Aspire SEO page', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     // The footer is the page's only site-wide link to the Aspire landing page;
     // the other one is a single inline anchor in the home Landscape Maintenance card.
     for (const path of ['/', '/products', '/privacy-policy']) {
       await page.goto(path, { waitUntil: 'domcontentloaded' });
       const link = page.locator('.footer7_link.is-secondary', { hasText: 'Aspire Consulting' });
-      await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies');
+      await expect(link).toHaveAttribute('href', '/aspire-consulting-for-landscape-companies/');
     }
   });
 
@@ -660,10 +642,63 @@ test.describe('products and legal SEO', () => {
     expect(xml).not.toContain('ui-kit');
   });
 
+  // Production is the apex host and serves every page at its trailing-slash
+  // URL; www and slashless URLs 301. A canonical, structured-data URL, or
+  // robots Sitemap line that names a redirect sends Google conflicting signals.
+  test('canonicals and structured data name the URL production serves', async ({ page }) => {
+    const pages = {
+      '/': 'https://miri-consulting.com/',
+      '/products': 'https://miri-consulting.com/products/',
+      '/aspire-consulting-for-landscape-companies': 'https://miri-consulting.com/aspire-consulting-for-landscape-companies/',
+      '/privacy-policy': 'https://miri-consulting.com/privacy-policy/',
+      '/terms-of-service': 'https://miri-consulting.com/terms-of-service/',
+    };
+    for (const [pathname, canonical] of Object.entries(pages)) {
+      await page.goto(pathname, { waitUntil: 'domcontentloaded' });
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', canonical);
+      const jsonLd = (await page.locator('script[type="application/ld+json"]').allTextContents()).join('\n');
+      expect(jsonLd).not.toContain('www.miri-consulting.com');
+    }
+  });
+
+  // The CookieYes banner is opt-in, but for Google tags it only pushes consent
+  // *updates*. The site must set the denied default before any Google tag
+  // reads the dataLayer, and keep `gtag` global so site events can reach it.
+  test('analytics starts consent-denied and records Relay signup clicks', async ({ page }) => {
+    await page.goto('/products', { waitUntil: 'domcontentloaded' });
+    const first = await page.evaluate(() => Array.from(window.dataLayer[0] as ArrayLike<unknown>));
+    expect(first[0]).toBe('consent');
+    expect(first[1]).toBe('default');
+    expect(first[2]).toMatchObject({ analytics_storage: 'denied', ad_storage: 'denied', ad_personalization: 'denied' });
+    expect(await page.evaluate(() => typeof window.gtag)).toBe('function');
+
+    const events = await page.evaluate(() => {
+      window.addEventListener('click', (event) => event.preventDefault(), { capture: true });
+      for (const selector of ['header a[href$="/signup"]', 'header a[href$="/plants"]']) {
+        document.querySelector(selector)?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      }
+      return window.dataLayer
+        .map((entry) => Array.from(entry as ArrayLike<unknown>))
+        .filter((entry) => entry[0] === 'event')
+        .map((entry) => entry[1]);
+    });
+    expect(events).toEqual(['relay_signup_click']);
+  });
+
+  test('robots.txt points at the sitemap index the build emits', async () => {
+    const robots = readFileSync(path.resolve('public/robots.txt'), 'utf8');
+    expect(robots.trim()).toBe('Sitemap: https://miri-consulting.com/sitemap-index.xml');
+    const index = path.resolve('dist/sitemap-index.xml');
+    if (!existsSync(index)) {
+      return;
+    }
+    const sitemap = readFileSync(path.resolve('dist/sitemap-0.xml'), 'utf8');
+    for (const loc of sitemap.match(/<loc>[^<]+<\/loc>/g) ?? []) {
+      expect(loc).toMatch(/^<loc>https:\/\/miri-consulting\.com\/([^<]*\/)?<\/loc>$/);
+    }
+  });
+
   test('Our Products CTA uses pool-water button-2', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const cta = page.locator('#miri-relay').getByRole('link', { name: 'Create an account' });
     await expect(cta).toHaveClass(/button-2/);
@@ -671,9 +706,6 @@ test.describe('products and legal SEO', () => {
   });
 
   test('Relay hero uses the UI-kit split hero and pill buttons', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('header.mk-hero .mk-hero__grid')).toHaveCount(1);
     await expect(page.locator('header.mk-hero a.mk-btn--primary')).toHaveClass(/mk-btn--primary/);
@@ -683,9 +715,6 @@ test.describe('products and legal SEO', () => {
   });
 
   test('closing Relay CTA goes to signup', async ({ page }) => {
-    await page.route('**/haqt6iy0yx2eNjRmMzYzYjRiYTBmYzEzNjIzNjI4MjRm/**', (route) =>
-      route.abort(),
-    );
     await page.goto('/products', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveText('Sign up');
     await expect(page.locator('.mk-cta__inner a.mk-btn--primary')).toHaveAttribute('href', 'https://relay.miri-consulting.com/signup');

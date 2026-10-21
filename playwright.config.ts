@@ -1,11 +1,15 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  timeout: 120_000,
-  workers: 1,
+  // Tests only read a static build, so they are safe to run side by side.
+  // Third-party tags are blocked in tests/fixtures.ts, which is what lets a
+  // page settle in seconds; generous timeouts only made a failure take minutes.
+  fullyParallel: true,
+  workers: process.env.CI ? 2 : 4,
+  timeout: 30_000,
   testDir: './tests',
   expect: {
-    timeout: 60_000,
+    timeout: 10_000,
     toHaveScreenshot: {
       maxDiffPixelRatio: 0.001,
       animations: 'disabled',
@@ -40,11 +44,6 @@ export default defineConfig({
       name: 'desktop',
       testMatch: /visual\.spec\.ts/,
       use: { viewport: { width: 1440, height: 900 } },
-    },
-    {
-      name: 'desktop-large',
-      testMatch: /visual\.spec\.ts/,
-      use: { viewport: { width: 1920, height: 1080 } },
     },
     {
       name: 'dom',

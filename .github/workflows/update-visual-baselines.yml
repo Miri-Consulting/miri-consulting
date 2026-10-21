@@ -1,0 +1,74 @@
+name: Update visual baselines
+
+# Regenerates the committed *-linux.png screenshot baselines on GitHub's
+# runners, so nobody needs Docker locally. Push a branch named
+# `baselines/<anything>` (or run it by hand from the Actions tab): it renders
+# every page in the same pinned Playwright image the `visual` CI job uses,
+# re-runs the suite twice against the new images to prove they are stable,
+# and only then commits them back to the branch. Merge the branch once green.
+#
+# Review the diff before merging — a baseline refresh locks in whatever is
+# rendered (see AGENTS.md, "Update visual baselines after intentional changes").
+
+on:
+  push:
+    branches: ['baselines/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    steps:
+      # actions/checkout needs git in the container to produce a real
+      # repository we can commit to.
+      - run: command -v git || (apt-get update && apt-get install -y --no-install-recommends git)
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Start preview server
+        run: |
+          npm run preview &
+          for i in $(seq 1 60); do
+            if curl -fs http://localhost:4321 > /dev/null; then
+              echo "Preview ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Preview never became ready"
+          exit 1
+      - name: Regenerate baselines
+        run: npx playwright test tests/visual.spec.ts --update-snapshots
+      - name: Verify the new baselines are stable
+        run: |
+          npx playwright test tests/visual.spec.ts
+          npx playwright test tests/visual.spec.ts
+      - name: Commit baselines
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/visual.spec.ts-snapshots/*-linux.png
+          if git diff --cached --quiet; then
+            echo "Baselines already up to date"
+          else
+            git commit -m "Refresh Linux visual baselines"
+            git push
+          fi
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baseline-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
