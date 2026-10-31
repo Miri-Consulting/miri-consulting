@@ -685,6 +685,25 @@ test.describe('products and legal SEO', () => {
     expect(events).toEqual(['relay_signup_click']);
   });
 
+  // Search Console still crawls these Webflow-era URLs. Each must land on a
+  // live page instead of the 404, and stay out of the index itself.
+  test('legacy Webflow URLs redirect instead of 404ing', async ({ page }) => {
+    const redirects = {
+      '/old-home': '/',
+      '/people/amber-shoap': '/#people',
+      '/people-copy/ramel-sanchez': '/#people',
+    };
+    for (const [pathname, target] of Object.entries(redirects)) {
+      const response = await page.request.get(pathname);
+      expect(response.status()).toBe(200);
+      const html = await response.text();
+      expect(html).toContain(`<meta http-equiv="refresh" content="0;url=${target}">`);
+      expect(html).toContain('<meta name="robots" content="noindex">');
+    }
+    const signup = await (await page.request.get('/signup')).text();
+    expect(signup).toContain('url=https://relay.miri-consulting.com/signup');
+  });
+
   test('robots.txt points at the sitemap index the build emits', async () => {
     const robots = readFileSync(path.resolve('public/robots.txt'), 'utf8');
     expect(robots.trim()).toBe('Sitemap: https://miri-consulting.com/sitemap-index.xml');

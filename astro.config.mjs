@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
@@ -32,10 +33,30 @@ function sitemapAllows(page) {
   }
 }
 
+// The Webflow site served each team member at /people/<slug> (and its draft
+// copies at /people-copy/<slug>); Search Console still crawls them as 404s.
+// GitHub Pages has no server redirects, so Astro emits a meta-refresh page per
+// path. Destinations get `base` because Astro does not add it to redirects.
+const teamSlugs = readdirSync(new URL('./src/content/team/', import.meta.url))
+  .filter((file) => file.endsWith('.md'))
+  .map((file) => file.replace(/\.md$/, ''));
+
+const legacyRedirects = {
+  '/old-home': base,
+  '/signup': 'https://relay.miri-consulting.com/signup',
+  ...Object.fromEntries(
+    teamSlugs.flatMap((slug) => [
+      [`/people/${slug}`, `${base}#people`],
+      [`/people-copy/${slug}`, `${base}#people`],
+    ]),
+  ),
+};
+
 export default defineConfig({
   site,
   base,
   trailingSlash: 'ignore',
+  redirects: legacyRedirects,
   build: {
     // Emit each page as <slug>/index.html so URLs are extension-less:
     // /privacy-policy, /terms-of-service, /thank-you, etc. Home stays at /.
