@@ -1,6 +1,6 @@
 export const site = {
   name: 'Miri Consulting',
-  title: 'Miri Consulting | Landscape Operations & Finance Consulting',
+  title: 'Miri Consulting | Landscape & Construction Consulting',
   description:
     "Miri is a consulting company that helps landscape, construction, and snow removal companies customize and integrate Aspire, Buildertrend, Quickbooks, and other industry standard softwares. Our Teams specialize in project management, financial forecasting and month-end close, HR onboarding and counseling, and digital design assistance. We work with you directly to strategize solutions for your company's specific needs, and we continue to support you as you implement new systems and grow your business.",
   /**
